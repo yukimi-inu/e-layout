@@ -1,0 +1,23 @@
+{
+  "extends": "../tsconfig.json", // Inherit settings from the root tsconfig
+  "compilerOptions": {
+    // Astro specific settings
+    "jsx": "preserve", // Keep JSX syntax for Astro compiler
+    "jsxImportSource": "astro", // Specify Astro as the JSX runtime
+    // Ensure module resolution works within the docs context
+    "baseUrl": ".",
+    "paths": {
+      "e-layout/*": ["../dist/*"], // Alias for built components
+      "@components/*": ["src/components/*"], // Alias for docs components
+      "@layouts/*": ["src/layouts/*"] // Alias for docs layouts
+    },
+    // Override output directory if needed, or let Astro handle it
+    "outDir": null, // Astro handles its own build output
+    "rootDir": null, // Override rootDir inherited from base config
+    "declaration": false, // No need to generate .d.ts for docs
+    "declarationMap": false,
+    "sourceMap": false // Astro handles source maps
+  },
+  "include": ["./src/**/*.ts", "./src/**/*.astro"], // Include Astro files relative to this tsconfig
+  "exclude": ["node_modules", "../dist-docs"] // Exclude build output
+}

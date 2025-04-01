@@ -1,0 +1,218 @@
+---
+// src/layouts/Layout.astro
+import '../styles/global.css'; // Import global styles
+// Import the new navigation components
+import GlobalSidebarNav from '../components/GlobalSidebarNav.astro';
+import PageTocNav from '../components/PageTocNav.astro';
+import type { MarkdownHeading } from 'astro'; // Import MarkdownHeading type
+interface Props {
+  title: string;
+  headings: MarkdownHeading[]; // Add headings prop
+  // Add frontmatter properties if needed for sidebar generation
+  // e.g., section: 'Components' | 'Guides';
+}
+
+const { title, headings } = Astro.props; // Destructure headings
+const currentPage = Astro.url.pathname; // Needed for GlobalSidebarNav active state
+
+// Define resolveUrl helper function in frontmatter for server-side use
+const resolveUrl = (href: string): string => {
+  const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+  const finalHref = href.startsWith('/') ? href.substring(1) : href;
+  if (href === '/') return baseUrl;
+  return `${baseUrl}${finalHref}`;
+};
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="e-layout Documentation" />
+    <meta name="viewport" content="width=device-width" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href={import.meta.env.BASE_URL + "/favicon.svg"}
+    />
+    {/* Google Fonts - JetBrains Mono */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="generator" content={Astro.generator} />
+    {/* Google Fonts - Inter */}
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title} - e-layout Docs</title>
+    {/* Remove e-sidebar import */}
+    <style>
+      /* Layout using CSS Grid */
+      .docs-grid-layout {
+        display: grid;
+        /* Define columns: sidebar, main content, TOC */
+        grid-template-columns: var(--sidebar-width, 20em) minmax(0, 1fr) auto;
+        gap: 1rem; /* Adjust gap */
+        min-height: 100vh; /* Ensure layout fills viewport height */
+      }
+
+      .left-sidebar-grid {
+        /* Styles for the container holding logo, links, and global nav */
+        padding: 1rem;
+        border-right: 1px solid var(--color-border);
+        /* Make the sidebar sticky */
+        position: sticky;
+        top: 0;
+        height: 100vh; /* Full viewport height */
+        overflow-y: auto; /* Allow scrolling within the sidebar */
+        background-color: var(--color-bg-sidebar); /* Apply background color */
+        display: flex; /* Use flex for internal alignment */
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .logo-area a {
+        font-weight: bold;
+        font-size: 1.2em;
+        text-decoration: none;
+        color: var(--color-text-heading);
+      }
+      .external-links a {
+        margin-right: 1rem;
+        font-size: 0.9em;
+        color: var(--color-text-secondary);
+        text-decoration: none;
+      }
+      .external-links a:hover {
+        color: var(--color-text-primary);
+      }
+
+      .main-content-grid {
+        padding: 2rem; /* Padding around main content */
+        max-width: 80ch; /* Limit content width */
+        margin: 0 auto; /* Center content area */
+        width: 100%; /* Ensure it takes available space */
+      }
+
+      .right-toc-grid {
+        width: 16em; /* Width of the TOC */
+        padding: 1rem;
+        /* Make TOC sticky within its grid cell */
+        position: sticky;
+        top: 2rem; /* Adjust top offset */
+        align-self: start; /* Align to top */
+        max-height: calc(100vh - 4rem); /* Prevent overflow */
+        overflow-y: auto; /* Allow scrolling */
+      }
+
+      footer {
+        margin-top: 4rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--color-border);
+        font-size: 0.85em;
+        color: var(--color-text-secondary);
+      }
+      footer a {
+        color: var(--color-text-secondary);
+        text-decoration: underline;
+      }
+      footer a:hover {
+        color: var(--color-text-primary);
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 1100px) {
+        .docs-grid-layout {
+          /* Switch to 2 columns, hide TOC */
+          grid-template-columns: var(--sidebar-width, 20em) minmax(0, 1fr);
+        }
+        .right-toc-grid {
+          display: none;
+        }
+        .main-content-grid {
+          max-width: none; /* Remove max width when TOC is hidden */
+        }
+      }
+
+      @media (max-width: 768px) {
+        .docs-grid-layout {
+          /* Switch to single column */
+          grid-template-columns: minmax(0, 1fr);
+        }
+        .left-sidebar-grid {
+          position: static; /* Unstick sidebar */
+          height: auto; /* Auto height */
+          border-right: none;
+          border-bottom: 1px solid var(--border-color); /* Use correct variable */
+        }
+        .main-content-grid {
+          padding: 1rem; /* Reduce padding */
+        }
+      }
+    </style>
+  </head>
+
+  {/* ... existing head content ... */}
+</html>
+<body>
+  {/* Use CSS Grid for layout */}
+  <div class="docs-grid-layout">
+    {/* Left Sidebar Grid Item */}
+    <aside class="left-sidebar-grid">
+      <div class="logo-area">
+        <a href={resolveUrl("/")}>e-layout</a>
+      </div>
+      <div class="external-links">
+        <a
+          href="https://github.com/yukimi-inu/e-layout"
+          target="_blank"
+          rel="noopener noreferrer">GitHub</a
+        >
+      </div>
+      <GlobalSidebarNav currentPage={currentPage} />
+    </aside>
+
+    {/* Main Content Grid Item */}
+    <main class="main-content-grid">
+      <article>
+        <h1>{title}</h1>
+        <slot />
+        {/* Page content will be injected here */}
+      </article>
+      <footer>
+        <p>
+          Copyright © {new Date().getFullYear()}
+          <a
+            href="https://github.com/yukimi-inu"
+            target="_blank"
+            rel="noopener noreferrer">yukimi-inu</a
+          >
+        </p>
+      </footer>
+    </main>
+
+    {/* Right TOC Grid Item */}
+    <aside class="right-toc-grid">
+      <PageTocNav headings={headings} />
+    </aside>
+  </div>
+</body>
+{
+  /* Client-side script is no longer needed as resolveUrl is handled server-side */
+}
+{
+  /*
+  <script define:vars={{ baseUrl: import.meta.env.BASE_URL }}>
+    function resolveUrl(href) {
+      const resolvedBaseUrl = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
+      const finalHref = href.startsWith('/') ? href.substring(1) : href;
+      if (href === "/") return resolvedBaseUrl;
+      return resolvedBaseUrl + finalHref;
+    }
+  </script>
+  */
+}

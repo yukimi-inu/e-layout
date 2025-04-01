@@ -1,0 +1,219 @@
+/* docs/src/styles/global.css */
+:root {
+  --font-family-base: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+    Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  --font-family-mono: "JetBrains Mono", monospace;
+
+  --color-bg: #f6f6f7;
+  --color-bg-soft: #ffffff;
+  --color-bg-sidebar: #f0f0f0; /* Light gray, lighter than active bg */
+  --color-bg-hover: #e8e8ea;
+  --color-bg-active: #dcdcde; /* Example active color */
+
+  --color-text-primary: #213547;
+  --color-text-secondary: #3c536a;
+  --color-text-link: #3eaf7c; /* Example link color */
+  --color-text-active: #005a9c; /* Dark blue for active menu text */
+
+  --border-color: #e2e2e3;
+  --sidebar-width: 280px; /* Match Layout.astro */
+  --content-max-width: 768px; /* Max width for main content */
+
+  --spacing-unit: 1rem;
+}
+
+/* Dark mode overrides (optional, basic example) */
+/* html.dark { ... } */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%; /* Ensure html takes full height */
+}
+
+body {
+  font-family: var(--font-family-base);
+  line-height: 1.7;
+  margin: 0;
+  padding: 0; /* Remove default padding */
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-size: 16px;
+  height: 100%; /* Ensure body takes full height */
+}
+
+.docs-layout {
+  /* Use CSS variables defined in e-sidebar if needed, or override here */
+  --sidebar-width: var(--sidebar-width);
+  gap: 0; /* Remove default gap from e-sidebar */
+  height: 100%; /* Make e-sidebar take full height of body */
+  display: flex; /* Ensure e-sidebar behaves like a flex container if needed */
+}
+
+/* Apply styles directly to the class used in Layout.astro */
+.sidebar-container {
+  background-color: var(--color-bg-sidebar);
+  height: 100%; /* Make sidebar container fill its slot height */
+  position: sticky; /* Ensure sticky positioning */
+  top: 0; /* Stick to the top */
+  overflow-y: auto; /* Allow scrolling within the sidebar */
+  padding: calc(var(--spacing-unit) * 1.5) 0; /* Keep existing padding */
+  border-right: 1px solid var(--border-color); /* Keep border */
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+.logo-area {
+  padding: 0 var(--spacing-unit);
+  margin-bottom: var(--spacing-unit);
+}
+.logo-area a {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+
+.external-links {
+  padding: 0 var(--spacing-unit);
+  margin-bottom: calc(var(--spacing-unit) * 1.5); /* Add space before nav */
+  font-size: 0.9em;
+}
+
+.external-links a {
+  color: var(--color-text-secondary);
+  /* Add icon styles later if needed */
+}
+
+.main-content {
+  padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 3);
+  flex-grow: 1; /* Ensure it takes remaining space */
+  min-width: 0; /* Prevent content from overflowing flex container */
+}
+
+.main-content article {
+  max-width: var(--content-max-width);
+  margin: 0 auto; /* Center the article content */
+}
+
+.main-content h1 {
+  font-size: 2.2em;
+  font-weight: 700;
+  margin-bottom: calc(var(--spacing-unit) * 1.5);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: calc(var(--spacing-unit) * 0.5);
+}
+.main-content h2 {
+  font-size: 1.8em;
+  font-weight: 600;
+  margin-top: calc(var(--spacing-unit) * 2);
+  margin-bottom: var(--spacing-unit);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: calc(var(--spacing-unit) * 0.3);
+}
+.main-content h3 {
+  font-size: 1.4em;
+  font-weight: 600;
+  margin-top: calc(var(--spacing-unit) * 1.5);
+  margin-bottom: calc(var(--spacing-unit) * 0.8);
+}
+
+footer {
+  margin-top: calc(var(--spacing-unit) * 3);
+  text-align: center;
+  font-size: 0.9em;
+  color: var(--color-text-secondary);
+  border-top: 1px solid var(--border-color);
+  padding-top: var(--spacing-unit);
+}
+
+a {
+  color: var(--color-text-link);
+  text-decoration: none;
+  font-weight: 500;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Code block styling */
+pre {
+  background-color: #282c34; /* Darker background */
+  color: #abb2bf; /* Lighter text */
+  padding: 1.2em;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-family: var(--font-family-mono);
+  font-size: 0.9em;
+  line-height: 1.5;
+  margin: var(--spacing-unit) 0;
+}
+
+code {
+  font-family: var(--font-family-mono);
+  background-color: var(--color-bg-hover);
+  color: var(--color-text-secondary);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+pre code {
+  background-color: transparent;
+  padding: 0;
+  color: inherit; /* Inherit color from pre */
+  font-size: inherit;
+}
+
+/* Example container styling */
+.example-container {
+  background-color: var(--color-bg-soft);
+  padding: var(--spacing-unit);
+  margin: var(--spacing-unit) 0;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Background color utility classes for examples */
+.example-item {
+  /* Add some default padding to example items */
+  padding: 0.5rem;
+}
+/* Abstracted background colors for examples (soft tones) */
+.bg-example-slate {
+  background-color: #eae4e9; /* Light Grayish Magenta */
+}
+.bg-example-gray {
+  background-color: #f0efeb; /* Isabelline */
+}
+.bg-example-zinc {
+  background-color: #e2ece9; /* Mint Cream */
+}
+.bg-example-neutral {
+  background-color: #f0efeb; /* Isabelline */
+}
+.bg-example-red {
+  background-color: #fde2e4; /* Misty Rose */
+}
+.bg-example-orange {
+  background-color: #fff1e6; /* Papaya Whip */
+}
+.bg-example-cyan {
+  background-color: #bee1e6; /* Powder Blue */
+}
+.bg-example-green {
+  background-color: #e2ece9; /* Mint Cream */
+}
+.bg-example-pink {
+  background-color: #fad2e1; /* Pink Lace */
+}
+.bg-example-blue {
+  background-color: #cddafd; /* Periwinkle Crayola */
+}
+.bg-example-lavender {
+  background-color: #dfe7fd; /* Lavender Web */
+}

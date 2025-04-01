@@ -1,0 +1,250 @@
+---
+// src/components/SidebarNav.astro
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+const { headings } = Astro.props;
+
+// Filter headings (e.g., only h2 and h3) and ensure they have slugs
+const filteredHeadings = headings.filter((h) => (h.depth === 2 || h.depth === 3) && h.slug);
+---
+
+{
+  filteredHeadings.length > 0 && (
+    <nav class="sidebar-nav sticky-nav" id="sidebar-nav">
+      <h2 class="on-this-page">On this page</h2>
+      <ul>
+        {filteredHeadings.map((heading) => (
+          <li class={`depth-${heading.depth}`}>
+            <a href={`#${heading.slug}`} data-target-id={heading.slug}>
+              {heading.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
+<style>
+  .sidebar-nav {
+    padding-top: 1rem;
+  }
+  .sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .sidebar-nav li {
+    margin-bottom: 0.5rem;
+  }
+  .sidebar-nav a {
+    text-decoration: none;
+    color: var(--color-text-secondary);
+    display: block;
+    padding: 0.25rem 1rem;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease;
+    font-size: 0.9em;
+    font-weight: 400;
+    border-left: 2px solid transparent; /* Active indicator */
+    line-height: 1.4;
+  }
+  .sidebar-nav a:hover {
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-hover);
+  }
+  .sidebar-nav a.active {
+    color: var(--color-text-active);
+    font-weight: 500;
+    border-left-color: var(--color-accent);
+  }
+  .sidebar-nav .depth-3 a {
+    padding-left: 2rem;
+  }
+  .sidebar-nav .depth-4 a {
+    padding-left: 3rem;
+  }
+  .on-this-page {
+    font-weight: 700;
+    color: var(--color-text-primary);
+    padding: 0.5rem 1rem 0.2rem;
+    margin-bottom: 0.5rem;
+    display: block;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .sticky-nav {
+    position: sticky;
+    top: 2rem;
+    align-self: start;
+  }
+</style>
+
+<script>
+  interface HeadingLinkData {
+    link: HTMLAnchorElement;
+    targetElement: HTMLElement;
+    targetId: string;
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const sidebarNav = document.getElementById("sidebar-nav");
+    if (!sidebarNav) return;
+
+    const links = Array.from(
+      sidebarNav.querySelectorAll<HTMLAnchorElement>("a[data-target-id]")
+    );
+
+    const headingsData: HeadingLinkData[] = links.reduce(
+      (acc: HeadingLinkData[], link) => {
+        const targetId = link.getAttribute("data-target-id");
+        if (!targetId) return acc;
+
+        let targetElement: HTMLElement | null = null;
+        try {
+          targetElement = document.getElementById(decodeURIComponent(targetId));
+        } catch (e) {
+          console.error(
+            `Error decoding or finding element with ID: ${targetId}`,
+            e
+          );
+          targetElement = document.getElementById(targetId);
+        }
+
+        if (targetElement) {
+          acc.push({ link, targetElement, targetId });
+        }
+        return acc;
+      },
+      []
+    );
+
+    if (headingsData.length === 0) return;
+
+    let activeLink: HTMLAnchorElement | null = null;
+    let isScrolling = false;
+
+    const updateActiveLink = (targetId: string | null) => {
+      const newActiveLinkData = targetId
+        ? headingsData.find((h) => h.targetId === targetId)
+        : null;
+      const newActiveLink = newActiveLinkData ? newActiveLinkData.link : null;
+
+      if (newActiveLink && newActiveLink !== activeLink) {
+        if (activeLink) activeLink.classList.remove("active");
+        newActiveLink.classList.add("active");
+        activeLink = newActiveLink;
+      } else if (!newActiveLink && activeLink) {
+        activeLink.classList.remove("active");
+        activeLink = null;
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (isScrolling) return;
+
+        let bestVisibleTargetId: string | null = null; // Store the ID of the best candidate
+        let minTop = Infinity;
+
+        entries.forEach((entry) => {
+          // Check if entry.target is an HTMLElement and has an id
+          if (entry.target instanceof HTMLElement && entry.target.id) {
+            const targetId = entry.target.id;
+            // Verify this ID corresponds to a heading we are tracking
+            const headingExists = headingsData.some(
+              (h) => h.targetId === targetId
+            );
+            if (!headingExists) return; // Not a heading we care about
+
+            const rect = entry.target.getBoundingClientRect();
+            if (rect.top < window.innerHeight / 3 && rect.bottom > 0) {
+              if (rect.top < minTop) {
+                minTop = rect.top;
+                bestVisibleTargetId = targetId; // Store the ID
+              }
+            }
+          }
+        });
+
+        if (bestVisibleTargetId) {
+          updateActiveLink(bestVisibleTargetId);
+        } else {
+          if (window.scrollY < 5) {
+            updateActiveLink(null);
+          } else {
+            let lastHeadingAboveTargetId: string | null = null; // Store ID
+            for (let i = headingsData.length - 1; i >= 0; i--) {
+              const currentHeadingData = headingsData[i];
+              if (
+                currentHeadingData.targetElement.getBoundingClientRect().top < 5
+              ) {
+                lastHeadingAboveTargetId = currentHeadingData.targetId; // Store ID
+                break;
+              }
+            }
+            updateActiveLink(lastHeadingAboveTargetId); // Pass the ID (or null)
+          }
+        }
+      },
+      {
+        rootMargin: "0px 0px -66% 0px",
+        threshold: 0,
+      }
+    );
+
+    headingsData.forEach(({ targetElement }) => {
+      observer.observe(targetElement);
+    });
+
+    links.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        const targetId = link.getAttribute("data-target-id");
+        if (!targetId) return;
+
+        isScrolling = true;
+        updateActiveLink(targetId);
+
+        const targetElement = headingsData.find(
+          (h) => h.targetId === targetId
+        )?.targetElement;
+        if (targetElement) {
+          const scrollEndHandler = () => {
+            isScrolling = false;
+            const scrollEvent = new Event("scroll");
+            window.dispatchEvent(scrollEvent);
+            window.removeEventListener("scroll", scrollEndDebounced);
+          };
+          let scrollTimeout: number;
+          const scrollEndDebounced = () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = window.setTimeout(scrollEndHandler, 150);
+          };
+          window.addEventListener("scroll", scrollEndDebounced);
+          setTimeout(() => {
+            if (isScrolling) {
+              scrollEndHandler();
+            }
+          }, 800);
+        } else {
+          setTimeout(() => {
+            isScrolling = false;
+            const scrollEvent = new Event("scroll");
+            window.dispatchEvent(scrollEvent);
+          }, 800);
+        }
+      });
+    });
+
+    setTimeout(() => {
+      const scrollEvent = new Event("scroll");
+      window.dispatchEvent(scrollEvent);
+    }, 150);
+  });
+</script>

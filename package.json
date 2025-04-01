@@ -1,0 +1,87 @@
+{
+  "name": "e-layout",
+  "version": "0.0.1",
+  "description": "",
+  "license": "MIT",
+  "author": "",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./box": {
+      "import": "./dist/components/box.js",
+      "types": "./dist/components/box.d.ts"
+    },
+    "./stack": {
+      "import": "./dist/components/stack.js",
+      "types": "./dist/components/stack.d.ts"
+    },
+    "./center": {
+      "import": "./dist/components/center.js",
+      "types": "./dist/components/center.d.ts"
+    },
+    "./cluster": {
+      "import": "./dist/components/cluster.js",
+      "types": "./dist/components/cluster.d.ts"
+    },
+    "./sidebar": {
+      "import": "./dist/components/sidebar.js",
+      "types": "./dist/components/sidebar.d.ts"
+    },
+    "./switcher": {
+      "import": "./dist/components/switcher.js",
+      "types": "./dist/components/switcher.d.ts"
+    },
+    "./grid": {
+      "import": "./dist/components/grid.js",
+      "types": "./dist/components/grid.d.ts"
+    },
+    "./frame": {
+      "import": "./dist/components/frame.js",
+      "types": "./dist/components/frame.d.ts"
+    },
+    "./reel": {
+      "import": "./dist/components/reel.js",
+      "types": "./dist/components/reel.d.ts"
+    },
+    "./imposter": {
+      "import": "./dist/components/imposter.js",
+      "types": "./dist/components/imposter.d.ts"
+    },
+    "./icon": {
+      "import": "./dist/components/icon.js",
+      "types": "./dist/components/icon.d.ts"
+    },
+    "./cover": {
+      "import": "./dist/components/cover.js",
+      "types": "./dist/components/cover.d.ts"
+    },
+    "./container": {
+      "import": "./dist/components/container.js",
+      "types": "./dist/components/container.d.ts"
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "docs:dev": "astro dev --root docs",
+    "docs:build": "astro build --root docs",
+    "docs:preview": "astro preview --root docs",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "lint": "biome lint .",
+    "check": "biome check --apply ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "astro": "^5.5.6",
+    "lit": "^3.2.1",
+    "typescript": "^5.8.2"
+  }
+}

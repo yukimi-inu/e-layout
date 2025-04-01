@@ -1,0 +1,256 @@
+---
+// src/components/PageTocNav.astro
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+const { headings } = Astro.props;
+
+// Filter headings (e.g., only h2 and h3) and ensure they have slugs
+const filteredHeadings = headings.filter((h) => (h.depth === 2 || h.depth === 3) && h.slug);
+---
+
+{
+  filteredHeadings.length > 0 && (
+    <nav class="page-toc-nav" id="page-toc-nav">
+      {" "}
+      {/* Remove sticky-nav class */}
+      <h2 class="on-this-page">On this page</h2>
+      <ul>
+        {filteredHeadings.map((heading) => (
+          <li class={`depth-${heading.depth}`}>
+            <a href={`#${heading.slug}`} data-target-id={heading.slug}>
+              {heading.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
+<style>
+  /* Styles adapted for Page TOC Nav */
+  .page-toc-nav {
+    padding-top: 1rem;
+    /* Adjust width if needed */
+    /* width: 15em; */
+  }
+  .page-toc-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .page-toc-nav li {
+    margin-bottom: 0.5rem;
+  }
+  .page-toc-nav a {
+    text-decoration: none;
+    color: var(--color-text-secondary);
+    display: block;
+    padding: 0.25rem 1rem;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease;
+    font-size: 0.9em; /* Revert font size */
+    font-weight: 400;
+    border-left: 2px solid transparent; /* Active indicator */
+    line-height: 1.4;
+  }
+  .page-toc-nav a:hover {
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-hover);
+  }
+  .page-toc-nav a.active {
+    color: var(--color-text-active);
+    font-weight: 500;
+    border-left-color: var(--color-accent);
+    /* Remove background color on active state */
+  }
+  .page-toc-nav .depth-3 a {
+    padding-left: 2rem;
+  }
+  .page-toc-nav .depth-4 a {
+    /* Keep if needed */
+    padding-left: 3rem;
+  }
+  .on-this-page {
+    font-weight: 700; /* Revert font weight */
+    color: var(--color-text-primary);
+    padding: 0.5rem 1rem 0.2rem;
+    margin-bottom: 0.5rem;
+    display: block;
+    font-size: 0.9em; /* Revert font size */
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  /* Remove .sticky-nav styles as positioning is handled in Layout.astro */
+</style>
+
+<script>
+  // Script adapted for Page TOC Nav
+  interface HeadingLinkData {
+    link: HTMLAnchorElement;
+    targetElement: HTMLElement;
+    targetId: string;
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // Target the specific ID for this component
+    const tocNav = document.getElementById("page-toc-nav");
+    if (!tocNav) return;
+
+    const links = Array.from(
+      tocNav.querySelectorAll<HTMLAnchorElement>("a[data-target-id]")
+    );
+
+    const headingsData: HeadingLinkData[] = links.reduce(
+      (acc: HeadingLinkData[], link) => {
+        const targetId = link.getAttribute("data-target-id");
+        if (!targetId) return acc;
+
+        let targetElement: HTMLElement | null = null;
+        try {
+          targetElement = document.getElementById(decodeURIComponent(targetId));
+        } catch (e) {
+          console.error(
+            `Error decoding or finding element with ID: ${targetId}`,
+            e
+          );
+          targetElement = document.getElementById(targetId);
+        }
+
+        if (targetElement) {
+          acc.push({ link, targetElement, targetId });
+        }
+        return acc;
+      },
+      []
+    );
+
+    if (headingsData.length === 0) return;
+
+    let activeLink: HTMLAnchorElement | null = null;
+    let isScrolling = false;
+
+    const updateActiveLink = (targetId: string | null) => {
+      const newActiveLinkData = targetId
+        ? headingsData.find((h) => h.targetId === targetId)
+        : null;
+      const newActiveLink = newActiveLinkData ? newActiveLinkData.link : null;
+
+      if (newActiveLink && newActiveLink !== activeLink) {
+        if (activeLink) activeLink.classList.remove("active");
+        newActiveLink.classList.add("active");
+        activeLink = newActiveLink;
+      } else if (!newActiveLink && activeLink) {
+        activeLink.classList.remove("active");
+        activeLink = null;
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (isScrolling) return;
+
+        let bestVisibleTargetId: string | null = null;
+        let minTop = Infinity;
+
+        entries.forEach((entry) => {
+          if (entry.target instanceof HTMLElement && entry.target.id) {
+            const targetId = entry.target.id;
+            const headingExists = headingsData.some(
+              (h) => h.targetId === targetId
+            );
+            if (!headingExists) return;
+
+            const rect = entry.target.getBoundingClientRect();
+            // Adjust viewport check area if needed (e.g., top 40%)
+            if (rect.top < window.innerHeight * 0.4 && rect.bottom > 0) {
+              if (rect.top < minTop) {
+                minTop = rect.top;
+                bestVisibleTargetId = targetId;
+              }
+            }
+          }
+        });
+
+        if (bestVisibleTargetId) {
+          updateActiveLink(bestVisibleTargetId);
+        } else {
+          if (window.scrollY < 5) {
+            updateActiveLink(null);
+          } else {
+            let lastHeadingAboveTargetId: string | null = null;
+            for (let i = headingsData.length - 1; i >= 0; i--) {
+              const currentHeadingData = headingsData[i];
+              if (
+                currentHeadingData.targetElement.getBoundingClientRect().top < 5
+              ) {
+                lastHeadingAboveTargetId = currentHeadingData.targetId;
+                break;
+              }
+            }
+            updateActiveLink(lastHeadingAboveTargetId);
+          }
+        }
+      },
+      {
+        // Adjust rootMargin based on desired observation area
+        rootMargin: "0px 0px -60% 0px", // Observe top 40% of viewport
+        threshold: 0,
+      }
+    );
+
+    headingsData.forEach(({ targetElement }) => {
+      observer.observe(targetElement);
+    });
+
+    links.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        const targetId = link.getAttribute("data-target-id");
+        if (!targetId) return;
+
+        isScrolling = true;
+        updateActiveLink(targetId);
+
+        const targetElement = headingsData.find(
+          (h) => h.targetId === targetId
+        )?.targetElement;
+        if (targetElement) {
+          const scrollEndHandler = () => {
+            isScrolling = false;
+            const scrollEvent = new Event("scroll");
+            window.dispatchEvent(scrollEvent);
+            window.removeEventListener("scroll", scrollEndDebounced);
+          };
+          let scrollTimeout: number;
+          const scrollEndDebounced = () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = window.setTimeout(scrollEndHandler, 150);
+          };
+          window.addEventListener("scroll", scrollEndDebounced);
+          setTimeout(() => {
+            if (isScrolling) {
+              scrollEndHandler();
+            }
+          }, 800); // Fallback timeout
+        } else {
+          setTimeout(() => {
+            isScrolling = false;
+            const scrollEvent = new Event("scroll");
+            window.dispatchEvent(scrollEvent);
+          }, 800);
+        }
+      });
+    });
+
+    // Initial check
+    setTimeout(() => {
+      const scrollEvent = new Event("scroll");
+      window.dispatchEvent(scrollEvent);
+    }, 150);
+  });
+</script>

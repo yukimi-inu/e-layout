@@ -1,0 +1,147 @@
+---
+// src/components/GlobalSidebarNav.astro
+interface Props {
+  currentPage: string;
+}
+const { currentPage } = Astro.props;
+
+// Define global navigation structure
+const navItems = [
+  { text: 'Introduction', href: '/' },
+  { text: 'Getting Started', href: '/getting-started' },
+  { text: 'Usage Guide', href: '/usage' },
+  {
+    text: 'Components',
+    isSection: true,
+    links: [
+      { text: 'Box', href: '/components/box' },
+      { text: 'Stack', href: '/components/stack' },
+      { text: 'Center', href: '/components/center' },
+      { text: 'Cluster', href: '/components/cluster' },
+      { text: 'Sidebar', href: '/components/sidebar' },
+      { text: 'Switcher', href: '/components/switcher' },
+      { text: 'Grid', href: '/components/grid' },
+      { text: 'Frame', href: '/components/frame' },
+      { text: 'Reel', href: '/components/reel' },
+      { text: 'Imposter', href: '/components/imposter' },
+      { text: 'Icon', href: '/components/icon' },
+      { text: 'Cover', href: '/components/cover' },
+      { text: 'Container', href: '/components/container' },
+    ],
+  },
+];
+
+// Helper function to resolve base URL (Consider moving to a shared utils file if used elsewhere)
+const resolveUrl = (href: string) => {
+  // Ensure leading slash is present and handle base URL correctly
+  const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+  const finalHref = href.startsWith('/') ? href.substring(1) : href;
+  // Handle root path explicitly
+  if (href === '/') return baseUrl;
+  return `${baseUrl}${finalHref}`;
+};
+
+// Function to check if a link is active
+const isActive = (linkHref: string, currentPath: string): boolean => {
+  const resolvedLink = resolveUrl(linkHref);
+  // Exact match or handle base path case
+  if (linkHref === '/') {
+    return currentPath === resolveUrl('/'); // Match base URL exactly
+  }
+  return currentPath === resolvedLink || currentPath === `${resolvedLink}/`; // Allow trailing slash match
+};
+---
+
+<nav class="global-sidebar-nav">
+  <ul>
+    {
+      navItems.map((item) => (
+        <li>
+          {item.isSection && <span class="section-title">{item.text}</span>}
+          {!item.isSection && item.href && (
+            <a
+              href={resolveUrl(item.href)}
+              class:list={{ active: isActive(item.href, currentPage) }}
+              aria-current={
+                isActive(item.href, currentPage) ? "page" : undefined
+              }
+            >
+              {item.text}
+            </a>
+          )}
+          {item.links && (
+            <ul class="nested-list">
+              {item.links.map((link) => (
+                <li>
+                  <a
+                    href={resolveUrl(link.href)}
+                    class:list={{ active: isActive(link.href, currentPage) }}
+                    aria-current={
+                      isActive(link.href, currentPage) ? "page" : undefined
+                    }
+                  >
+                    {link.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  /* Styles adapted from the original SidebarNav */
+  .global-sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .global-sidebar-nav li {
+    margin-bottom: 0.5rem;
+  }
+  .global-sidebar-nav a {
+    text-decoration: none;
+    color: var(--color-text-secondary);
+    display: block;
+    padding: 0.25rem 1rem;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+    font-size: 0.9em;
+    font-weight: 400;
+    border-radius: 4px; /* Add subtle rounding */
+  }
+  .global-sidebar-nav a:hover {
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-hover);
+  }
+  .global-sidebar-nav a.active {
+    background-color: var(--color-bg-active);
+    color: var(--color-text-active);
+    font-weight: 500;
+  }
+  .section-title {
+    font-weight: 700;
+    color: var(--color-text-primary);
+    padding: 0.5rem 1rem 0.2rem;
+    margin-top: 1rem;
+    display: block;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .nested-list {
+    padding-left: 1rem; /* Indent component links */
+    margin-top: 0.3rem;
+  }
+  .nested-list li {
+    margin-bottom: 0.2rem;
+  }
+  .nested-list a {
+    padding: 0.2rem 1rem;
+    font-size: 0.88em;
+  }
+</style>
