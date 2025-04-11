@@ -1,25 +1,24 @@
+import path from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { defineConfig } from 'astro/config';
 
-// https://astro.build/config
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
+
 export default defineConfig({
-  // GitHub Pages deployment configuration
-  site: 'https://yukimi-inu.github.io', // Replace with your GitHub username
-  base: '/e-layout', // Replace with your repository name
-  outDir: '../dist-docs', // Output directory relative to the docs folder
-  // Ensure Astro can resolve the web components from the parent directory
+  site: 'https://yukimi-inu.github.io',
+  base: '/e-layout',
+  outDir: '../dist-docs',
+  devToolbar: {
+    enabled: false,
+  },
   vite: {
     resolve: {
-      // alias: {
-      //   'e-layout': '../dist', // Alias might interfere with package exports resolution
-      // },
-    },
-    // Ensure dependencies are handled correctly
-    optimizeDeps: {
-      include: ['e-layout', 'e-layout/*'], // Include the package itself and its exports
+      alias: {
+        'e-layout': path.resolve(__dirname, '../dist/components'),
+      },
     },
     ssr: {
-      // Ensure Lit components work correctly with SSR (if needed, though likely client-side for docs)
-      noExternal: ['lit', '@lit/reactive-element'],
+      noExternal: [],
     },
   },
 });

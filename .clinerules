@@ -1,0 +1,39 @@
+# Cline Rules for e-layout Project
+
+## Language Preference
+- Respond in Japanese (日本語) for general conversation and explanations.
+- Use English for code comments, documentation content (unless specified otherwise), commit messages, and other technical artifacts intended for a wider audience.
+
+## Coding Standards
+- Follow the configuration defined in `biome.json` for formatting and linting. Run `npm run check` or `npm run format` after making code changes.
+- Adhere to SOLID principles where applicable.
+- Keep code concise and avoid unnecessary explanatory comments within the code itself.
+
+## CSS Styling and Examples
+- **Units:** Use `rem` or `em` for all properties except `border-width`. Use `rem` for values based on the root font size (absolute context) and `em` for values based on the current element's font size (relative context). Prefer `em` for component dimensions (like padding, gap, size) that should scale with the component's text.
+- **Examples:** In documentation examples (`*.md` files), generally use concrete values (e.g., `padding: 1.5em;`, `gap: 1em;`) instead of CSS custom properties (like `var(--some-var)`) unless demonstrating the property itself. This makes examples clearer and self-contained.
+
+## File Editing
+- **Component Implementation:** Modify files within `src/components/*.ts`. Ensure changes align with the specifications in `plans/components.md`.
+- **Documentation Content:** Modify Markdown files within `docs/src/pages/components/*.md`. **Crucially, whenever a component in `src/components/*.ts` is modified (e.g., properties added/removed/changed), the corresponding documentation file MUST be updated to reflect these changes accurately.** Keep documentation consistent with the latest component implementations.
+- **Documentation Structure/Layout:** Modify files within `docs/src/layouts/`, `docs/src/components/` (for docs-specific components like SidebarNav), and `docs/src/styles/`.
+- **Configuration Files:** Edit `package.json`, `tsconfig.json`, `biome.json`, `docs/astro.config.mjs`, `.github/workflows/*.yml` as needed for project setup, dependencies, build processes, and CI.
+- **Exports:** When adding or removing components, update `src/components/index.ts` and the `exports` field in `package.json`.
+
+## Tool Usage
+- Use `apply_diff` for targeted changes. If it fails, use `read_file` to get the latest content and retry the diff carefully. Ensure the SEARCH block exactly matches the current content. Prefer smaller, single-block diffs if complex changes cause failures.
+- Use `write_to_file` for creating new files or for substantial rewrites where `apply_diff` is impractical. Always provide the complete intended file content.
+- Use `search_files` to locate code patterns or specific text before making widespread changes.
+- Use `execute_command` for running npm scripts (build, format, test, docs), installing dependencies, or necessary file system operations (like `mkdir`).
+- Use `ask_followup_question` sparingly, only when essential information is missing and cannot be reasonably inferred or found using other tools.
+
+## Prohibitions
+- Do not add verbose, unnecessary comments within the code (e.g., comments explaining obvious logic or simply restating the code). Prefer self-documenting code.
+- Avoid conversational filler in responses (e.g., "Okay, I will...", "Great!"). Be direct and technical.
+- Do not end `attempt_completion` messages with questions or open-ended offers for further assistance.
+
+## Consistency and Assumptions
+- **Maintain Existing Naming Conventions:** Do not change existing component tag names, CSS custom property names, class names, etc., unless explicitly instructed or agreed upon with the user.
+- **Avoid Assumptions about Global Context:** Do not assume the existence or intended use of global CSS variables (e.g., theme variables like `--e-layout-space-*`) without verification. If unsure, use simple, self-contained default values or ask the user for clarification.
+- **Follow Existing Implementation Patterns:** Before making changes, analyze the existing codebase (especially related components) to understand and follow established patterns (e.g., how styles are applied, usage of lifecycle methods). If deviating from a pattern, provide a clear reason and seek confirmation.
+- **Preserve `tag` Property:** Do not remove the `tag` property from layout components (like `e-container`, `e-box`, etc.) unless explicitly instructed, as it might be used for semantic rendering or accessibility purposes.

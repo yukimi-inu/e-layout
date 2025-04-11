@@ -1,0 +1,677 @@
+---
+// Import the layout component
+import Layout from "../../layouts/Layout.astro";
+// Import custom elements definitions
+import "e-layout";
+---
+
+<Layout headings={[]} title="Blog Post Layout Example">
+  <p>
+    This example demonstrates a modern blog post layout with a main content area
+    and sidebar, utilizing various e-layout components for optimal content
+    presentation.
+  </p>
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+      color: #212529;
+      line-height: 1.6;
+    }
+    .example-page-container {
+      background-color: #f8f9fa;
+    }
+    .blog-header {
+      text-align: center;
+      margin-bottom: 1em;
+      padding-bottom: 1em;
+      border-bottom: 1px solid #e9ecef;
+    }
+    .blog-title {
+      font-size: 2.5em;
+      margin-bottom: 0.3em;
+      line-height: 1.2;
+    }
+    .blog-meta {
+      color: #6c757d;
+      font-size: 0.95em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1em;
+    }
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4em;
+    }
+    .meta-icon {
+      opacity: 0.7;
+    }
+    .author-info {
+      display: flex;
+      align-items: center;
+      gap: 0.8em;
+      margin: 1.5em 0;
+      padding: 1em 0;
+      border-bottom: 1px solid #e9ecef;
+    }
+    .author-avatar {
+      width: 3.5em;
+      height: 3.5em;
+      border-radius: 50%;
+      background-color: #4263eb;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2em;
+      aspect-ratio: 1/1;
+    }
+    .author-details h3 {
+      margin: 0 0 0.2em 0;
+      font-size: 1.1em;
+    }
+    .author-details p {
+      margin: 0;
+      color: #6c757d;
+      font-size: 0.9em;
+    }
+    .blog-content {
+      font-size: 1.05em;
+    }
+    .blog-content p {
+      margin-bottom: 1.5em;
+    }
+    .blog-content h2 {
+      font-size: 1.8em;
+      margin: 1.5em 0 0.8em;
+      color: #343a40;
+    }
+    .blog-content h3 {
+      font-size: 1.4em;
+      margin: 1.3em 0 0.7em;
+      color: #343a40;
+    }
+    .blog-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 0.5em;
+    }
+    .blog-content blockquote {
+      border-left: 4px solid #4263eb;
+      padding-left: 1em;
+      margin-left: 0;
+      color: #495057;
+      font-style: italic;
+    }
+    .blog-content code {
+      background-color: #f1f3f5;
+      padding: 0.2em 0.4em;
+      border-radius: 0.3em;
+      font-family: monospace;
+      font-size: 0.9em;
+    }
+    .blog-content pre {
+      background-color: #212529;
+      color: #f8f9fa;
+      padding: 1em;
+      border-radius: 0.5em;
+      overflow-x: auto;
+      font-family: monospace;
+      font-size: 0.9em;
+    }
+    .blog-content pre code {
+      background-color: transparent;
+      color: inherit;
+      padding: 0;
+    }
+    .blog-content ul,
+    .blog-content ol {
+      margin-bottom: 1.5em;
+      padding-left: 1.5em;
+    }
+    .blog-content li {
+      margin-bottom: 0.5em;
+    }
+    .image-caption {
+      text-align: center;
+      color: #6c757d;
+      font-size: 0.9em;
+      margin-top: 0.5em;
+      margin-bottom: 1.5em;
+    }
+    .tag {
+      display: inline-block;
+      background-color: #e9ecef;
+      color: #495057;
+      padding: 0.3em 0.8em;
+      border-radius: 2em;
+      font-size: 0.85em;
+      text-decoration: none;
+      transition: background-color 0.2s;
+    }
+    .tag:hover {
+      background-color: #dee2e6;
+    }
+    .share-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5em;
+      height: 2.5em;
+      border-radius: 50%;
+      background-color: #f1f3f5;
+      color: #495057;
+      transition: background-color 0.2s;
+      aspect-ratio: 1/1;
+    }
+    .share-button:hover {
+      background-color: #e9ecef;
+    }
+    .sidebar-section {
+    }
+    .sidebar-title {
+      font-size: 1.2em;
+      margin-bottom: 1em;
+      padding-bottom: 0.5em;
+      border-bottom: 1px solid #e9ecef;
+    }
+    .sidebar-post {
+      display: flex;
+      gap: 0.8em;
+      margin-bottom: 1em;
+      text-decoration: none;
+      color: inherit;
+    }
+    .sidebar-post:hover .sidebar-post-title {
+      color: #4263eb;
+    }
+    .sidebar-post-image {
+      flex-shrink: 0;
+      width: 5em;
+      height: 5em;
+      border-radius: 0.3em;
+      background-color: #e9ecef;
+      overflow: hidden;
+    }
+    .sidebar-post-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .sidebar-post-content {
+      flex-grow: 1;
+    }
+    .sidebar-post-title {
+      font-size: 0.95em;
+      margin: 0 0 0.3em 0;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .sidebar-post-date {
+      font-size: 0.8em;
+      color: #6c757d;
+    }
+    .categories-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .categories-list li {
+      margin-bottom: 0.5em;
+    }
+    .categories-list a {
+      display: flex;
+      justify-content: space-between;
+      text-decoration: none;
+      color: #495057;
+      padding: 0.5em 0;
+      border-bottom: 1px solid #e9ecef;
+      transition: color 0.2s;
+    }
+    .categories-list a:hover {
+      color: #4263eb;
+    }
+    .categories-list .count {
+      background-color: #e9ecef;
+      color: #495057;
+      padding: 0.2em 0.6em;
+      border-radius: 1em;
+      font-size: 0.8em;
+    }
+    .newsletter-form {
+      margin-top: 1em;
+    }
+    .newsletter-input {
+      width: 100%;
+      padding: 0.8em 1em;
+      border: 1px solid #ced4da;
+      border-radius: 0.3em;
+      margin-bottom: 0.8em;
+    }
+    .newsletter-button {
+      width: 100%;
+      padding: 0.8em 1em;
+      background-color: #4263eb;
+      color: white;
+      border: none;
+      border-radius: 0.3em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .newsletter-button:hover {
+      background-color: #3b5bdb;
+    }
+    .main-content {
+      background-color: white;
+      border-radius: 0.5em;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    .sidebar-content {
+      max-width: 100%;
+    }
+    .code-example {
+      background-color: #212529;
+      color: #f8f9fa;
+      padding: 1em;
+      border-radius: 0.5em;
+      margin-bottom: 1.5em;
+      font-family: monospace;
+      font-size: 0.9em;
+    }
+  </style>
+
+  <div class="example-page-container">
+    <e-center max="100em" gutters="1.5rem">
+      <e-sidebar side="right" side-width="100%" space="2em" content-min="65%">
+        <!-- Main Content Area -->
+        <e-box padding="2em" class="main-content">
+          <e-stack space="1em">
+            <header class="blog-header">
+              <h1 class="blog-title">
+                Building Responsive Layouts with Modern CSS Techniques
+              </h1>
+              <div class="blog-meta">
+                <span class="meta-item">
+                  <e-icon label="Date" space="0.4em">
+                    <span class="meta-icon">
+                      <i class="fa-solid fa-calendar-days"></i>
+                    </span>
+                    April 8, 2025
+                  </e-icon>
+                </span>
+                <span class="meta-item">
+                  <e-icon label="Reading time" space="0.4em">
+                    <span class="meta-icon">
+                      <i class="fa-solid fa-clock"></i>
+                    </span>
+                    8 min read
+                  </e-icon>
+                </span>
+                <span class="meta-item">
+                  <e-icon label="Comments" space="0.4em">
+                    <span class="meta-icon">
+                      <i class="fa-solid fa-comment"></i>
+                    </span>
+                    12 comments
+                  </e-icon>
+                </span>
+              </div>
+            </header>
+
+            <div class="author-info">
+              <div class="author-avatar">A</div>
+              <div class="author-details">
+                <h3>Alex Johnson</h3>
+                <p>Senior Frontend Developer & CSS Enthusiast</p>
+              </div>
+            </div>
+
+            <article class="blog-content">
+              <p>
+                In today's web development landscape, creating responsive
+                layouts that work seamlessly across devices is no longer
+                optional—it's essential. Fortunately, modern CSS provides
+                powerful tools that make responsive design more intuitive and
+                maintainable than ever before.
+              </p>
+
+              <e-frame ratio="16/9">
+                <img
+                  src="/e-layout/hd720.png"
+                  alt="Responsive layout illustration"
+                />
+              </e-frame>
+              <p class="image-caption">
+                Modern responsive layouts adapt to various screen sizes and
+                devices
+              </p>
+
+              <h2>The Evolution of CSS Layout</h2>
+              <p>
+                For years, web developers relied on float-based layouts and
+                complex CSS frameworks to create responsive designs. These
+                approaches often led to verbose code that was difficult to
+                maintain. The introduction of Flexbox and CSS Grid has
+                revolutionized how we approach layout design.
+              </p>
+
+              <p>
+                Let's explore how these modern techniques can be combined to
+                create powerful, flexible layouts with minimal code.
+              </p>
+
+              <h3>Flexbox: One-dimensional Layout Power</h3>
+              <p>
+                Flexbox excels at distributing space and aligning items in a
+                single dimension (either rows or columns). It's perfect for:
+              </p>
+
+              <ul>
+                <li>Navigation menus and toolbars</li>
+                <li>Card layouts with equal-height elements</li>
+                <li>Centering elements vertically and horizontally</li>
+                <li>Creating flexible form controls</li>
+              </ul>
+
+              <p>
+                Here's a simple example of a responsive navigation using
+                Flexbox:
+              </p>
+
+              <e-box
+                padding="1em"
+                bg="#212529"
+                color="#f8f9fa"
+                radius="0.5em"
+                style="font-family: monospace; font-size: 0.9em; margin-bottom: 1.5em;"
+              >
+                /* Flexbox navigation example */
+                <p style="margin: 0;">
+                  /* Use flexbox for layout with justify-content and align-items
+                  */
+                </p>
+                <p style="margin: 0;">
+                  /* Set flex-wrap to wrap for responsive behavior */
+                </p>
+                <p style="margin: 0.5em 0;">
+                  /* Use gap property for spacing between flex items */
+                </p>
+              </e-box>
+
+              <h3>CSS Grid: Two-dimensional Layout Control</h3>
+              <p>
+                CSS Grid provides unprecedented control over two-dimensional
+                layouts. It's ideal for:
+              </p>
+
+              <ul>
+                <li>Page-level layouts with headers, footers, and sidebars</li>
+                <li>Complex grid systems with precise control</li>
+                <li>Overlapping elements and asymmetrical designs</li>
+                <li>Responsive image galleries and card layouts</li>
+              </ul>
+
+              <p>
+                A powerful feature of CSS Grid is the ability to create
+                responsive layouts without media queries using the <code
+                  >minmax()</code
+                > function and <code>auto-fit</code> or <code>auto-fill</code>:
+              </p>
+
+              <e-box
+                padding="1em"
+                bg="#212529"
+                color="#f8f9fa"
+                radius="0.5em"
+                style="font-family: monospace; font-size: 0.9em; margin-bottom: 1.5em;"
+              >
+                /* CSS Grid responsive layout */
+                <p style="margin: 0;">
+                  /* Create a responsive grid with auto-fit and minmax */
+                </p>
+                <p style="margin: 0;">
+                  /* No media queries needed for basic responsiveness */
+                </p>
+                <p style="margin: 0.5em 0;">
+                  /* Use gap property for spacing between grid items */
+                </p>
+              </e-box>
+
+              <blockquote>
+                "CSS Grid and Flexbox aren't competing layout models. They're
+                designed to work together, each solving different layout
+                problems."
+              </blockquote>
+
+              <h2>Container Queries: The Future of Component-Based Design</h2>
+              <p>
+                While media queries have been the backbone of responsive design
+                for years, they have limitations. Container queries address
+                these by allowing elements to respond to their parent
+                container's size rather than the viewport.
+              </p>
+
+              <p>
+                This approach enables truly modular, reusable components that
+                adapt to their context, regardless of where they're placed in
+                the layout.
+              </p>
+
+              <h3>Combining These Techniques</h3>
+              <p>
+                The most powerful responsive layouts combine these techniques:
+              </p>
+
+              <ul>
+                <li>CSS Grid for the overall page structure</li>
+                <li>Flexbox for component-level layouts</li>
+                <li>Container queries for context-aware components</li>
+                <li>Logical properties for internationalization support</li>
+              </ul>
+
+              <p>
+                By leveraging these modern CSS features, we can create layouts
+                that are not only responsive but also more maintainable,
+                accessible, and future-proof.
+              </p>
+            </article>
+
+            <footer>
+              <e-stack space="2em">
+                <div>
+                  <h3>Tags</h3>
+                  <e-cluster space="0.5em" align="center">
+                    <a href="#" class="tag">CSS</a>
+                    <a href="#" class="tag">Responsive Design</a>
+                    <a href="#" class="tag">Flexbox</a>
+                    <a href="#" class="tag">CSS Grid</a>
+                    <a href="#" class="tag">Web Development</a>
+                  </e-cluster>
+                </div>
+
+                <div>
+                  <h3>Share this article</h3>
+                  <e-cluster space="0.8em">
+                    <a
+                      href="#"
+                      class="share-button"
+                      aria-label="Share on Twitter"
+                    >
+                      <i class="fa-brands fa-twitter"></i>
+                    </a>
+                    <a
+                      href="#"
+                      class="share-button"
+                      aria-label="Share on Facebook"
+                    >
+                      <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a
+                      href="#"
+                      class="share-button"
+                      aria-label="Share on LinkedIn"
+                    >
+                      <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+                    <a
+                      href="#"
+                      class="share-button"
+                      aria-label="Share via Email"
+                    >
+                      <i class="fa-solid fa-envelope"></i>
+                    </a>
+                  </e-cluster>
+                </div>
+              </e-stack>
+            </footer>
+          </e-stack>
+        </e-box>
+
+        <!-- Sidebar Content -->
+        <div slot="sidebar" class="sidebar-content">
+          <e-grid space="1em" min="20em">
+            <e-box
+              padding="1.5em"
+              bg="white"
+              radius="0.5em"
+              class="sidebar-section"
+              borderWidth="0"
+              style="box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);"
+            >
+              <h3 class="sidebar-title">About the Author</h3>
+              <e-stack space="1em">
+                <div
+                  class="author-info"
+                  style="margin: 0; padding: 0; border: none;"
+                >
+                  <div class="author-avatar">A</div>
+                  <div class="author-details">
+                    <h3>Alex Johnson</h3>
+                    <p>
+                      Senior Frontend Developer with 8+ years of experience
+                      specializing in responsive design and CSS architecture.
+                    </p>
+                  </div>
+                </div>
+                <a href="#" style="color: #4263eb; text-decoration: none;"
+                  >View all posts →</a
+                >
+              </e-stack>
+            </e-box>
+
+            <e-box
+              padding="1.5em"
+              bg="white"
+              radius="0.5em"
+              class="sidebar-section"
+              borderWidth="0"
+              style="box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);"
+            >
+              <h3 class="sidebar-title">Popular Posts</h3>
+              <e-stack space="1em">
+                <a href="#" class="sidebar-post">
+                  <div class="sidebar-post-image">
+                    <img
+                      src="/e-layout/thumb_1.jpg"
+                      alt="CSS Variables post thumbnail"
+                    />
+                  </div>
+                  <div class="sidebar-post-content">
+                    <h4 class="sidebar-post-title">
+                      Mastering CSS Variables for Dynamic Themes
+                    </h4>
+                    <div class="sidebar-post-date">March 15, 2025</div>
+                  </div>
+                </a>
+
+                <a href="#" class="sidebar-post">
+                  <div class="sidebar-post-image">
+                    <img
+                      src="/e-layout/thumb_2.jpg"
+                      alt="Web Components post thumbnail"
+                    />
+                  </div>
+                  <div class="sidebar-post-content">
+                    <h4 class="sidebar-post-title">
+                      Building Reusable Web Components with Lit
+                    </h4>
+                    <div class="sidebar-post-date">February 28, 2025</div>
+                  </div>
+                </a>
+
+                <a href="#" class="sidebar-post">
+                  <div class="sidebar-post-image">
+                    <img
+                      src="/e-layout/thumb_3.jpg"
+                      alt="Accessibility post thumbnail"
+                    />
+                  </div>
+                  <div class="sidebar-post-content">
+                    <h4 class="sidebar-post-title">
+                      Accessibility Best Practices for Modern Websites
+                    </h4>
+                    <div class="sidebar-post-date">January 12, 2025</div>
+                  </div>
+                </a>
+              </e-stack>
+            </e-box>
+
+            <e-box
+              padding="1.5em"
+              bg="white"
+              radius="0.5em"
+              class="sidebar-section"
+              borderWidth="0"
+              style="box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);"
+            >
+              <h3 class="sidebar-title">Categories</h3>
+              <ul class="categories-list">
+                <li><a href="#">CSS <span class="count">24</span></a></li>
+                <li>
+                  <a href="#">JavaScript <span class="count">18</span></a>
+                </li>
+                <li>
+                  <a href="#">Web Components <span class="count">12</span></a>
+                </li>
+                <li>
+                  <a href="#">Accessibility <span class="count">9</span></a>
+                </li>
+                <li>
+                  <a href="#">Performance <span class="count">7</span></a>
+                </li>
+              </ul>
+            </e-box>
+
+            <e-box
+              padding="1.5em"
+              bg="white"
+              radius="0.5em"
+              class="sidebar-section"
+              borderWidth="0"
+              style="box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);"
+            >
+              <h3 class="sidebar-title">Newsletter</h3>
+              <p>
+                Subscribe to our newsletter to receive the latest updates and
+                articles.
+              </p>
+              <form class="newsletter-form">
+                <input
+                  type="email"
+                  placeholder="Your email address"
+                  class="newsletter-input"
+                />
+                <button type="submit" class="newsletter-button"
+                  >Subscribe</button
+                >
+              </form>
+            </e-box>
+          </e-grid>
+        </div>
+      </e-sidebar>
+    </e-center>
+  </div>
+</Layout>

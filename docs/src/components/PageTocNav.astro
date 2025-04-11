@@ -1,21 +1,19 @@
 ---
-// src/components/PageTocNav.astro
-import type { MarkdownHeading } from 'astro';
+import type { MarkdownHeading } from "astro";
 
 interface Props {
   headings: MarkdownHeading[];
 }
 const { headings } = Astro.props;
 
-// Filter headings (e.g., only h2 and h3) and ensure they have slugs
-const filteredHeadings = headings.filter((h) => (h.depth === 2 || h.depth === 3) && h.slug);
+const filteredHeadings = headings.filter(
+  (h) => (h.depth === 2 || h.depth === 3) && h.slug
+);
 ---
 
 {
   filteredHeadings.length > 0 && (
     <nav class="page-toc-nav" id="page-toc-nav">
-      {" "}
-      {/* Remove sticky-nav class */}
       <h2 class="on-this-page">On this page</h2>
       <ul>
         {filteredHeadings.map((heading) => (
@@ -31,20 +29,20 @@ const filteredHeadings = headings.filter((h) => (h.depth === 2 || h.depth === 3)
 }
 
 <style>
-  /* Styles adapted for Page TOC Nav */
   .page-toc-nav {
     padding-top: 1rem;
-    /* Adjust width if needed */
-    /* width: 15em; */
   }
+
   .page-toc-nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
   }
+
   .page-toc-nav li {
     margin-bottom: 0.5rem;
   }
+
   .page-toc-nav a {
     text-decoration: none;
     color: var(--color-text-secondary);
@@ -54,43 +52,44 @@ const filteredHeadings = headings.filter((h) => (h.depth === 2 || h.depth === 3)
       background-color 0.2s ease,
       color 0.2s ease,
       border-color 0.2s ease;
-    font-size: 0.9em; /* Revert font size */
+    font-size: 0.9em;
     font-weight: 400;
-    border-left: 2px solid transparent; /* Active indicator */
+    border-left: 2px solid transparent;
     line-height: 1.4;
   }
+
   .page-toc-nav a:hover {
     color: var(--color-text-primary);
     background-color: var(--color-bg-hover);
   }
+
   .page-toc-nav a.active {
     color: var(--color-text-active);
     font-weight: 500;
     border-left-color: var(--color-accent);
-    /* Remove background color on active state */
   }
+
   .page-toc-nav .depth-3 a {
     padding-left: 2rem;
   }
+
   .page-toc-nav .depth-4 a {
-    /* Keep if needed */
     padding-left: 3rem;
   }
+
   .on-this-page {
-    font-weight: 700; /* Revert font weight */
+    font-weight: 700;
     color: var(--color-text-primary);
     padding: 0.5rem 1rem 0.2rem;
     margin-bottom: 0.5rem;
     display: block;
-    font-size: 0.9em; /* Revert font size */
+    font-size: 0.9em;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
-  /* Remove .sticky-nav styles as positioning is handled in Layout.astro */
 </style>
 
 <script>
-  // Script adapted for Page TOC Nav
   interface HeadingLinkData {
     link: HTMLAnchorElement;
     targetElement: HTMLElement;
@@ -167,7 +166,6 @@ const filteredHeadings = headings.filter((h) => (h.depth === 2 || h.depth === 3)
             if (!headingExists) return;
 
             const rect = entry.target.getBoundingClientRect();
-            // Adjust viewport check area if needed (e.g., top 40%)
             if (rect.top < window.innerHeight * 0.4 && rect.bottom > 0) {
               if (rect.top < minTop) {
                 minTop = rect.top;
@@ -198,8 +196,7 @@ const filteredHeadings = headings.filter((h) => (h.depth === 2 || h.depth === 3)
         }
       },
       {
-        // Adjust rootMargin based on desired observation area
-        rootMargin: "0px 0px -60% 0px", // Observe top 40% of viewport
+        rootMargin: "0px 0px -60% 0px",
         threshold: 0,
       }
     );

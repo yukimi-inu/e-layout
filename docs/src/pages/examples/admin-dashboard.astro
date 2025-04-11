@@ -1,0 +1,657 @@
+---
+// Import the layout component
+import Layout from "../../layouts/Layout.astro";
+// Import custom elements definitions
+import "e-layout";
+---
+
+<Layout headings={[]} title="Admin Dashboard Layout Example">
+  <p>
+    This example demonstrates a modern admin dashboard layout with a fixed
+    sidebar navigation, interactive components, and data visualization areas,
+    using various e-layout components.
+  </p>
+
+  <style>
+    body {
+      background-color: #f4f7fa; /* Light grey background */
+    }
+    .example-page-container {
+      background-color: #f4f7fa;
+      min-height: 100vh;
+      display: flex;
+    }
+    .admin-sidebar {
+      background-color: #2c3e50; /* Dark sidebar */
+      color: #ecf0f1;
+      min-height: 100%;
+      position: sticky; /* Make sidebar sticky */
+      top: 0;
+    }
+    .sidebar-header {
+      padding: 1.5em;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+    .logo-icon {
+      background-color: #3498db;
+      color: white;
+      width: 1.8em;
+      height: 1.8em;
+      border-radius: 0.3em;
+      display: grid;
+      place-items: center;
+      font-weight: bold;
+    }
+    .nav-section {
+      padding: 1.5em 0;
+    }
+    .nav-section-title {
+      font-size: 0.8em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      padding: 0 1.5em;
+      margin-bottom: 1em;
+    }
+    .admin-sidebar nav a {
+      display: flex;
+      align-items: center;
+      gap: 0.8em;
+      color: #ecf0f1;
+      text-decoration: none;
+      padding: 0.75em 1.5em;
+      transition: background-color 0.2s;
+    }
+    .admin-sidebar nav a:hover,
+    .admin-sidebar nav a.active {
+      background-color: rgba(52, 73, 94, 0.7);
+    }
+    .admin-sidebar nav a.active {
+      border-left: 3px solid #3498db;
+    }
+    .nav-icon {
+      width: 1.5em;
+      height: 1.5em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.8;
+    }
+    .main-content {
+      padding: 0;
+      flex: 1;
+      min-height: 100vh;
+    }
+    .dashboard-header {
+      background-color: #fff;
+      border-bottom: 1px solid #e0e0e0;
+      padding: 1em 2em;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .search-bar {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+    }
+    .search-input {
+      width: 100%;
+      padding: 0.6em 1em 0.6em 2.5em;
+      border: 1px solid #e0e0e0;
+      border-radius: 2em;
+      background-color: #f8f9fa;
+    }
+    .search-icon {
+      position: absolute;
+      left: 0.8em;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6c757d;
+    }
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 1.5em;
+    }
+    .notification-icon {
+      position: relative;
+      color: #6c757d;
+      cursor: pointer;
+    }
+    .notification-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: #e74c3c;
+      color: white;
+      font-size: 0.7em;
+      width: 1.5em;
+      height: 1.5em;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+    }
+    .user-avatar {
+      width: 2.5em;
+      height: 2.5em;
+      border-radius: 50%;
+      background-color: #3498db;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .dashboard-content {
+      padding: 2em;
+    }
+    .page-title {
+      margin-bottom: 1.5em;
+      font-size: 1.5em;
+      font-weight: 600;
+    }
+    .info-card {
+      background-color: #fff;
+      border-radius: 0.5em;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+    }
+    .info-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    .card-icon {
+      width: 3em;
+      height: 3em;
+      border-radius: 0.5em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2em;
+      color: white;
+    }
+    .users-icon {
+      background-color: #3498db;
+    }
+    .revenue-icon {
+      background-color: #2ecc71;
+    }
+    .orders-icon {
+      background-color: #f39c12;
+    }
+    .issues-icon {
+      background-color: #e74c3c;
+    }
+    .info-card h3 {
+      font-size: 1em;
+      margin-bottom: 0.3em;
+      color: #6c757d;
+    }
+    .info-card p {
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #2c3e50;
+      margin: 0;
+    }
+    .info-card .trend {
+      font-size: 0.9em;
+      margin-top: 0.5em;
+      display: flex;
+      align-items: center;
+      gap: 0.3em;
+    }
+    .trend-up {
+      color: #2ecc71;
+    }
+    .trend-down {
+      color: #e74c3c;
+    }
+    .chart-container {
+      background-color: #fff;
+      border-radius: 0.5em;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      margin-top: 2em;
+    }
+    .chart-header {
+      padding: 1.5em;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chart-title {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: #2c3e50;
+      margin: 0;
+    }
+    .chart-actions {
+      display: flex;
+      gap: 0.8em;
+    }
+    .chart-action-btn {
+      background: none;
+      border: 1px solid #e0e0e0;
+      border-radius: 0.3em;
+      padding: 0.4em 0.8em;
+      font-size: 0.9em;
+      color: #6c757d;
+      cursor: pointer;
+    }
+    .chart-action-btn:hover {
+      background-color: #f8f9fa;
+    }
+    .chart-content {
+      padding: 1.5em;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6c757d;
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2em;
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      border-radius: 0.5em;
+      overflow: hidden; /* Ensures border-radius applies to table */
+    }
+    .data-table th,
+    .data-table td {
+      padding: 1em 1.5em;
+      text-align: left;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .data-table th {
+      background-color: #f8f9fa;
+      color: #6c757d;
+      font-weight: 600;
+      font-size: 0.9em;
+    }
+    .data-table tr:last-child td {
+      border-bottom: none;
+    }
+    .data-table tr:hover td {
+      background-color: #f8f9fa;
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 0.3em 0.8em;
+      border-radius: 1em;
+      font-size: 0.8em;
+      font-weight: 600;
+    }
+    .status-active {
+      background-color: rgba(46, 204, 113, 0.15);
+      color: #2ecc71;
+    }
+    .status-inactive {
+      background-color: rgba(231, 76, 60, 0.15);
+      color: #e74c3c;
+    }
+    .status-pending {
+      background-color: rgba(243, 156, 18, 0.15);
+      color: #f39c12;
+    }
+    .table-actions {
+      display: flex;
+      gap: 0.5em;
+    }
+    .table-action-btn {
+      background: none;
+      border: none;
+      color: #6c757d;
+      cursor: pointer;
+      width: 2em;
+      height: 2em;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+    }
+    .table-action-btn:hover {
+      background-color: #f0f0f0;
+    }
+    .sidebar-wrapper {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+
+  <div class="example-page-container">
+    <e-sidebar side="left" side-width="16em" space="0" no-stretch>
+      <!-- Sidebar Navigation -->
+      <div slot="sidebar" class="admin-sidebar">
+        <div class="sidebar-wrapper">
+          <div class="sidebar-header">
+            <div class="logo">
+              <div class="logo-icon">
+                <i class="fa-solid fa-a"></i>
+              </div>
+              <span>AdminPro</span>
+            </div>
+          </div>
+
+          <div class="nav-section">
+            <div class="nav-section-title">Main</div>
+            <nav>
+              <e-stack space="0">
+                <a href="#" class="active">
+                  <e-icon label="Dashboard" space="0.8em">
+                    <div class="nav-icon">
+                      <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                    Dashboard
+                  </e-icon>
+                </a>
+                <a href="#">
+                  <e-icon label="Analytics" space="0.8em">
+                    <div class="nav-icon">
+                      <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    Analytics
+                  </e-icon>
+                </a>
+                <a href="#">
+                  <e-icon label="Reports" space="0.8em">
+                    <div class="nav-icon">
+                      <i class="fa-solid fa-file-lines"></i>
+                    </div>
+                    Reports
+                  </e-icon>
+                </a>
+              </e-stack>
+            </nav>
+          </div>
+
+          <div class="nav-section">
+            <div class="nav-section-title">Management</div>
+            <nav>
+              <e-stack space="0">
+                <a href="#">
+                  <e-icon label="Users" space="0.8em">
+                    <div class="nav-icon">
+                      <i class="fa-solid fa-users"></i>
+                    </div>
+                    Users
+                  </e-icon>
+                </a>
+                <a href="#">
+                  <e-icon label="Products" space="0.8em">
+                    <div class="nav-icon">
+                      <i class="fa-solid fa-box"></i>
+                    </div>
+                    Products
+                  </e-icon>
+                </a>
+                <a href="#">
+                  <e-icon label="Orders" space="0.8em">
+                    <div class="nav-icon">
+                      <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    Orders
+                  </e-icon>
+                </a>
+                <a href="#">
+                  <e-icon label="Customers" space="0.8em">
+                    <div class="nav-icon">
+                      <i class="fa-solid fa-user"></i>
+                    </div>
+                    Customers
+                  </e-icon>
+                </a>
+              </e-stack>
+            </nav>
+          </div>
+
+          <div class="nav-section">
+            <div class="nav-section-title">System</div>
+            <nav>
+              <e-stack space="0">
+                <a href="#">
+                  <e-icon label="Settings" space="0.8em">
+                    <div class="nav-icon">
+                      <i class="fa-solid fa-gear"></i>
+                    </div>
+                    Settings
+                  </e-icon>
+                </a>
+                <a href="#">
+                  <e-icon label="Help" space="0.8em">
+                    <div class="nav-icon">
+                      <i class="fa-solid fa-circle-question"></i>
+                    </div>
+                    Help Center
+                  </e-icon>
+                </a>
+              </e-stack>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content Area -->
+      <div class="main-content">
+        <e-box class="dashboard-header">
+          <div class="header-content">
+            <div class="search-bar">
+              <i class="fa-solid fa-search search-icon"></i>
+              <input type="text" class="search-input" placeholder="Search..." />
+            </div>
+            <div class="user-menu">
+              <div class="notification-icon">
+                <e-icon label="Notifications" size="1.5em">
+                  <i class="fa-solid fa-bell"></i>
+                </e-icon>
+                <span class="notification-badge">3</span>
+              </div>
+              <div class="user-avatar">A</div>
+            </div>
+          </div>
+        </e-box>
+
+        <e-box class="dashboard-content">
+          <h1 class="page-title">Dashboard Overview</h1>
+
+          <e-grid min="15em" gap="1.5em">
+            <e-box padding="1.5em" class="info-card">
+              <e-cluster justify="space-between" align="center">
+                <div class="card-icon users-icon">
+                  <i class="fa-solid fa-users"></i>
+                </div>
+                <div style="text-align: right;">
+                  <h3>Total Users</h3>
+                  <p>1,234</p>
+                  <div class="trend trend-up">
+                    <i class="fa-solid fa-arrow-up"></i>
+                    <span>12% from last month</span>
+                  </div>
+                </div>
+              </e-cluster>
+            </e-box>
+
+            <e-box padding="1.5em" class="info-card">
+              <e-cluster justify="space-between" align="center">
+                <div class="card-icon revenue-icon">
+                  <i class="fa-solid fa-money-bill-wave"></i>
+                </div>
+                <div style="text-align: right;">
+                  <h3>Revenue (Month)</h3>
+                  <p>$5,678</p>
+                  <div class="trend trend-up">
+                    <i class="fa-solid fa-arrow-up"></i>
+                    <span>8% from last month</span>
+                  </div>
+                </div>
+              </e-cluster>
+            </e-box>
+
+            <e-box padding="1.5em" class="info-card">
+              <e-cluster justify="space-between" align="center">
+                <div class="card-icon orders-icon">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                </div>
+                <div style="text-align: right;">
+                  <h3>New Orders</h3>
+                  <p>56</p>
+                  <div class="trend trend-down">
+                    <i class="fa-solid fa-arrow-down"></i>
+                    <span>3% from last month</span>
+                  </div>
+                </div>
+              </e-cluster>
+            </e-box>
+
+            <e-box padding="1.5em" class="info-card">
+              <e-cluster justify="space-between" align="center">
+                <div class="card-icon issues-icon">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div style="text-align: right;">
+                  <h3>Pending Issues</h3>
+                  <p>3</p>
+                  <div class="trend trend-down">
+                    <i class="fa-solid fa-arrow-down"></i>
+                    <span>25% from last month</span>
+                  </div>
+                </div>
+              </e-cluster>
+            </e-box>
+          </e-grid>
+
+          <e-box class="chart-container">
+            <div class="chart-header">
+              <h3 class="chart-title">Revenue Overview</h3>
+              <div class="chart-actions">
+                <button class="chart-action-btn">Weekly</button>
+                <button class="chart-action-btn">Monthly</button>
+                <button class="chart-action-btn">Yearly</button>
+                <button class="chart-action-btn">Export</button>
+              </div>
+            </div>
+            <e-frame ratio="16/6">
+              <div class="chart-content">[Revenue Chart Visualization]</div>
+            </e-frame>
+          </e-box>
+
+          <e-stack space="2em">
+            <e-box class="chart-container" style="margin-top: 2em;">
+              <div class="chart-header">
+                <h3 class="chart-title">Recent Products</h3>
+                <div class="chart-actions">
+                  <button class="chart-action-btn">View All</button>
+                </div>
+              </div>
+              <div style="padding: 0 1em;">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Product Name</th>
+                      <th>Status</th>
+                      <th>Date Added</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>#001</td>
+                      <td>Premium Dashboard Template</td>
+                      <td
+                        ><span class="status-badge status-active">Active</span
+                        ></td
+                      >
+                      <td>2025-04-01</td>
+                      <td>
+                        <div class="table-actions">
+                          <button class="table-action-btn">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                          </button>
+                          <button class="table-action-btn">
+                            <i class="fa-solid fa-trash"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>#002</td>
+                      <td>E-commerce Platform</td>
+                      <td
+                        ><span class="status-badge status-inactive"
+                          >Inactive</span
+                        ></td
+                      >
+                      <td>2025-03-15</td>
+                      <td>
+                        <div class="table-actions">
+                          <button class="table-action-btn">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                          </button>
+                          <button class="table-action-btn">
+                            <i class="fa-solid fa-trash"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>#003</td>
+                      <td>CRM Solution</td>
+                      <td
+                        ><span class="status-badge status-active">Active</span
+                        ></td
+                      >
+                      <td>2025-04-05</td>
+                      <td>
+                        <div class="table-actions">
+                          <button class="table-action-btn">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                          </button>
+                          <button class="table-action-btn">
+                            <i class="fa-solid fa-trash"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>#004</td>
+                      <td>Mobile App Template</td>
+                      <td
+                        ><span class="status-badge status-pending">Pending</span
+                        ></td
+                      >
+                      <td>2025-04-07</td>
+                      <td>
+                        <div class="table-actions">
+                          <button class="table-action-btn">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                          </button>
+                          <button class="table-action-btn">
+                            <i class="fa-solid fa-trash"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </e-box>
+          </e-stack>
+        </e-box>
+      </div>
+    </e-sidebar>
+  </div>
+</Layout>

@@ -1,70 +1,99 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { resolveVars } from '../utils/index.js';
 
+type JustifyContent = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
+type AlignItems = 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'stretch';
+type AlignContent = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'stretch';
+type FlexWrap = 'wrap' | 'nowrap' | 'wrap-reverse';
+/**
+ * A layout component that arranges items in a flex container, primarily for grouping
+ * items like tags or buttons. It provides controls for alignment, justification,
+ * wrapping, and spacing.
+ *
+ * @element e-cluster
+ *
+ * @slot - The items to be arranged within the cluster.
+ *
+ * @cssprop --cluster-wrap - Controls whether items wrap. Maps to the `flex-wrap` property. Defaults to `wrap`. Controlled by the `wrap` attribute.
+ * @cssprop --cluster-space - The gap between items. Defaults to `var(--s1, 1rem)`. Controlled by the `space` attribute.
+ * @cssprop --cluster-justify - Justification of items along the main axis. Maps to `justify-content`. Defaults to `flex-start`. Controlled by the `justify` attribute.
+ * @cssprop --cluster-align - Alignment of items along the cross axis. Maps to `align-items`. Defaults to `flex-start`. Controlled by the `align` attribute.
+ * @cssprop --cluster-align-content - Alignment of content lines when items wrap. Maps to `align-content`. Defaults to `flex-start`. Controlled by the `align-content` attribute.
+ */
 @customElement('e-cluster')
 export class Cluster extends LitElement {
   static styles = css`
     :host {
       display: flex;
-      flex-wrap: var(--cluster-wrap, wrap); /* Use wrap property */
-      gap: var(--cluster-space, var(--s1, 1rem)); /* Use space property */
-      justify-content: var(--cluster-justify, flex-start); /* Use justify property */
-      align-items: var(--cluster-align, flex-start); /* Use align property */
+      flex-wrap: var(--cluster-wrap, wrap);
+      gap: var(--cluster-space, var(--s1, 1rem));
+      justify-content: var(--cluster-justify, flex-start);
+      align-items: var(--cluster-align, flex-start);
+      align-content: var(--cluster-align-content, flex-start);
     }
   `;
 
   /**
-   * A CSS justify-content value.
-   * Defaults to 'flex-start'.
+   * A semantic hint for the role of the cluster element.
+   * Does not change the rendered tag but can be used for CSS attribute selectors
+   * or JavaScript targeting.
+   * @attr
    */
   @property({ type: String })
-  justify = 'flex-start';
+  tag?: string;
 
   /**
-   * A CSS align-items value.
-   * Defaults to 'flex-start'.
+   * Controls the justification of items along the main axis.
+   * Maps to the `justify-content` CSS property via `--cluster-justify`.
+   * @attr
    */
-  @property({ type: String })
-  align = 'flex-start';
+  @property()
+  justify: JustifyContent = 'flex-start';
 
   /**
-   * A CSS gap value. The minimum space between the clustered child elements.
-   * Defaults to 'var(--s1, 1rem)'.
+   * Controls the alignment of items along the cross axis.
+   * Maps to the `align-items` CSS property via `--cluster-align`.
+   * @attr
+   */
+  @property()
+  align: AlignItems = 'flex-start';
+
+  /**
+   * Sets the gap between items.
+   * Maps to the `gap` CSS property via `--cluster-space`.
+   * Accepts any valid CSS length value or CSS variable.
+   * @attr
    */
   @property({ type: String })
   space = 'var(--s1, 1rem)';
 
   /**
-   * Controls the wrapping behavior. Accepts 'wrap', 'nowrap', 'wrap-reverse'.
-   * Defaults to 'wrap'.
+   * Controls whether items wrap to the next line.
+   * Maps to the `flex-wrap` CSS property via `--cluster-wrap`.
+   * @attr
    */
-  @property({ type: String })
-  wrap: 'wrap' | 'nowrap' | 'wrap-reverse' = 'wrap';
+  @property()
+  wrap: FlexWrap = 'wrap';
 
   /**
-   * Updates CSS custom properties when properties change.
+   * Controls the alignment of content lines when items wrap onto multiple lines.
+   * Maps to the `align-content` CSS property via `--cluster-align-content`.
+   * @attr align-content
    */
-  updated(changedProperties: Map<string | number | symbol, unknown>) {
-    if (changedProperties.has('justify')) {
-      this.style.setProperty('--cluster-justify', this.justify);
-    }
-    if (changedProperties.has('align')) {
-      this.style.setProperty('--cluster-align', this.align);
-    }
-    if (changedProperties.has('space')) {
-      this.style.setProperty('--cluster-space', this.space);
-    }
-    if (changedProperties.has('wrap')) {
-      this.style.setProperty('--cluster-wrap', this.wrap);
-    }
-  }
+  @property({ reflect: true, attribute: 'align-content' })
+  alignContent: AlignContent = 'flex-start';
 
   render() {
+    this.style.setProperty('--cluster-justify', resolveVars(this.justify));
+    this.style.setProperty('--cluster-align', resolveVars(this.align));
+    this.style.setProperty('--cluster-space', resolveVars(this.space));
+    this.style.setProperty('--cluster-wrap', resolveVars(this.wrap));
+    this.style.setProperty('--cluster-align-content', resolveVars(this.alignContent));
     return html`<slot></slot>`;
   }
 }
 
-// Type definition for custom element in the global scope
 declare global {
   interface HTMLElementTagNameMap {
     'e-cluster': Cluster;

@@ -1,124 +1,106 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { resolveVars } from '../utils/index.js';
 
+/**
+ * A layout component that creates a horizontally scrolling container.
+ * Useful for carousels, image galleries, or lists that shouldn't wrap.
+ *
+ * @element e-reel
+ *
+ * @slot - The items to be displayed in the reel.
+ *
+ * @cssprop --reel-height - The height of the reel container. Defaults to `auto`. Controlled by the `height` attribute.
+ * @cssprop --reel-padding - The padding of the reel container. Defaults to `inherit`. Controlled by the `padding` attribute.
+ * @cssprop --reel-item-width - The width of individual items in the reel. Defaults to `auto`. Controlled by the `item-width` attribute.
+ * @cssprop --reel-gap - The gap between items in the reel. Defaults to `1rem`. Controlled by the `gap` attribute.
+ */
 @customElement('e-reel')
 export class Reel extends LitElement {
   static styles = css`
     :host {
       display: flex;
-      /* Default height, overridden by property */
       block-size: var(--reel-height, auto);
       overflow-x: auto;
       overflow-y: hidden;
-      /* Scrollbar colors, overridden by properties */
-      scrollbar-color: var(--reel-thumb-color, #fff) var(--reel-track-color, #000);
+      padding: var(--reel-padding, inherit);
     }
 
-    /* Webkit scrollbar styling */
-    :host::-webkit-scrollbar {
-      block-size: 1rem; /* As per spec example */
+    :host([no-bar]) {
+      scrollbar-width: none;
     }
-    :host::-webkit-scrollbar-track {
-      background-color: var(--reel-track-color, #000);
-    }
-    :host::-webkit-scrollbar-thumb {
-      background-color: var(--reel-thumb-color, #fff);
-      /* Optional gradient from spec example - might need adjustment */
-      /* background-image: linear-gradient(var(--reel-track-color, #000) 0, var(--reel-track-color, #000) 0.25rem, var(--reel-thumb-color, #fff) 0.25rem, var(--reel-thumb-color, #fff) 0.75rem, var(--reel-track-color, #000) 0.75rem); */
+    :host([no-bar])::-webkit-scrollbar {
+      display: none;
     }
 
-    /* Hide scrollbar if noBar is true */
-    :host([nobar]) {
-      scrollbar-width: none; /* Firefox */
-    }
-    :host([nobar])::-webkit-scrollbar {
-      display: none; /* WebKit/Blink */
-    }
-
-    /* Slotted items styling */
     ::slotted(*) {
-      flex: 0 0 var(--reel-item-width, auto); /* Use itemWidth property */
+      flex: 0 0 var(--reel-item-width, auto);
     }
     ::slotted(img) {
-      /* Specific styles for images from spec example */
       block-size: 100%;
       flex-basis: auto;
       width: auto;
     }
 
-    /* Gap implementation using margin */
     ::slotted(*:not(:first-child)) {
-      margin-inline-start: var(--reel-gap, 1rem); /* Use gap property */
+      margin-inline-start: var(--reel-gap, 1rem);
     }
 
-    /* TODO: Implement .overflowing class logic if needed (requires JS ResizeObserver) */
-    /* :host(.overflowing) { padding-block-end: var(--reel-gap, 1rem); } */
   `;
 
   /**
-   * The width of each child element. Defaults to 'auto'.
+   * The width of each item in the reel.
+   * Maps to the `--reel-item-width` CSS custom property.
+   * Accepts any valid CSS length value.
+   * @attr item-width
    */
   @property({ type: String, attribute: 'item-width' })
   itemWidth = 'auto';
 
   /**
-   * The space between each child element. Defaults to '1rem'.
+   * The gap between items in the reel.
+   * Maps to the `--reel-gap` CSS custom property.
+   * Accepts any valid CSS length value.
+   * @attr
    */
   @property({ type: String })
   gap = '1rem';
 
   /**
-   * The height (block-size) of the Reel element. Defaults to 'auto'.
+   * The height of the reel container.
+   * Maps to the `--reel-height` CSS custom property.
+   * Accepts any valid CSS length value.
+   * @attr
    */
   @property({ type: String })
   height = 'auto';
 
   /**
-   * The color of the scrollbar track. Defaults to '#000'.
+   * The padding of the reel container.
+   * Maps to the `--reel-padding` CSS custom property.
+   * Accepts any valid CSS padding value.
+   * @attr
    */
-  @property({ type: String, attribute: 'track-color' })
-  trackColor = '#000';
+  @property({ type: String })
+  padding = '0';
 
   /**
-   * The color of the scrollbar thumb. Defaults to '#fff'.
+   * If true, hides the horizontal scrollbar.
+   * Reflects to the `no-bar` attribute.
+   * @attr no-bar
    */
-  @property({ type: String, attribute: 'thumb-color' })
-  thumbColor = '#fff';
-
-  /**
-   * Whether to hide the scrollbar. Reflects as attribute 'nobar'. Defaults to false.
-   */
-  @property({ type: Boolean, reflect: true }) // Reflect for CSS targeting
+  @property({ type: Boolean, reflect: true, attribute: 'no-bar' })
   noBar = false;
 
-  /**
-   * Updates CSS custom properties when properties change.
-   */
-  updated(changedProperties: Map<string | number | symbol, unknown>) {
-    if (changedProperties.has('itemWidth')) {
-      this.style.setProperty('--reel-item-width', this.itemWidth);
-    }
-    if (changedProperties.has('gap')) {
-      this.style.setProperty('--reel-gap', this.gap);
-    }
-    if (changedProperties.has('height')) {
-      this.style.setProperty('--reel-height', this.height);
-    }
-    if (changedProperties.has('trackColor')) {
-      this.style.setProperty('--reel-track-color', this.trackColor);
-    }
-    if (changedProperties.has('thumbColor')) {
-      this.style.setProperty('--reel-thumb-color', this.thumbColor);
-    }
-    // noBar is handled by attribute reflection and CSS selectors
-  }
-
   render() {
+    this.style.setProperty('--reel-item-width', resolveVars(this.itemWidth));
+    this.style.setProperty('--reel-gap', resolveVars(this.gap));
+    this.style.setProperty('--reel-height', resolveVars(this.height));
+    this.style.setProperty('--reel-padding', resolveVars(this.padding));
     return html`<slot></slot>`;
   }
 }
 
-// Type definition for custom element in the global scope
 declare global {
   interface HTMLElementTagNameMap {
     'e-reel': Reel;

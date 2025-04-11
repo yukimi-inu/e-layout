@@ -1,106 +1,104 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { resolveVars } from '../utils/index.js';
 
+/**
+ * A layout component that creates a sidebar layout, placing sidebar content
+ * alongside main content. The sidebar can be positioned on the left or right.
+ * It uses Flexbox and allows content to wrap when space is limited.
+ *
+ * @element e-sidebar
+ *
+ * @slot sidebar - The content for the sidebar area.
+ * @slot - Default slot for the main content area.
+ *
+ * @cssprop --sidebar-space - The gap between the sidebar and main content. Defaults to `var(--s1, 1rem)`. Controlled by the `space` attribute.
+ * @cssprop --sidebar-align - Vertical alignment of sidebar and main content. Defaults to `stretch`. Set to `flex-start` when `no-stretch` attribute is present.
+ * @cssprop --sidebar-content-min - The minimum width of the main content area before wrapping. Defaults to `50%`. Controlled by the `content-min` attribute.
+ * @cssprop --sidebar-width - The width of the sidebar. Defaults to `undefined` (intrinsic width). Controlled by the `side-width` attribute.
+ */
 @customElement('e-sidebar')
 export class Sidebar extends LitElement {
   static styles = css`
     :host {
       display: flex;
-      flex-wrap: wrap; /* Allow wrapping */
-      gap: var(--sidebar-space, var(--s1, 1rem)); /* Use space property */
-      /* Default alignment, override if noStretch is true */
+      flex-wrap: wrap;
+      gap: var(--sidebar-space, var(--s1, 1rem));
       align-items: var(--sidebar-align, stretch);
     }
 
-    /* Styles for the main content area (assuming side="left") */
-    /* ::slotted(:not([slot="sidebar"])) { */
-    /* Using a general selector as direct :not([slot]) might be tricky */
-    /* Target the default slot content specifically if possible, otherwise rely on order */
-    /* Let's assume default slot is the main content */
-    ::slotted(:not([slot="sidebar"])) { /* More specific selector */
+    ::slotted(:not([slot="sidebar"])) {
       flex-basis: 0;
-      flex-grow: 999; /* Allow main content to grow significantly */
-      min-inline-size: var(--sidebar-content-min, 50%); /* Use contentMin property */
+      flex-grow: 999;
+      min-inline-size: var(--sidebar-content-min, 50%);
     }
 
-    /* Styles for the sidebar element (assuming side="left") */
     ::slotted([slot="sidebar"]) {
-      flex-basis: var(--sidebar-width); /* Use sideWidth property */
-      flex-grow: 0; /* Do not allow sidebar to grow beyond its basis */
+      flex-basis: var(--sidebar-width);
+      flex-grow: 0;
     }
 
-    /* Apply align-items: flex-start if noStretch is true */
-    :host([nostretch]) {
-      align-items: flex-start;
+    :host([no-stretch]) {
+      align-items: flex-start; /* Override default stretch alignment */
     }
 
-    /* TODO: Implement styles for side="right" */
-    /* This might require swapping the order or changing flex properties based on the 'side' attribute */
-    /* Example: :host([side="right"]) ::slotted([slot="sidebar"]) { order: 1; } */
-    /* Example: :host([side="right"]) ::slotted(:not([slot="sidebar"])) { order: 0; } */
+    :host([side="right"]) ::slotted([slot="sidebar"]) {
+      order: 1;
+    }
   `;
 
   /**
-   * Which element to treat as the sidebar ('left' or 'right').
-   * Defaults to 'left'.
-   * Note: Current CSS primarily implements 'left'. 'right' needs further work.
+   * Determines which side the sidebar appears on.
+   * Reflects to the `side` attribute.
+   * @attr
    */
-  @property({ type: String, reflect: true }) // Reflect for potential CSS targeting
+  @property({ type: String, reflect: true })
   side: 'left' | 'right' = 'left';
 
   /**
-   * Represents the width of the sidebar when adjacent.
-   * If not set (null), it defaults to the sidebar's content width (handled by flexbox).
-   * Accepts any valid CSS size value. Defaults to null.
+   * The width of the sidebar element. If not set, the sidebar takes its intrinsic width.
+   * Maps to the `--sidebar-width` CSS custom property.
+   * Accepts any valid CSS length value.
+   * @attr side-width
    */
   @property({ type: String, attribute: 'side-width' })
-  sideWidth: string | null = null;
+  sideWidth: string | undefined = undefined;
 
   /**
-   * The minimum width of the content element in the horizontal configuration.
-   * Accepts a CSS percentage value. Defaults to '50%'.
+   * The minimum width of the main content area before the layout wraps.
+   * Maps to the `--sidebar-content-min` CSS custom property.
+   * Accepts any valid CSS length or percentage value.
+   * @attr content-min
    */
   @property({ type: String, attribute: 'content-min' })
   contentMin = '50%';
 
   /**
-   * A CSS margin value representing the space between the sidebar and content.
-   * Defaults to 'var(--s1, 1rem)'.
+   * The gap between the sidebar and the main content.
+   * Maps to the `--sidebar-space` CSS custom property.
+   * Accepts any valid CSS length value or CSS variable.
+   * @attr
    */
   @property({ type: String })
   space = 'var(--s1, 1rem)';
 
   /**
-   * Make the adjacent elements adopt their natural height.
-   * Reflects as attribute 'nostretch'. Defaults to false.
+   * If true, prevents the sidebar and content from stretching vertically,
+   * aligning them to the top instead.
+   * Reflects to the `no-stretch` attribute.
+   * @attr no-stretch
    */
-  @property({ type: Boolean, reflect: true }) // Reflect for CSS targeting
+  @property({ type: Boolean, reflect: true, attribute: 'no-stretch' })
   noStretch = false;
 
-  /**
-   * Updates CSS custom properties when properties change.
-   */
-  updated(changedProperties: Map<string | number | symbol, unknown>) {
-    if (changedProperties.has('sideWidth')) {
-      // Set --sidebar-width only if sideWidth is provided
-      this.style.setProperty('--sidebar-width', this.sideWidth ?? 'auto');
-    }
-    if (changedProperties.has('contentMin')) {
-      this.style.setProperty('--sidebar-content-min', this.contentMin);
-    }
-    if (changedProperties.has('space')) {
-      this.style.setProperty('--sidebar-space', this.space);
-    }
-    // side and noStretch are handled by attribute reflection and CSS selectors
-  }
-
   render() {
-    // Slots will determine the order unless overridden by CSS 'order' property
+    this.style.setProperty('--sidebar-width', resolveVars(this.sideWidth));
+    this.style.setProperty('--sidebar-content-min', resolveVars(this.contentMin));
+    this.style.setProperty('--sidebar-space', resolveVars(this.space));
     return html`<slot name="sidebar"></slot><slot></slot>`;
   }
 }
 
-// Type definition for custom element in the global scope
 declare global {
   interface HTMLElementTagNameMap {
     'e-sidebar': Sidebar;

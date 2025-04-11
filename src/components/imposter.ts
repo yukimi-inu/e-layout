@@ -1,25 +1,94 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { resolveVars } from '../utils/index.js';
 
+/**
+ * @element e-imposter
+ * @description Overlays content on top of other content, typically used for modals or popups. It uses logical properties for positioning.
+ *
+ * @slot - The content to be overlaid.
+ *
+ * @cssprop --imposter-margin - The logical space between the imposter element and the containing block edges (default: 0px). Applied based on alignment.
+ *
+ * @attr {boolean} breakout - Allows the imposter to break out of its container's bounds.
+ * @attr {string} margin - Sets the logical margin from the aligned edge. Accepts CSS length values (default: '0px').
+ * @attr {boolean} fixed - Uses fixed positioning instead of absolute positioning.
+ * @attr {'start' | 'center' | 'end'} [alignBlock='center'] - Block direction alignment (e.g., top/bottom in horizontal writing modes).
+ * @attr {'start' | 'center' | 'end'} [alignInline='center'] - Inline direction alignment (e.g., left/right in horizontal writing modes).
+ */
 @customElement('e-imposter')
 export class Imposter extends LitElement {
   static styles = css`
     :host {
-      position: absolute; /* Default, overridden if fixed=true */
-      /* Default centering */
+      position: absolute;
+      --margin: var(--imposter-margin, 0px);
+      --z-index: var(--imposter-z-index, 1);
+      z-index: var(--z-index);
       inset-block-start: 50%;
       inset-inline-start: 50%;
       transform: translate(-50%, -50%);
-      /* Default margin */
-      --margin: var(--imposter-margin, 0px);
     }
 
-    /* Apply fixed positioning if fixed=true */
     :host([fixed]) {
       position: fixed;
     }
 
-    /* Apply containment styles if breakout=false (default) */
+    :host([align-block='start']) {
+      inset-block-start: var(--margin);
+      inset-block-end: auto;
+    }
+    :host([align-block='end']) {
+      inset-block-start: auto;
+      inset-block-end: var(--margin);
+    }
+    :host([align-block='center']) {
+       inset-block-start: 50%;
+       inset-block-end: auto;
+    }
+
+
+    :host([align-inline='start']) {
+      inset-inline-start: var(--margin);
+      inset-inline-end: auto;
+    }
+    :host([align-inline='end']) {
+      inset-inline-start: auto;
+      inset-inline-end: var(--margin);
+    }
+    :host([align-inline='center']) {
+      inset-inline-start: 50%;
+      inset-inline-end: auto;
+    }
+
+    :host([align-block='start']),
+    :host([align-block='end']) {
+        transform: translateY(0);
+    }
+    :host([align-inline='start']),
+    :host([align-inline='end']) {
+        transform: translateX(0);
+    }
+
+    :host([align-block='center'][align-inline='start']),
+    :host([align-block='center'][align-inline='end']) {
+      transform: translateY(-50%);
+    }
+    :host([align-inline='center'][align-block='start']),
+    :host([align-inline='center'][align-block='end']) {
+      transform: translateX(-50%);
+    }
+
+    :host([align-block='center'][align-inline='center']) {
+       transform: translate(-50%, -50%);
+    }
+     :host([align-block='start'][align-inline='start']),
+     :host([align-block='start'][align-inline='end']),
+     :host([align-block='end'][align-inline='start']),
+     :host([align-block='end'][align-inline='end']) {
+        transform: translate(0, 0);
+     }
+
+
     :host(:not([breakout])) {
       overflow: auto;
       max-inline-size: calc(100% - (var(--margin) * 2));
@@ -27,44 +96,33 @@ export class Imposter extends LitElement {
     }
   `;
 
-  /**
-   * Whether the element is allowed to break out of its container.
-   * Reflects as attribute 'breakout'. Defaults to false.
-   */
   @property({ type: Boolean, reflect: true })
   breakout = false;
 
-  /**
-   * The minimum space between the element and the container edges
-   * when breakout is false. Accepts any valid CSS size value.
-   * Defaults to '0px'.
-   */
   @property({ type: String })
   margin = '0px';
 
-  /**
-   * Whether to position the element relative to the viewport (fixed).
-   * Reflects as attribute 'fixed'. Defaults to false.
-   */
   @property({ type: Boolean, reflect: true })
   fixed = false;
 
-  /**
-   * Updates CSS custom properties when properties change.
-   */
-  updated(changedProperties: Map<string | number | symbol, unknown>) {
-    if (changedProperties.has('margin')) {
-      this.style.setProperty('--imposter-margin', this.margin);
-    }
-    // fixed and breakout are handled by attribute reflection and CSS selectors
-  }
+  /** Block direction alignment (e.g., top/bottom in horizontal writing modes). Maps to `align-block` attribute. */
+  @property({ type: String, reflect: true, attribute: 'align-block' })
+  alignBlock: 'start' | 'center' | 'end' = 'center';
+
+  /** Inline direction alignment (e.g., left/right in horizontal writing modes). Maps to `align-inline` attribute. */
+  @property({ type: String, reflect: true, attribute: 'align-inline' })
+  alignInline: 'start' | 'center' | 'end' = 'center';
+
+  @property({ type: String, reflect: true, attribute: 'z-index' })
+  zIndex = '1';
 
   render() {
+    this.style.setProperty('--imposter-margin', resolveVars(this.margin));
+    this.style.setProperty('--imposter-z-index', resolveVars(this.zIndex));
     return html`<slot></slot>`;
   }
 }
 
-// Type definition for custom element in the global scope
 declare global {
   interface HTMLElementTagNameMap {
     'e-imposter': Imposter;

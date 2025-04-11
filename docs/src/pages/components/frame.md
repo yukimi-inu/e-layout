@@ -11,53 +11,49 @@ The `e-frame` component creates a container that maintains a specific aspect rat
 
 ```html
 <e-frame ratio="16:9">
-  <img src="https://via.placeholder.com/800x450/cccccc/969696?text=16:9+Image" alt="Placeholder">
+  <img src="/e-layout/hd720.png" alt="Placeholder">
 </e-frame>
 ```
 
-## Example
+## Examples
 
-This example shows a frame with a 1:1 aspect ratio.
+**Square Frame: `ratio="1:1"`**
 
-<div class="example-container" style="max-width: 300px;"> {/* Constrain container width */}
-  <e-frame ratio="1:1" style="border: 1px dashed blue;">
-    <img src="https://via.placeholder.com/300/cccccc/969696?text=1:1+Image" alt="Placeholder">
-  </e-frame>
+<div class="example-container">
+  <div class="example-wrapper">
+    <e-frame ratio="1:1">
+      <img src="/e-layout/hd720.png" alt="Placeholder">
+    </e-frame>
+  </div>
 </div>
 
-<style>
-.example-container {
-  /* background-color: #f0f0f0; */ /* Defined in parent example */
-  /* padding: 1rem; */
-  margin-top: 1rem;
-  border-radius: 4px;
-}
-</style>
+**4:3 Frame: `ratio="4:3"`**
 
-<script>
-  // Import the component definition
-  import 'e-layout/frame';
-</script>
+<div class="example-container">
+  <div class="example-wrapper">
+    <e-frame ratio="4:3">
+      <img src="/e-layout/hd720.png" alt="Placeholder">
+    </e-frame>
+  </div>
+</div>
+
+**Wide Frame: `ratio="2:1"`**
+
+<div class="example-container">
+  <div class="example-wrapper">
+    <e-frame ratio="2:1">
+      <img src="/e-layout/hd720.png" alt="Placeholder">
+    </e-frame>
+  </div>
+</div>
 
 ## Properties
 
-*   **`ratio`**: `string` (Default: `'16:9'`)
-    *   The desired aspect ratio, formatted as `'N:D'` or `'N/D'` (e.g., `'16:9'`, `'1/1'`, `'4/3'`).
+*   **`ratio`** `<string>` (Default: `'16:9'`)
+    *   The desired aspect ratio, formatted as `'N:D'` or `'N/D'` (e.g., `'16:9'`, `'1/1'`, `'4/3'`). Maps to CSS variables `--n` and `--d`. Attribute: `ratio`.
+*   **`tag`** `<string>` (Default: `undefined`)
+    *   Provides a semantic hint (e.g., 'figure'). Does not change the rendered tag. Useful for CSS selectors (`e-frame[tag="..."]`). Attribute: `tag`.
 
-## Styling
-
-*   **`--n`**: (Default: `16`) The numerator of the aspect ratio.
-*   **`--d`**: (Default: `9`) The denominator of the aspect ratio.
-    *   These are set internally based on the `ratio` property but can potentially be overridden via CSS.
-
-```css
-/* Style the slotted content to fill the frame */
-e-frame > img,
-e-frame > video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-```
-
-You can also apply standard CSS like `max-width`, `border`, etc., to the `e-frame` element itself.
+<style>
+/* .example-container and .example-wrapper styles are defined globally */
+</style>

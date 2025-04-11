@@ -7,7 +7,7 @@
     // Ensure module resolution works within the docs context
     "baseUrl": ".",
     "paths": {
-      "e-layout/*": ["../dist/*"], // Alias for built components
+      "e-layout/*": ["../dist/components/*"],
       "@components/*": ["src/components/*"], // Alias for docs components
       "@layouts/*": ["src/layouts/*"] // Alias for docs layouts
     },

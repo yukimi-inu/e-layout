@@ -28,7 +28,7 @@ npm install e-layout
     // ... import other needed components
 
     // Or import all (larger bundle size if not tree-shaken)
-    // import 'e-layout';
+    import 'e-layout';
     ```
 
 2.  **Use in HTML:** Use the custom element tags directly in your HTML.
@@ -47,6 +47,51 @@ npm install e-layout
       </body>
     </html>
     ```
+
+## The `tag` Attribute
+
+Many `e-layout` components accept a `tag` attribute (e.g., `<e-box tag="section">`).
+
+**Important:** This attribute **does not change the actual HTML tag** rendered by the component itself (the component's host element remains `<e-box>`, `<e-stack>`, etc.).
+
+Its purpose is purely semantic and for targeting:
+
+1.  **Semantic Hint:** It provides a hint about the intended role of the component in the document structure (e.g., indicating a box represents a `<section>` or an `<article>`).
+2.  **CSS Targeting:** You can use attribute selectors in CSS to style components based on their intended role:
+   ```css
+   nav, [tag='nav'] {
+     /* Styles specific to boxes intended as navigation */
+     background-color: lightgrey;
+   }
+   ```
+3.  **JavaScript Targeting:** You can select elements in JavaScript based on this attribute:
+   ```javascript
+   const mainContentBox = document.querySelector('[tag="main"]');
+   ```
+
+While the attribute value often corresponds to a standard HTML tag name like `div`, `section`, `nav`, etc., the component itself always renders its own custom element tag.
+
+## Using CSS Variables as Property Values
+
+A convenient feature of `e-layout` components is the ability to pass CSS custom property names directly as values to component properties (attributes). If a property value starts with `--` (e.g., `space="--my-custom-space"`), the component automatically wraps it in `var()` when applying the style internally (e.g., `gap: var(--my-custom-space)`).
+
+This allows you to easily leverage your existing CSS variable definitions:
+
+```html
+<style>
+  :root {
+    --spacing-large: 3rem;
+  }
+</style>
+
+<!-- The component will apply 'gap: var(--spacing-large)' -->
+<e-stack space="--spacing-large">
+  <div>Item 1</div>
+  <div>Item 2</div>
+</e-stack>
+```
+
+This behavior is handled by the internal `resolveVars` utility function. If the property value does *not* start with `--`, it's treated as a literal CSS value (e.g., `space="2em"` results in `gap: 2em`).
 
 ## Framework Integration
 
@@ -288,6 +333,39 @@ Web Components integrate well with most modern frameworks. The general approach 
     <e-some-component-with-event on:my-custom-event={handleCustomEvent}>
     </e-some-component-with-event>
     ```
+
+## Important Considerations: Avoiding Layout Shift
+
+Because `e-layout` relies on Web Components (Custom Elements), the browser needs to execute the component definition script *before* it initially renders the elements that use them. If the script runs too late (e.g., after the initial HTML is parsed and displayed), you might experience a "layout shift" or "Flash Of Unstyled Content (FOUC)" where the elements initially appear unstyled or incorrectly laid out before the component logic takes over.
+
+**General Rule:** Ensure `import 'e-layout';` or specific component imports run as early as possible in your page load, ideally within the `<head>` or at the very beginning of the `<body>`.
+
+**Framework-Specific Notes:**
+
+While simply importing `e-layout` in your main JavaScript bundle often works after a production build, some development server setups or specific framework behaviors might require adjustments to prevent layout shifts during development (`npm run dev`):
+
+*   **Astro:** If you encounter layout shifts, especially during development, import the library directly within a `<script>` tag inside the `<head>` of your main layout file (e.g., `src/layouts/Layout.astro`). This ensures the definitions are processed before the body content renders.
+
+    ```astro
+    // src/layouts/Layout.astro
+    <head>
+      {/* Other head elements */}
+      <script> import 'e-layout'; </script>
+    </head>
+    ```
+
+*   **Remix:** Standard Remix bundling might place your main script at the end of the `<body>`. To guarantee early execution, it's recommended to use the pre-built IIFE version of `e-layout`. Place this script tag in your root layout's `<head>`. You'll need to ensure `e-layout.min.js` (or the non-minified version) is available in your public assets directory (e.g., copy it during your build process).
+
+    ```html
+    // app/root.tsx (or similar)
+    <head>
+      {/* Other head elements */}
+      <script src="/scripts/e-layout.min.js" defer></script> {/* Adjust path as needed */}
+    </head>
+    ```
+    *(Note: Using `defer` is generally recommended for scripts in the head that don't modify the DOM immediately)*
+
+If you experience layout shifts with other frameworks during development, investigate how to ensure the `e-layout` import executes before the initial render. Often, production builds optimize script loading, resolving the issue automatically.
 
 ## Server-Side Rendering (SSR) & Hydration
 

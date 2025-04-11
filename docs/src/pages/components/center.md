@@ -20,8 +20,8 @@ The `e-center` component centers its content horizontally within a defined maxim
 **With Max Width and Gutters:**
 
 ```html
-<e-center max="500px" gutters="1rem">
-  <span>This content is centered within a 500px max width and has 1rem gutters.</span>
+<e-center max="20em" gutters="1rem">
+  <span>This content is centered within a 20em max width and has 1rem gutters.</span>
 </e-center>
 ```
 
@@ -43,56 +43,51 @@ The `e-center` component centers its content horizontally within a defined maxim
 
 ## Examples
 
-**Horizontal Only:**
+**Basic Centering: `max="30em"`**
 
-<div class="example-container" style="min-height: 100px; border: 1px solid #ccc;">
-  <e-center style="border: 1px dashed blue;">
-    <span>Horizontally Centered</span>
-  </e-center>
+<div class="example-container">
+  <div class="example-wrapper">
+    <e-center max="30em">
+      <div class="example-item bg-example-blue">Horizontally Centered</div>
+    </e-center>
+  </div>
 </div>
 
-**Intrinsic & Text Centering:**
+**Intrinsic and Text Centering: `max="30em" intrinsic with-text`**
 
-<div class="example-container" style="min-height: 100px; border: 1px solid #ccc;">
-  <e-center intrinsic with-text style="border: 1px dashed green;">
-    <button>Intrinsically Centered Button</button>
-    <p>And centered text.</p>
-  </e-center>
+<div class="example-container">
+  <div class="example-wrapper">
+    <e-center max="30em" intrinsic with-text>
+      <div class="example-item bg-example-blue">
+        <button>Intrinsically Centered Button</button>
+        <p>And centered text.</p>
+      </div>
+    </e-center>
+  </div>
 </div>
 
-<style>
-.example-container {
-  background-color: #f0f0f0;
-  padding: 1rem;
-  margin-top: 1rem;
-  border-radius: 4px;
-}
-</style>
+**Intrinsic with Gutters: `intrinsic max="30em" gutters="5em"`**
 
-<script>
-</script>
+<div class="example-container">
+  <div class="example-wrapper">
+    <e-center intrinsic max="30em" gutters="5em">
+      <div class="example-item bg-example-blue">
+        <p>Gutters (5em)</p>
+        <p>This content is intrinsically centered within a max width of 30em, but has 5em gutters on each side.</p>
+      </div>
+    </e-center>
+  </div>
+</div>
 
 ## Properties
 
-*   **`max`**: `string` (Default: `'var(--measure, 60ch)'`)
-    *   The maximum inline size (width) of the content. Attribute: `max`.
-*   **`gutters`**: `string` (Default: `'0'`)
-    *   The minimum space (inline padding) on either side of the content.
-*   **`withText`**: `boolean` (Default: `false`)
-    *   Whether to apply `text-align: center`. Attribute: `with-text`.
-*   **`intrinsic`**: `boolean` (Default: `false`)
-    *   Whether to use intrinsic (flex) centering. Attribute: `intrinsic`.
-
-## Styling
-
-*   **`--center-max-width`**: (Default: `var(--measure, 60ch)`) Overrides `max`.
-*   **`--center-gutters`**: (Default: `0`) Overrides `gutters`.
-*   Standard CSS like `padding-block` can be applied directly.
-
-```css
-e-center {
-  max-width: 500px;
-  margin-inline: auto; /* Center the component itself if needed */
-  padding: 2rem;
-  border: 1px solid lightgray;
-}
+*   **`max`** `<string>` (Default: `100%`)
+    *   The maximum inline size (width) of the content. Maps to `--center-max-width`. Attribute: `max`.
+*   **`gutters`** `<string>` (Default: `0`)
+    *   The padding on the left and right sides of the content. Maps to `--center-gutters`. Attribute: `gutters`.
+*   **`with-text`** `<boolean>` (Default: `false`)
+    *   If true, centers the text content within the element (`text-align: center`). Attribute: `with-text`.
+*   **`intrinsic`** `<boolean>` (Default: `false`)
+    *   If true, centers the element intrinsically based on its content width (`display: flex; align-items: center;`). Attribute: `intrinsic`.
+*   **`tag`** `<string>` (Default: `undefined`)
+    *   Provides a semantic hint (e.g., 'section'). Does not change the rendered tag. Useful for CSS selectors (`e-center[tag="..."]`). Attribute: `tag`.

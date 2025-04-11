@@ -1,4 +1,3 @@
-/* docs/src/styles/global.css */
 :root {
   --font-family-base: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
     Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
@@ -9,21 +8,32 @@
   --color-bg-sidebar: #f0f0f0; /* Light gray, lighter than active bg */
   --color-bg-hover: #e8e8ea;
   --color-bg-active: #dcdcde; /* Example active color */
+  --color-bg-gray: #f0f0f0; /* Light gray for sidebar */
 
   --color-text-primary: #213547;
   --color-text-secondary: #3c536a;
-  --color-text-link: #3eaf7c; /* Example link color */
+  --color-text-link: #0b6d9f; /* Example link color */
   --color-text-active: #005a9c; /* Dark blue for active menu text */
+  --color-text-therity: #e7eaf1; /* Example text color for the sidebar */
 
   --border-color: #e2e2e3;
   --sidebar-width: 280px; /* Match Layout.astro */
   --content-max-width: 768px; /* Max width for main content */
 
   --spacing-unit: 1rem;
+  /* Example Background Colors */
+  --color-bg-example-slate: #64748b;
+  --color-bg-example-gray: #4a5051;
+  --color-bg-example-zinc: #61e4be;
+  --color-bg-example-neutral: #f4c918;
+  --color-bg-example-red: #ea4b57;
+  --color-bg-example-orange: #e37f28;
+  --color-bg-example-cyan: #36c1d6;
+  --color-bg-example-green: #39cc6c;
+  --color-bg-example-pink: #da346e;
+  --color-bg-example-blue: #3a5ce4;
+  --color-bg-example-lavender: #3235ec;
 }
-
-/* Dark mode overrides (optional, basic example) */
-/* html.dark { ... } */
 
 *,
 *::before,
@@ -47,7 +57,6 @@ body {
 }
 
 .docs-layout {
-  /* Use CSS variables defined in e-sidebar if needed, or override here */
   --sidebar-width: var(--sidebar-width);
   gap: 0; /* Remove default gap from e-sidebar */
   height: 100%; /* Make e-sidebar take full height of body */
@@ -61,8 +70,8 @@ body {
   position: sticky; /* Ensure sticky positioning */
   top: 0; /* Stick to the top */
   overflow-y: auto; /* Allow scrolling within the sidebar */
-  padding: calc(var(--spacing-unit) * 1.5) 0; /* Keep existing padding */
-  border-right: 1px solid var(--border-color); /* Keep border */
+  padding: calc(var(--spacing-unit) * 1.5) 0;
+  border-right: 1px solid var(--border-color);
   flex-shrink: 0; /* Prevent shrinking */
 }
 
@@ -85,13 +94,11 @@ body {
 
 .external-links a {
   color: var(--color-text-secondary);
-  /* Add icon styles later if needed */
 }
 
 .main-content {
   padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 3);
-  flex-grow: 1; /* Ensure it takes remaining space */
-  min-width: 0; /* Prevent content from overflowing flex container */
+  flex-grow: 1;
 }
 
 .main-content article {
@@ -139,6 +146,27 @@ a:hover {
   text-decoration: underline;
 }
 
+button {
+  display: inline-block;
+  width: fit-content;
+  background-color: var(--color-bg-example-blue);
+  color: var(--color-text-therity);
+  border: none;
+  padding: calc(var(--spacing-unit) * 0.5) calc(var(--spacing-unit) * 1.5);
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 1em;
+
+  &:active {
+    background-color: var(--color-bg-example-lavender);
+    color: var(--color-text-therity);
+  }
+
+  &.expand {
+    width: auto;
+  }
+}
+
 /* Code block styling */
 pre {
   background-color: #282c34; /* Darker background */
@@ -168,52 +196,95 @@ pre code {
   font-size: inherit;
 }
 
+ul,
+[tag="ul"] {
+  margin-inline-start: 1.25em;
+  padding-left: 0;
+}
+
 /* Example container styling */
 .example-container {
+  resize: horizontal;
+  overflow: auto;
   background-color: var(--color-bg-soft);
   padding: var(--spacing-unit);
   margin: var(--spacing-unit) 0;
-  border-radius: 6px;
+  border-radius: 0.33rem;
   border: 1px solid var(--border-color);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
+.example-page-container {
+  resize: horizontal;
+  overflow: auto;
+  background-color: var(--color-bg-soft);
+  margin: var(--spacing-unit) 0;
+  border-radius: 0.33rem;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.example-wrapper {
+  padding: 0;
+  border: 1px dashed var(--color-text-secondary);
+}
+
 /* Background color utility classes for examples */
 .example-item {
-  /* Add some default padding to example items */
+  color: white;
   padding: 0.5rem;
+  border-radius: 4px;
+
+  &.no-padding {
+    padding: 0;
+  }
 }
-/* Abstracted background colors for examples (soft tones) */
+
+.example-tag {
+  display: block;
+  padding: 0.2em 1em;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: white;
+  height: fit-content;
+  background-color: var(--color-bg-example-blue);
+}
+
 .bg-example-slate {
-  background-color: #eae4e9; /* Light Grayish Magenta */
+  background-color: var(--color-bg-example-slate);
 }
 .bg-example-gray {
-  background-color: #f0efeb; /* Isabelline */
+  background-color: var(--color-bg-example-gray);
 }
 .bg-example-zinc {
-  background-color: #e2ece9; /* Mint Cream */
+  background-color: var(--color-bg-example-zinc);
 }
 .bg-example-neutral {
-  background-color: #f0efeb; /* Isabelline */
+  background-color: var(--color-bg-example-neutral);
 }
 .bg-example-red {
-  background-color: #fde2e4; /* Misty Rose */
+  background-color: var(--color-bg-example-red);
 }
 .bg-example-orange {
-  background-color: #fff1e6; /* Papaya Whip */
+  background-color: var(--color-bg-example-orange);
 }
 .bg-example-cyan {
-  background-color: #bee1e6; /* Powder Blue */
+  background-color: var(--color-bg-example-cyan);
 }
 .bg-example-green {
-  background-color: #e2ece9; /* Mint Cream */
+  background-color: var(--color-bg-example-green);
 }
 .bg-example-pink {
-  background-color: #fad2e1; /* Pink Lace */
+  background-color: var(--color-bg-example-pink);
 }
 .bg-example-blue {
-  background-color: #cddafd; /* Periwinkle Crayola */
+  background-color: var(--color-bg-example-blue);
 }
 .bg-example-lavender {
-  background-color: #dfe7fd; /* Lavender Web */
+  background-color: var(--color-bg-example-lavender);
+}
+
+.example-container {
+  background-color: var(--color-bg-gray);
+  color: var(--color-text-primary);
 }

@@ -1,0 +1,2847 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "dist/e-layout.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "t4"
+        },
+        {
+          "kind": "variable",
+          "name": "e5"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "t4",
+          "declaration": {
+            "name": "e5",
+            "module": "dist/e-layout.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "t4",
+          "declaration": {
+            "name": "e5",
+            "module": "dist/e-layout.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/e-layout.min.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "t"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "i",
+          "declaration": {
+            "name": "t",
+            "module": "dist/e-layout.min.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "i",
+          "declaration": {
+            "name": "t",
+            "module": "dist/e-layout.min.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/index.js",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./components/index.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./components/index.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/components/box.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "Box",
+          "default": "class Box extends LitElement { render() { this.style.setProperty('--box-padding', resolveVars(this.padding)); this.style.setProperty('--box-border-width', resolveVars(this.borderWidth)); this.style.setProperty('--box-border-color', resolveVars(this.borderColor)); this.style.setProperty('--box-border', resolveVars(this.border)); this.style.setProperty('--box-radius', resolveVars(this.radius)); this.style.setProperty('--box-bg', resolveVars(this.bg)); this.style.setProperty('--box-color', resolveVars(this.color)); return html `<slot></slot>`; } }",
+          "description": "A custom element that provides a flexible box layout."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Box",
+          "declaration": {
+            "name": "Box",
+            "module": "dist/components/box.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/components/center.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "Center",
+          "default": "class Center extends LitElement { constructor() { super(...arguments); /** * The padding on the left and right sides (gutters) of the content. * Maps to the `--center-gutters` CSS custom property. * Accepts any valid CSS length value. * @attr */ this.gutters = '0'; /** * If true, centers the text content within the element (`text-align: center`). * Reflects to the `with-text` attribute. * @attr with-text */ this.withText = false; /** * If true, centers the element intrinsically based on its content width * (`display: flex; align-items: center;`). * Reflects to the `intrinsic` attribute. * @attr */ this.intrinsic = false; } render() { this.style.setProperty('--center-max-width', resolveVars(this.max)); this.style.setProperty('--center-gutters', resolveVars(this.gutters)); return html `<slot></slot>`; } }",
+          "description": "A layout component that centers its content horizontally within a maximum width,\nwith optional gutters on either side. It can also center text content or\nintrinsically size its content based on the children."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Center",
+          "declaration": {
+            "name": "Center",
+            "module": "dist/components/center.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/components/cluster.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "Cluster",
+          "default": "class Cluster extends LitElement { constructor() { super(...arguments); /** * Controls the justification of items along the main axis. * Maps to the `justify-content` CSS property via `--cluster-justify`. * @attr */ this.justify = 'flex-start'; /** * Controls the alignment of items along the cross axis. * Maps to the `align-items` CSS property via `--cluster-align`. * @attr */ this.align = 'flex-start'; /** * Sets the gap between items. * Maps to the `gap` CSS property via `--cluster-space`. * Accepts any valid CSS length value or CSS variable. * @attr */ this.space = 'var(--s1, 1rem)'; /** * Controls whether items wrap to the next line. * Maps to the `flex-wrap` CSS property via `--cluster-wrap`. * @attr */ this.wrap = 'wrap'; /** * Controls the alignment of content lines when items wrap onto multiple lines. * Maps to the `align-content` CSS property via `--cluster-align-content`. * @attr align-content */ this.alignContent = 'flex-start'; } render() { this.style.setProperty('--cluster-justify', resolveVars(this.justify)); this.style.setProperty('--cluster-align', resolveVars(this.align)); this.style.setProperty('--cluster-space', resolveVars(this.space)); this.style.setProperty('--cluster-wrap', resolveVars(this.wrap)); this.style.setProperty('--cluster-align-content', resolveVars(this.alignContent)); return html `<slot></slot>`; } }",
+          "description": "A layout component that arranges items in a flex container, primarily for grouping\nitems like tags or buttons. It provides controls for alignment, justification,\nwrapping, and spacing."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Cluster",
+          "declaration": {
+            "name": "Cluster",
+            "module": "dist/components/cluster.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/components/container.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "Container",
+          "default": "class Container extends LitElement { constructor() { super(...arguments); _Container_instances.add(this); /** * The name assigned to the CSS container context. * This name is used in container queries (`@container`). * Maps to the `container-name` CSS property. * @attr container-name */ this.containerName = null; } firstUpdated(changedProperties) { super.firstUpdated(changedProperties); this.style.setProperty('container-type', 'inline-size'); __classPrivateFieldGet(this, _Container_instances, \"m\", _Container_updateContainerNameStyle).call(this); } updated(changedProperties) { super.updated(changedProperties); if (changedProperties.has('containerName')) { __classPrivateFieldGet(this, _Container_instances, \"m\", _Container_updateContainerNameStyle).call(this); } } render() { return html `<slot></slot>`; } }"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Container",
+          "declaration": {
+            "name": "Container",
+            "module": "dist/components/container.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/components/cover.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "Cover",
+          "default": "class Cover extends LitElement { constructor() { super(...arguments); /** * The minimum height of the cover element. * Maps to the `--cover-min-height` CSS custom property. * @attr min-height */ this.minHeight = '100vh'; /** * The space (gap) between the header, main content, and footer. * Also used as the default padding unless `no-padding` is set. * Maps to the `--cover-space` CSS custom property. * @attr */ this.space = '1rem'; /** * If true, removes the padding around the cover element. * Reflects to the `no-padding` attribute. * @attr no-padding */ this.noPadding = false; this._hasHeader = false; this._hasFooter = false; this._headerSlot = null; this._footerSlot = null; this._handleHeaderChange = () => { // Check if any element nodes are assigned to the slot this._hasHeader = (this._headerSlot?.assignedElements({ flatten: true }) ?? []).length > 0; this.requestUpdate(); // Trigger re-render to apply classes }; this._handleFooterChange = () => { // Check if any element nodes are assigned to the slot this._hasFooter = (this._footerSlot?.assignedElements({ flatten: true }) ?? []).length > 0; this.requestUpdate(); // Trigger re-render to apply classes }; } firstUpdated() { this._headerSlot = this.shadowRoot?.querySelector('slot[name=\"header\"]') ?? null; this._footerSlot = this.shadowRoot?.querySelector('slot[name=\"footer\"]') ?? null; this._headerSlot?.addEventListener('slotchange', this._handleHeaderChange); this._footerSlot?.addEventListener('slotchange', this._handleFooterChange); // Initial check this._handleHeaderChange(); this._handleFooterChange(); } disconnectedCallback() { super.disconnectedCallback(); this._headerSlot?.removeEventListener('slotchange', this._handleHeaderChange); this._footerSlot?.removeEventListener('slotchange', this._handleFooterChange); } render() { this.style.setProperty('--cover-min-height', resolveVars(this.minHeight, '100vh')); this.style.setProperty('--cover-space', resolveVars(this.space, '1rem')); // --cover-padding is handled by CSS based on --cover-space and the [no-padding] attribute const hostClasses = { 'has-header': this._hasHeader, 'has-footer': this._hasFooter, }; // CSS selectors :host(.has-header) and :host(.has-footer) handle conditional styling. // No need to set className directly here. // The hostClasses object itself is not used in the template below, // but the _hasHeader and _hasFooter states trigger updates which allow CSS to apply. return html ` <slot name=\"header\"></slot> <slot class=\"main-content\"></slot> <slot name=\"footer\"></slot> `; } }",
+          "description": "A layout component that covers a container, typically the viewport,\nplacing a header at the top, a footer at the bottom, and centering\nthe main content vertically in the remaining space."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Cover",
+          "declaration": {
+            "name": "Cover",
+            "module": "dist/components/cover.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/components/frame.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "Frame",
+          "default": "class Frame extends LitElement { constructor() { super(...arguments); /** * The aspect ratio for the frame, written as 'width:height' or 'width/height'. * Defaults to '16:9'. * @attr */ this.ratio = '16:9'; } _updateRatioStyles() { const ratioParts = this.ratio.split(/[:/]/); if (ratioParts.length === 2) { const n = Number.parseFloat(ratioParts[0]); const d = Number.parseFloat(ratioParts[1]); if (!Number.isNaN(n) && !Number.isNaN(d) && d !== 0) { this.style.setProperty('--n', String(n)); this.style.setProperty('--d', String(d)); } else { this.style.setProperty('--n', '16'); this.style.setProperty('--d', '9'); } } else { this.style.setProperty('--n', '16'); this.style.setProperty('--d', '9'); } } updated(changedProperties) { super.updated(changedProperties); if (changedProperties.has('ratio')) { this._updateRatioStyles(); } } connectedCallback() { super.connectedCallback(); this._updateRatioStyles(); // Initial calculation } render() { return html `<slot></slot>`; } }",
+          "description": "A layout component that wraps content (typically an image or video)\nand maintains a specific aspect ratio. It uses `aspect-ratio` CSS property."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Frame",
+          "declaration": {
+            "name": "Frame",
+            "module": "dist/components/frame.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/components/grid.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "Grid",
+          "default": "class Grid extends LitElement { constructor() { super(...arguments); /** * The minimum width for items in the grid. * Maps to the `--grid-min` CSS custom property. * Accepts any valid CSS length value. * @attr */ this.min = '10em'; /** * The maximum width for items in the grid. * Maps to the `--grid-max` CSS custom property. * Accepts any valid CSS length value or percentage. * @attr */ this.max = '100%'; /** * The gap between grid items. * Maps to the `--grid-gap` CSS custom property. * Accepts any valid CSS length value. * @attr */ this.gap = '1em'; /** * Controls the grid layout mode: * - `fit`: Uses `auto-fit` to fill the row with as many columns as fit. * - `fill`: Uses `auto-fill` to fill the row, potentially leaving empty tracks. * - `count`: Creates a grid with a fixed number of columns specified by the `count` attribute. * Reflects to the `mode` attribute. * @attr */ this.mode = 'fit'; /** * The number of columns to create when `mode` is set to `count`. * Maps to the `--grid-count` CSS custom property. * @attr */ this.count = 4; } render() { this.style.setProperty('--grid-min-override', resolveVars(this.min)); this.style.setProperty('--grid-max-override', resolveVars(this.max)); this.style.setProperty('--grid-gap', resolveVars(this.gap)); this.style.setProperty('--grid-count-override', String(this.count)); return html `<slot></slot>`; } }",
+          "description": "A layout component that creates a responsive grid using CSS Grid.\nIt supports different modes (`fit`, `fill`, `count`) for controlling column behavior."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Grid",
+          "declaration": {
+            "name": "Grid",
+            "module": "dist/components/grid.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/components/icon.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "Icon",
+          "default": "class Icon extends LitElement { constructor() { super(...arguments); /** * An accessible label for the icon. If provided, sets `role=\"img\"` and `aria-label`. * If null or empty, these attributes are removed. * @attr */ this.label = null; /** * The color of the icon and any adjacent text. * Maps to the `--e-icon-color` CSS custom property. * @attr */ this.color = undefined; /** * The size (width and height) of the slotted SVG icon. * Maps to the `--e-icon-size` CSS custom property. * Accepts any valid CSS length value. * @attr */ this.size = '1em'; /** * The space between the icon and adjacent text. * Maps to the `--e-icon-space` CSS custom property (used as `gap`). * Accepts any valid CSS length value. * @attr */ this.space = '0.25em'; } render() { if (this.label) { this.setAttribute('role', 'img'); this.setAttribute('aria-label', this.label); } else { this.removeAttribute('role'); this.removeAttribute('aria-label'); } if (this.color !== undefined) { this.style.setProperty('--e-icon-color', resolveVars(this.color)); } else { this.style.removeProperty('--e-icon-color'); } this.style.setProperty('--e-icon-size', resolveVars(this.size, '1em')); this.style.setProperty('--e-icon-space', resolveVars(this.space, '0.25em')); return html `<slot></slot>`; } }",
+          "description": "A component for displaying icons, typically SVG, with optional text label\nand control over size, color, and spacing between icon and text.\nIt sets accessibility attributes based on the presence of the label."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Icon",
+          "declaration": {
+            "name": "Icon",
+            "module": "dist/components/icon.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/components/imposter.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "Imposter",
+          "default": "class Imposter extends LitElement { constructor() { super(...arguments); this.breakout = false; this.margin = '0px'; this.fixed = false; /** Block direction alignment (e.g., top/bottom in horizontal writing modes). Maps to `align-block` attribute. */ this.alignBlock = 'center'; /** Inline direction alignment (e.g., left/right in horizontal writing modes). Maps to `align-inline` attribute. */ this.alignInline = 'center'; this.zIndex = '1'; } render() { this.style.setProperty('--imposter-margin', resolveVars(this.margin)); this.style.setProperty('--imposter-z-index', resolveVars(this.zIndex)); return html `<slot></slot>`; } }"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Imposter",
+          "declaration": {
+            "name": "Imposter",
+            "module": "dist/components/imposter.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/components/index.js",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./box.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./stack.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./center.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./cluster.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./sidebar.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./switcher.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./grid.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./frame.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./reel.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./imposter.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./icon.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./cover.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./container.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/components/reel.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "Reel",
+          "default": "class Reel extends LitElement { constructor() { super(...arguments); /** * The width of each item in the reel. * Maps to the `--reel-item-width` CSS custom property. * Accepts any valid CSS length value. * @attr item-width */ this.itemWidth = 'auto'; /** * The gap between items in the reel. * Maps to the `--reel-gap` CSS custom property. * Accepts any valid CSS length value. * @attr */ this.gap = '1rem'; /** * The height of the reel container. * Maps to the `--reel-height` CSS custom property. * Accepts any valid CSS length value. * @attr */ this.height = 'auto'; /** * The padding of the reel container. * Maps to the `--reel-padding` CSS custom property. * Accepts any valid CSS padding value. * @attr */ this.padding = '0'; /** * If true, hides the horizontal scrollbar. * Reflects to the `no-bar` attribute. * @attr no-bar */ this.noBar = false; } render() { this.style.setProperty('--reel-item-width', resolveVars(this.itemWidth)); this.style.setProperty('--reel-gap', resolveVars(this.gap)); this.style.setProperty('--reel-height', resolveVars(this.height)); this.style.setProperty('--reel-padding', resolveVars(this.padding)); return html `<slot></slot>`; } }",
+          "description": "A layout component that creates a horizontally scrolling container.\nUseful for carousels, image galleries, or lists that shouldn't wrap."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Reel",
+          "declaration": {
+            "name": "Reel",
+            "module": "dist/components/reel.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/components/sidebar.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "Sidebar",
+          "default": "class Sidebar extends LitElement { constructor() { super(...arguments); /** * Determines which side the sidebar appears on. * Reflects to the `side` attribute. * @attr */ this.side = 'left'; /** * The width of the sidebar element. If not set, the sidebar takes its intrinsic width. * Maps to the `--sidebar-width` CSS custom property. * Accepts any valid CSS length value. * @attr side-width */ this.sideWidth = undefined; /** * The minimum width of the main content area before the layout wraps. * Maps to the `--sidebar-content-min` CSS custom property. * Accepts any valid CSS length or percentage value. * @attr content-min */ this.contentMin = '50%'; /** * The gap between the sidebar and the main content. * Maps to the `--sidebar-space` CSS custom property. * Accepts any valid CSS length value or CSS variable. * @attr */ this.space = 'var(--s1, 1rem)'; /** * If true, prevents the sidebar and content from stretching vertically, * aligning them to the top instead. * Reflects to the `no-stretch` attribute. * @attr no-stretch */ this.noStretch = false; } render() { this.style.setProperty('--sidebar-width', resolveVars(this.sideWidth)); this.style.setProperty('--sidebar-content-min', resolveVars(this.contentMin)); this.style.setProperty('--sidebar-space', resolveVars(this.space)); return html `<slot name=\"sidebar\"></slot><slot></slot>`; } }",
+          "description": "A layout component that creates a sidebar layout, placing sidebar content\nalongside main content. The sidebar can be positioned on the left or right.\nIt uses Flexbox and allows content to wrap when space is limited."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Sidebar",
+          "declaration": {
+            "name": "Sidebar",
+            "module": "dist/components/sidebar.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/components/stack.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "Stack",
+          "default": "class Stack extends LitElement { constructor() { super(...arguments); /** * The vertical space between stacked items. * Maps to the `--stack-space` CSS custom property. * Accepts any valid CSS length value or CSS variable. * @attr */ this.space = '1.5rem'; /** * The 1-based index after which to inject `margin-block-end: auto`, * pushing subsequent items to the end of the stack. * @attr split-after */ this.splitAfter = null; } _applySplitAfterStyle() { const children = this.shadowRoot?.querySelector('slot')?.assignedElements({ flatten: true }) || []; const splitIndex = this.splitAfter; for (const child of children) { if (child instanceof HTMLElement) { child.style.removeProperty('margin-block-end'); } } if (splitIndex !== null && splitIndex > 0 && splitIndex < children.length) { const targetChild = children[splitIndex - 1]; // Adjust index (1-based to 0-based) if (targetChild instanceof HTMLElement) { targetChild.style.marginBlockEnd = 'auto'; } } } handleSlotChange() { this._applySplitAfterStyle(); } updated(changedProperties) { super.updated(changedProperties); if (changedProperties.has('splitAfter')) { this._applySplitAfterStyle(); } } connectedCallback() { super.connectedCallback(); // Apply initial styles potentially needed by _applySplitAfterStyle this.style.setProperty('--stack-space', resolveVars(this.space)); // Apply splitAfter style after initial render and potentially after slot changes // Use requestAnimationFrame to ensure children are available requestAnimationFrame(() => this._applySplitAfterStyle()); } render() { // Update space property on render if it changes this.style.setProperty('--stack-space', resolveVars(this.space)); return html `<slot @slotchange=${this.handleSlotChange}></slot>`; } }",
+          "description": "A layout component that arranges items vertically with consistent spacing.\nIt uses `flex-direction: column` and applies margin between items.\nOptionally, it can push items apart after a specific child index."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Stack",
+          "declaration": {
+            "name": "Stack",
+            "module": "dist/components/stack.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/components/switcher.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "Switcher",
+          "default": "class Switcher extends LitElement { constructor() { super(...arguments); /** * The container width threshold at which the layout switches from horizontal to vertical. * Accepts any valid CSS length value. Maps to the `--switcher-threshold` CSS custom property. * @attr */ this.threshold = '30rem'; /** * The gap between items. Accepts any valid CSS length value or CSS variable. * Maps to the `--switcher-gap` CSS custom property. * @attr */ this.gap = 'var(--s1, 1rem)'; /** * The maximum number of items that should maintain the horizontal layout before * subsequent items are forced onto new lines (by setting `flex-basis: 100%`). * Set to `Infinity` by default, meaning no limit. * @attr */ this.limit = Number.POSITIVE_INFINITY; } applyLimitStyles() { const children = this.shadowRoot?.querySelector('slot')?.assignedElements({ flatten: true }) || []; const limitNum = this.limit; for (const child of children) { if (child instanceof HTMLElement) { child.style.removeProperty('flex-basis'); } } if (limitNum !== Number.POSITIVE_INFINITY && limitNum > 0 && children.length > limitNum) { for (let i = limitNum; i < children.length; i++) { const child = children[i]; if (child instanceof HTMLElement) { child.style.flexBasis = '100%'; } } } } handleSlotChange() { this.applyLimitStyles(); } render() { this.style.setProperty('--switcher-threshold', resolveVars(this.threshold)); this.style.setProperty('--switcher-gap', resolveVars(this.gap)); return html `<slot @slotchange=${this.handleSlotChange}></slot>`; } }",
+          "description": "A layout component that arranges items horizontally until a specified threshold is reached,\nthen switches to a vertical layout by wrapping items. It can limit the number of items\nthat maintain the horizontal layout before forcing subsequent items onto new lines."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Switcher",
+          "declaration": {
+            "name": "Switcher",
+            "module": "dist/components/switcher.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/utils/index.js",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./resolve-vars.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/utils/resolve-vars.js",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "resolveVars",
+          "parameters": [
+            {
+              "name": "value"
+            },
+            {
+              "name": "defaultValue"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "resolveVars",
+          "declaration": {
+            "name": "resolveVars",
+            "module": "dist/utils/resolve-vars.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist-docs/_astro/Layout.astro_astro_type_script_index_0_lang.CMMECK-C.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "t"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "o",
+          "declaration": {
+            "name": "t",
+            "module": "dist-docs/_astro/Layout.astro_astro_type_script_index_0_lang.CMMECK-C.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "o",
+          "declaration": {
+            "name": "t",
+            "module": "dist-docs/_astro/Layout.astro_astro_type_script_index_0_lang.CMMECK-C.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/box.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A custom element that provides a flexible box layout.",
+          "name": "Box",
+          "cssProperties": [
+            {
+              "description": "The padding of the box. Defaults to `0`. Controlled by the `padding` attribute.",
+              "name": "--box-padding"
+            },
+            {
+              "description": "The border width of the box. Defaults to `0`. Controlled by the `border-width` attribute.",
+              "name": "--box-border-width"
+            },
+            {
+              "description": "The border color of the box. Defaults to `transparent`. Controlled by the `border-color` attribute. Used if `--box-border` is not set.",
+              "name": "--box-border-color"
+            },
+            {
+              "description": "The border shorthand property for the box. Defaults to unset. Controlled by the `border` attribute. Overrides individual border properties if set.",
+              "name": "--box-border"
+            },
+            {
+              "description": "The border radius of the box. Defaults to `0`. Controlled by the `radius` attribute.",
+              "name": "--box-radius"
+            },
+            {
+              "description": "The background color of the box. Defaults to `inherit`. Controlled by the `bg` attribute.",
+              "name": "--box-bg"
+            },
+            {
+              "description": "The text color of the box. Defaults to `currentColor`. Controlled by the `color` attribute.",
+              "name": "--box-color"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The content to be placed inside the box.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "styles",
+              "static": true,
+              "default": "css` :host { display: block; padding: var(--box-padding, 0); border: var(--box-border); border-radius: var(--box-radius, 0); background-color: var(--box-bg, inherit); color: var(--box-color, currentColor); } `"
+            },
+            {
+              "kind": "field",
+              "name": "tag",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "A semantic hint for the role of the box.\nThis attribute does not change the rendered HTML tag itself\nbut can be used for CSS attribute selectors (e.g., `e-box[tag=\"section\"]`)\nor JavaScript targeting. If not set, the attribute is absent."
+            },
+            {
+              "kind": "field",
+              "name": "padding",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The padding of the box. Maps to the `--box-padding` CSS custom property.",
+              "attribute": "padding"
+            },
+            {
+              "kind": "field",
+              "name": "borderWidth",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The border width of the box. Maps to the `--box-border-width` CSS custom property.",
+              "attribute": "border-width"
+            },
+            {
+              "kind": "field",
+              "name": "borderColor",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The border color of the box. Maps to the `--box-border-color` CSS custom property.",
+              "attribute": "border-color"
+            },
+            {
+              "kind": "field",
+              "name": "border",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The border shorthand property for the box. Maps to the `--box-border` CSS custom property.\nIf set, this overrides `borderWidth` and `borderColor`.",
+              "attribute": "border"
+            },
+            {
+              "kind": "field",
+              "name": "radius",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The border radius of the box. Maps to the `--box-radius` CSS custom property.",
+              "attribute": "radius"
+            },
+            {
+              "kind": "field",
+              "name": "bg",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The background color of the box. Maps to the `--box-bg` CSS custom property.",
+              "attribute": "bg"
+            },
+            {
+              "kind": "field",
+              "name": "color",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The text color of the box. Maps to the `--box-color` CSS custom property.",
+              "attribute": "color"
+            },
+            {
+              "kind": "method",
+              "name": "render"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "padding",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The padding of the box. Maps to the `--box-padding` CSS custom property.",
+              "fieldName": "padding"
+            },
+            {
+              "name": "border-width",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The border width of the box. Maps to the `--box-border-width` CSS custom property.",
+              "fieldName": "borderWidth"
+            },
+            {
+              "name": "border-color",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The border color of the box. Maps to the `--box-border-color` CSS custom property.",
+              "fieldName": "borderColor"
+            },
+            {
+              "name": "border",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The border shorthand property for the box. Maps to the `--box-border` CSS custom property.\nIf set, this overrides `borderWidth` and `borderColor`.",
+              "fieldName": "border"
+            },
+            {
+              "name": "radius",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The border radius of the box. Maps to the `--box-radius` CSS custom property.",
+              "fieldName": "radius"
+            },
+            {
+              "name": "bg",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The background color of the box. Maps to the `--box-bg` CSS custom property.",
+              "fieldName": "bg"
+            },
+            {
+              "name": "color",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The text color of the box. Maps to the `--box-color` CSS custom property.",
+              "fieldName": "color"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "e-box",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Box",
+          "declaration": {
+            "name": "Box",
+            "module": "src/components/box.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/center.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A layout component that centers its content horizontally within a maximum width,\nwith optional gutters on either side. It can also center text content or\nintrinsically size its content based on the children.",
+          "name": "Center",
+          "cssProperties": [
+            {
+              "description": "The maximum width of the centered content area. Defaults to `100%`. Controlled by the `max` attribute.",
+              "name": "--center-max-width"
+            },
+            {
+              "description": "The padding on the left and right sides of the content. Defaults to `0`. Controlled by the `gutters` attribute.",
+              "name": "--center-gutters"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The content to be centered.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "styles",
+              "static": true,
+              "default": "css` :host { box-sizing: content-box; display: block; margin-inline: auto; max-inline-size: var(--center-max-width, 100%); padding-inline: var(--center-gutters, 0); } :host([with-text]) { text-align: center; } :host([intrinsic]) { display: flex; flex-direction: column; align-items: center; } `"
+            },
+            {
+              "kind": "field",
+              "name": "tag",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "A semantic hint for the role of the center element.\nDoes not change the rendered tag but can be used for CSS attribute selectors\nor JavaScript targeting.",
+              "attribute": "tag"
+            },
+            {
+              "kind": "field",
+              "name": "max",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The maximum inline size (width) of the centered content.\nMaps to the `--center-max-width` CSS custom property.\nAccepts any valid CSS length value.",
+              "attribute": "max"
+            },
+            {
+              "kind": "field",
+              "name": "gutters",
+              "type": {
+                "text": "string"
+              },
+              "default": "'0'",
+              "description": "The padding on the left and right sides (gutters) of the content.\nMaps to the `--center-gutters` CSS custom property.\nAccepts any valid CSS length value.",
+              "attribute": "gutters"
+            },
+            {
+              "kind": "field",
+              "name": "withText",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "If true, centers the text content within the element (`text-align: center`).\nReflects to the `with-text` attribute.",
+              "attribute": "with-text"
+            },
+            {
+              "kind": "field",
+              "name": "intrinsic",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "If true, centers the element intrinsically based on its content width\n(`display: flex; align-items: center;`).\nReflects to the `intrinsic` attribute.",
+              "attribute": "intrinsic"
+            },
+            {
+              "kind": "method",
+              "name": "render"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "tag",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "A semantic hint for the role of the center element.\nDoes not change the rendered tag but can be used for CSS attribute selectors\nor JavaScript targeting.",
+              "fieldName": "tag"
+            },
+            {
+              "name": "max",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The maximum inline size (width) of the centered content.\nMaps to the `--center-max-width` CSS custom property.\nAccepts any valid CSS length value.",
+              "fieldName": "max"
+            },
+            {
+              "name": "gutters",
+              "type": {
+                "text": "string"
+              },
+              "default": "'0'",
+              "description": "The padding on the left and right sides (gutters) of the content.\nMaps to the `--center-gutters` CSS custom property.\nAccepts any valid CSS length value.",
+              "fieldName": "gutters"
+            },
+            {
+              "name": "with-text",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "If true, centers the text content within the element (`text-align: center`).\nReflects to the `with-text` attribute.",
+              "fieldName": "withText"
+            },
+            {
+              "name": "intrinsic",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "If true, centers the element intrinsically based on its content width\n(`display: flex; align-items: center;`).\nReflects to the `intrinsic` attribute.",
+              "fieldName": "intrinsic"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "e-center",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Center",
+          "declaration": {
+            "name": "Center",
+            "module": "src/components/center.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/cluster.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A layout component that arranges items in a flex container, primarily for grouping\nitems like tags or buttons. It provides controls for alignment, justification,\nwrapping, and spacing.",
+          "name": "Cluster",
+          "cssProperties": [
+            {
+              "description": "Controls whether items wrap. Maps to the `flex-wrap` property. Defaults to `wrap`. Controlled by the `wrap` attribute.",
+              "name": "--cluster-wrap"
+            },
+            {
+              "description": "The gap between items. Defaults to `var(--s1, 1rem)`. Controlled by the `space` attribute.",
+              "name": "--cluster-space"
+            },
+            {
+              "description": "Justification of items along the main axis. Maps to `justify-content`. Defaults to `flex-start`. Controlled by the `justify` attribute.",
+              "name": "--cluster-justify"
+            },
+            {
+              "description": "Alignment of items along the cross axis. Maps to `align-items`. Defaults to `flex-start`. Controlled by the `align` attribute.",
+              "name": "--cluster-align"
+            },
+            {
+              "description": "Alignment of content lines when items wrap. Maps to `align-content`. Defaults to `flex-start`. Controlled by the `align-content` attribute.",
+              "name": "--cluster-align-content"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The items to be arranged within the cluster.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "styles",
+              "static": true,
+              "default": "css` :host { display: flex; flex-wrap: var(--cluster-wrap, wrap); gap: var(--cluster-space, var(--s1, 1rem)); justify-content: var(--cluster-justify, flex-start); align-items: var(--cluster-align, flex-start); align-content: var(--cluster-align-content, flex-start); } `"
+            },
+            {
+              "kind": "field",
+              "name": "tag",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "A semantic hint for the role of the cluster element.\nDoes not change the rendered tag but can be used for CSS attribute selectors\nor JavaScript targeting.",
+              "attribute": "tag"
+            },
+            {
+              "kind": "field",
+              "name": "justify",
+              "type": {
+                "text": "JustifyContent"
+              },
+              "default": "'flex-start'",
+              "description": "Controls the justification of items along the main axis.\nMaps to the `justify-content` CSS property via `--cluster-justify`.",
+              "attribute": "justify"
+            },
+            {
+              "kind": "field",
+              "name": "align",
+              "type": {
+                "text": "AlignItems"
+              },
+              "default": "'flex-start'",
+              "description": "Controls the alignment of items along the cross axis.\nMaps to the `align-items` CSS property via `--cluster-align`.",
+              "attribute": "align"
+            },
+            {
+              "kind": "field",
+              "name": "space",
+              "type": {
+                "text": "string"
+              },
+              "default": "'var(--s1, 1rem)'",
+              "description": "Sets the gap between items.\nMaps to the `gap` CSS property via `--cluster-space`.\nAccepts any valid CSS length value or CSS variable.",
+              "attribute": "space"
+            },
+            {
+              "kind": "field",
+              "name": "wrap",
+              "type": {
+                "text": "FlexWrap"
+              },
+              "default": "'wrap'",
+              "description": "Controls whether items wrap to the next line.\nMaps to the `flex-wrap` CSS property via `--cluster-wrap`.",
+              "attribute": "wrap"
+            },
+            {
+              "kind": "field",
+              "name": "alignContent",
+              "type": {
+                "text": "AlignContent"
+              },
+              "default": "'flex-start'",
+              "description": "Controls the alignment of content lines when items wrap onto multiple lines.\nMaps to the `align-content` CSS property via `--cluster-align-content`.",
+              "attribute": "align-content"
+            },
+            {
+              "kind": "method",
+              "name": "render"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "tag",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "A semantic hint for the role of the cluster element.\nDoes not change the rendered tag but can be used for CSS attribute selectors\nor JavaScript targeting.",
+              "fieldName": "tag"
+            },
+            {
+              "name": "justify",
+              "type": {
+                "text": "JustifyContent"
+              },
+              "default": "'flex-start'",
+              "description": "Controls the justification of items along the main axis.\nMaps to the `justify-content` CSS property via `--cluster-justify`.",
+              "fieldName": "justify"
+            },
+            {
+              "name": "align",
+              "type": {
+                "text": "AlignItems"
+              },
+              "default": "'flex-start'",
+              "description": "Controls the alignment of items along the cross axis.\nMaps to the `align-items` CSS property via `--cluster-align`.",
+              "fieldName": "align"
+            },
+            {
+              "name": "space",
+              "type": {
+                "text": "string"
+              },
+              "default": "'var(--s1, 1rem)'",
+              "description": "Sets the gap between items.\nMaps to the `gap` CSS property via `--cluster-space`.\nAccepts any valid CSS length value or CSS variable.",
+              "fieldName": "space"
+            },
+            {
+              "name": "wrap",
+              "type": {
+                "text": "FlexWrap"
+              },
+              "default": "'wrap'",
+              "description": "Controls whether items wrap to the next line.\nMaps to the `flex-wrap` CSS property via `--cluster-wrap`.",
+              "fieldName": "wrap"
+            },
+            {
+              "name": "align-content",
+              "type": {
+                "text": "AlignContent"
+              },
+              "default": "'flex-start'",
+              "description": "Controls the alignment of content lines when items wrap onto multiple lines.\nMaps to the `align-content` CSS property via `--cluster-align-content`.",
+              "fieldName": "alignContent"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "e-cluster",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Cluster",
+          "declaration": {
+            "name": "Cluster",
+            "module": "src/components/cluster.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/container.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Container",
+          "members": [
+            {
+              "kind": "field",
+              "name": "styles",
+              "static": true,
+              "default": "css` :host { display: block; } `"
+            },
+            {
+              "kind": "field",
+              "name": "tag",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "A semantic hint for the role of the container element.\nDoes not change the rendered tag but can be used for CSS attribute selectors\nor JavaScript targeting.",
+              "attribute": "tag"
+            },
+            {
+              "kind": "field",
+              "name": "containerName",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "The name assigned to the CSS container context.\nThis name is used in container queries (`@container`).\nMaps to the `container-name` CSS property.",
+              "attribute": "container-name"
+            },
+            {
+              "kind": "method",
+              "name": "firstUpdated",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "changedProperties",
+                  "type": {
+                    "text": "PropertyValues<this>"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "updated",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "changedProperties",
+                  "type": {
+                    "text": "PropertyValues<this>"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "#updateContainerNameStyle",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "render"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "tag",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "A semantic hint for the role of the container element.\nDoes not change the rendered tag but can be used for CSS attribute selectors\nor JavaScript targeting.",
+              "fieldName": "tag"
+            },
+            {
+              "name": "container-name",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "The name assigned to the CSS container context.\nThis name is used in container queries (`@container`).\nMaps to the `container-name` CSS property.",
+              "fieldName": "containerName"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Container",
+          "declaration": {
+            "name": "Container",
+            "module": "src/components/container.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/cover.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A layout component that covers a container, typically the viewport,\nplacing a header at the top, a footer at the bottom, and centering\nthe main content vertically in the remaining space.",
+          "name": "Cover",
+          "cssProperties": [
+            {
+              "description": "The minimum height of the cover element. Defaults to `100vh`. Controlled by the `min-height` attribute.",
+              "name": "--cover-min-height"
+            },
+            {
+              "description": "The space (gap) between the header, main content, and footer. Defaults to `1rem`. Controlled by the `space` attribute.",
+              "name": "--cover-space"
+            },
+            {
+              "description": "The padding around the cover element. Defaults to the value of `--cover-space`. Set to `0` when `no-padding` attribute is present.",
+              "name": "--cover-padding"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Content placed at the top.",
+              "name": "header"
+            },
+            {
+              "description": "Default slot for the main content, centered vertically.",
+              "name": ""
+            },
+            {
+              "description": "Content placed at the bottom.",
+              "name": "footer"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "styles",
+              "static": true,
+              "default": "css` :host { display: flex; flex-direction: column; justify-content: space-between; min-block-size: var(--cover-min-height, 100vh); padding: var(--cover-padding, var(--cover-space, 1rem)); box-sizing: border-box; gap: var(--cover-space, 1rem); } ::slotted(*) { margin: 0; } ::slotted([slot=\"header\"]) { flex-shrink: 0; } ::slotted([slot=\"footer\"]) { flex-shrink: 0; } :host([no-padding]) { padding: 0; } `"
+            },
+            {
+              "kind": "field",
+              "name": "minHeight",
+              "type": {
+                "text": "string"
+              },
+              "default": "'100vh'",
+              "description": "The minimum height of the cover element.\nMaps to the `--cover-min-height` CSS custom property.",
+              "attribute": "min-height"
+            },
+            {
+              "kind": "field",
+              "name": "space",
+              "type": {
+                "text": "string"
+              },
+              "default": "'1rem'",
+              "description": "The space (gap) between the header, main content, and footer.\nAlso used as the default padding unless `no-padding` is set.\nMaps to the `--cover-space` CSS custom property.",
+              "attribute": "space"
+            },
+            {
+              "kind": "field",
+              "name": "noPadding",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "If true, removes the padding around the cover element.\nReflects to the `no-padding` attribute.",
+              "attribute": "no-padding"
+            },
+            {
+              "kind": "field",
+              "name": "_hasHeader",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "_hasFooter",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "_headerSlot",
+              "type": {
+                "text": "HTMLSlotElement | null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "_footerSlot",
+              "type": {
+                "text": "HTMLSlotElement | null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "method",
+              "name": "firstUpdated"
+            },
+            {
+              "kind": "field",
+              "name": "_handleHeaderChange",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_handleFooterChange",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "render"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "min-height",
+              "type": {
+                "text": "string"
+              },
+              "default": "'100vh'",
+              "description": "The minimum height of the cover element.\nMaps to the `--cover-min-height` CSS custom property.",
+              "fieldName": "minHeight"
+            },
+            {
+              "name": "space",
+              "type": {
+                "text": "string"
+              },
+              "default": "'1rem'",
+              "description": "The space (gap) between the header, main content, and footer.\nAlso used as the default padding unless `no-padding` is set.\nMaps to the `--cover-space` CSS custom property.",
+              "fieldName": "space"
+            },
+            {
+              "name": "no-padding",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "If true, removes the padding around the cover element.\nReflects to the `no-padding` attribute.",
+              "fieldName": "noPadding"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "e-cover",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Cover",
+          "declaration": {
+            "name": "Cover",
+            "module": "src/components/cover.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/frame.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A layout component that wraps content (typically an image or video)\nand maintains a specific aspect ratio. It uses `aspect-ratio` CSS property.",
+          "name": "Frame",
+          "cssProperties": [
+            {
+              "description": "The numerator of the aspect ratio. Defaults to `16`. Controlled by the `ratio` attribute.",
+              "name": "--n"
+            },
+            {
+              "description": "The denominator of the aspect ratio. Defaults to `9`. Controlled by the `ratio` attribute.",
+              "name": "--d"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The content (e.g., `<img>`, `<video>`) to be framed. Slotted images and videos are automatically styled to fit the frame.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "styles",
+              "static": true,
+              "default": "css` :host { --n: 16; --d: 9; aspect-ratio: var(--n) / var(--d); overflow: hidden; display: flex; justify-content: center; align-items: center; } ::slotted(img), ::slotted(video) { inline-size: 100%; block-size: 100%; object-fit: cover; } `"
+            },
+            {
+              "kind": "field",
+              "name": "tag",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "A semantic hint for the role of the frame element.\nDoes not change the rendered tag but can be used for CSS attribute selectors\nor JavaScript targeting.",
+              "attribute": "tag"
+            },
+            {
+              "kind": "field",
+              "name": "ratio",
+              "type": {
+                "text": "string"
+              },
+              "default": "'16:9'",
+              "description": "The aspect ratio for the frame, written as 'width:height' or 'width/height'.\nDefaults to '16:9'.",
+              "attribute": "ratio"
+            },
+            {
+              "kind": "method",
+              "name": "_updateRatioStyles",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "updated",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "changedProperties",
+                  "type": {
+                    "text": "Map<string | number | symbol, unknown>"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "render"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "tag",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "A semantic hint for the role of the frame element.\nDoes not change the rendered tag but can be used for CSS attribute selectors\nor JavaScript targeting.",
+              "fieldName": "tag"
+            },
+            {
+              "name": "ratio",
+              "type": {
+                "text": "string"
+              },
+              "default": "'16:9'",
+              "description": "The aspect ratio for the frame, written as 'width:height' or 'width/height'.\nDefaults to '16:9'.",
+              "fieldName": "ratio"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "e-frame",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Frame",
+          "declaration": {
+            "name": "Frame",
+            "module": "src/components/frame.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/grid.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A layout component that creates a responsive grid using CSS Grid.\nIt supports different modes (`fit`, `fill`, `count`) for controlling column behavior.",
+          "name": "Grid",
+          "cssProperties": [
+            {
+              "description": "The gap between grid items. Defaults to `1rem`. Controlled by the `gap` attribute.",
+              "name": "--grid-gap"
+            },
+            {
+              "description": "The minimum width for grid items. Defaults to `10em`. Controlled by the `min` attribute. Used in `minmax()`.",
+              "name": "--grid-min"
+            },
+            {
+              "description": "The maximum width for grid items. Defaults to `100%`. Controlled by the `max` attribute. Used in `minmax()`.",
+              "name": "--grid-max"
+            },
+            {
+              "description": "The number of columns when `mode` is `count`. Defaults to `4`. Controlled by the `count` attribute.",
+              "name": "--grid-count"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The items to be placed in the grid.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "styles",
+              "static": true,
+              "default": "css` :host { display: grid; grid-gap: var(--grid-gap, 1rem); --grid-min: var(--grid-min-override, 10em); --grid-max: var(--grid-max-override, 100%); --grid-count: var(--grid-count-override, 4); } :host([mode=\"fit\"]) { grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), var(--grid-max)), 1fr)); } :host([mode=\"fill\"]) { grid-template-columns: repeat(auto-fill, minmax(var(--grid-min), var(--grid-max))); } :host([mode=\"count\"]) { grid-template-columns: repeat(var(--grid-count), minmax(var(--grid-min), var(--grid-max))); } `"
+            },
+            {
+              "kind": "field",
+              "name": "tag",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "A semantic hint for the role of the grid element.\nDoes not change the rendered tag but can be used for CSS attribute selectors\nor JavaScript targeting.",
+              "attribute": "tag"
+            },
+            {
+              "kind": "field",
+              "name": "min",
+              "type": {
+                "text": "string"
+              },
+              "default": "'10em'",
+              "description": "The minimum width for items in the grid.\nMaps to the `--grid-min` CSS custom property.\nAccepts any valid CSS length value.",
+              "attribute": "min"
+            },
+            {
+              "kind": "field",
+              "name": "max",
+              "type": {
+                "text": "string"
+              },
+              "default": "'100%'",
+              "description": "The maximum width for items in the grid.\nMaps to the `--grid-max` CSS custom property.\nAccepts any valid CSS length value or percentage.",
+              "attribute": "max"
+            },
+            {
+              "kind": "field",
+              "name": "gap",
+              "type": {
+                "text": "string"
+              },
+              "default": "'1em'",
+              "description": "The gap between grid items.\nMaps to the `--grid-gap` CSS custom property.\nAccepts any valid CSS length value.",
+              "attribute": "gap"
+            },
+            {
+              "kind": "field",
+              "name": "mode",
+              "type": {
+                "text": "'fit' | 'fill' | 'count'"
+              },
+              "default": "'fit'",
+              "description": "Controls the grid layout mode:\n- `fit`: Uses `auto-fit` to fill the row with as many columns as fit.\n- `fill`: Uses `auto-fill` to fill the row, potentially leaving empty tracks.\n- `count`: Creates a grid with a fixed number of columns specified by the `count` attribute.\nReflects to the `mode` attribute.",
+              "attribute": "mode"
+            },
+            {
+              "kind": "field",
+              "name": "count",
+              "type": {
+                "text": "number"
+              },
+              "default": "4",
+              "description": "The number of columns to create when `mode` is set to `count`.\nMaps to the `--grid-count` CSS custom property.",
+              "attribute": "count"
+            },
+            {
+              "kind": "method",
+              "name": "render"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "tag",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "A semantic hint for the role of the grid element.\nDoes not change the rendered tag but can be used for CSS attribute selectors\nor JavaScript targeting.",
+              "fieldName": "tag"
+            },
+            {
+              "name": "min",
+              "type": {
+                "text": "string"
+              },
+              "default": "'10em'",
+              "description": "The minimum width for items in the grid.\nMaps to the `--grid-min` CSS custom property.\nAccepts any valid CSS length value.",
+              "fieldName": "min"
+            },
+            {
+              "name": "max",
+              "type": {
+                "text": "string"
+              },
+              "default": "'100%'",
+              "description": "The maximum width for items in the grid.\nMaps to the `--grid-max` CSS custom property.\nAccepts any valid CSS length value or percentage.",
+              "fieldName": "max"
+            },
+            {
+              "name": "gap",
+              "type": {
+                "text": "string"
+              },
+              "default": "'1em'",
+              "description": "The gap between grid items.\nMaps to the `--grid-gap` CSS custom property.\nAccepts any valid CSS length value.",
+              "fieldName": "gap"
+            },
+            {
+              "name": "mode",
+              "type": {
+                "text": "'fit' | 'fill' | 'count'"
+              },
+              "default": "'fit'",
+              "description": "Controls the grid layout mode:\n- `fit`: Uses `auto-fit` to fill the row with as many columns as fit.\n- `fill`: Uses `auto-fill` to fill the row, potentially leaving empty tracks.\n- `count`: Creates a grid with a fixed number of columns specified by the `count` attribute.\nReflects to the `mode` attribute.",
+              "fieldName": "mode"
+            },
+            {
+              "name": "count",
+              "type": {
+                "text": "number"
+              },
+              "default": "4",
+              "description": "The number of columns to create when `mode` is set to `count`.\nMaps to the `--grid-count` CSS custom property.",
+              "fieldName": "count"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "e-grid",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Grid",
+          "declaration": {
+            "name": "Grid",
+            "module": "src/components/grid.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/icon.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A component for displaying icons, typically SVG, with optional text label\nand control over size, color, and spacing between icon and text.\nIt sets accessibility attributes based on the presence of the label.",
+          "name": "Icon",
+          "cssProperties": [
+            {
+              "description": "The space between the icon and adjacent text. Defaults to `0.25em`. Controlled by the `space` attribute.",
+              "name": "--e-icon-space"
+            },
+            {
+              "description": "The color of the icon and text. Defaults to `inherit`. Controlled by the `color` attribute.",
+              "name": "--e-icon-color"
+            },
+            {
+              "description": "The width and height of the slotted SVG. Defaults to `1em`. Controlled by the `size` attribute.",
+              "name": "--e-icon-size"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The icon content, usually an `<svg>` element.",
+              "name": ""
+            },
+            {
+              "description": "If text is provided alongside the SVG, it will be displayed next to the icon.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "styles",
+              "static": true,
+              "default": "css` :host { display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; gap: var(--e-icon-space, 0.25em); color: var(--e-icon-color, inherit); } ::slotted(svg) { display: block; width: var(--e-icon-size, 1em); height: var(--e-icon-size, 1em); fill: currentColor; } `"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "An accessible label for the icon. If provided, sets `role=\"img\"` and `aria-label`.\nIf null or empty, these attributes are removed.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "color",
+              "type": {
+                "text": "string | undefined"
+              },
+              "default": "undefined",
+              "description": "The color of the icon and any adjacent text.\nMaps to the `--e-icon-color` CSS custom property.",
+              "attribute": "color"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "string"
+              },
+              "default": "'1em'",
+              "description": "The size (width and height) of the slotted SVG icon.\nMaps to the `--e-icon-size` CSS custom property.\nAccepts any valid CSS length value.",
+              "attribute": "size"
+            },
+            {
+              "kind": "field",
+              "name": "space",
+              "type": {
+                "text": "string"
+              },
+              "default": "'0.25em'",
+              "description": "The space between the icon and adjacent text.\nMaps to the `--e-icon-space` CSS custom property (used as `gap`).\nAccepts any valid CSS length value.",
+              "attribute": "space"
+            },
+            {
+              "kind": "method",
+              "name": "render"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "description": "An accessible label for the icon. If provided, sets `role=\"img\"` and `aria-label`.\nIf null or empty, these attributes are removed.",
+              "fieldName": "label"
+            },
+            {
+              "name": "color",
+              "type": {
+                "text": "string | undefined"
+              },
+              "default": "undefined",
+              "description": "The color of the icon and any adjacent text.\nMaps to the `--e-icon-color` CSS custom property.",
+              "fieldName": "color"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "string"
+              },
+              "default": "'1em'",
+              "description": "The size (width and height) of the slotted SVG icon.\nMaps to the `--e-icon-size` CSS custom property.\nAccepts any valid CSS length value.",
+              "fieldName": "size"
+            },
+            {
+              "name": "space",
+              "type": {
+                "text": "string"
+              },
+              "default": "'0.25em'",
+              "description": "The space between the icon and adjacent text.\nMaps to the `--e-icon-space` CSS custom property (used as `gap`).\nAccepts any valid CSS length value.",
+              "fieldName": "space"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "e-icon",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Icon",
+          "declaration": {
+            "name": "Icon",
+            "module": "src/components/icon.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/imposter.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Imposter",
+          "cssProperties": [
+            {
+              "description": "The logical space between the imposter element and the containing block edges (default: 0px). Applied based on alignment.",
+              "name": "--imposter-margin"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The content to be overlaid.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "styles",
+              "static": true,
+              "default": "css` :host { position: absolute; --margin: var(--imposter-margin, 0px); --z-index: var(--imposter-z-index, 1); z-index: var(--z-index); inset-block-start: 50%; inset-inline-start: 50%; transform: translate(-50%, -50%); } :host([fixed]) { position: fixed; } :host([align-block='start']) { inset-block-start: var(--margin); inset-block-end: auto; } :host([align-block='end']) { inset-block-start: auto; inset-block-end: var(--margin); } :host([align-block='center']) { inset-block-start: 50%; inset-block-end: auto; } :host([align-inline='start']) { inset-inline-start: var(--margin); inset-inline-end: auto; } :host([align-inline='end']) { inset-inline-start: auto; inset-inline-end: var(--margin); } :host([align-inline='center']) { inset-inline-start: 50%; inset-inline-end: auto; } :host([align-block='start']), :host([align-block='end']) { transform: translateY(0); } :host([align-inline='start']), :host([align-inline='end']) { transform: translateX(0); } :host([align-block='center'][align-inline='start']), :host([align-block='center'][align-inline='end']) { transform: translateY(-50%); } :host([align-inline='center'][align-block='start']), :host([align-inline='center'][align-block='end']) { transform: translateX(-50%); } :host([align-block='center'][align-inline='center']) { transform: translate(-50%, -50%); } :host([align-block='start'][align-inline='start']), :host([align-block='start'][align-inline='end']), :host([align-block='end'][align-inline='start']), :host([align-block='end'][align-inline='end']) { transform: translate(0, 0); } :host(:not([breakout])) { overflow: auto; max-inline-size: calc(100% - (var(--margin) * 2)); max-block-size: calc(100% - (var(--margin) * 2)); } `"
+            },
+            {
+              "kind": "field",
+              "name": "breakout",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "margin",
+              "type": {
+                "text": "string"
+              },
+              "default": "'0px'"
+            },
+            {
+              "kind": "field",
+              "name": "fixed",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "alignBlock",
+              "type": {
+                "text": "'start' | 'center' | 'end'"
+              },
+              "default": "'center'",
+              "description": "Block direction alignment (e.g., top/bottom in horizontal writing modes). Maps to `align-block` attribute."
+            },
+            {
+              "kind": "field",
+              "name": "alignInline",
+              "type": {
+                "text": "'start' | 'center' | 'end'"
+              },
+              "default": "'center'",
+              "description": "Inline direction alignment (e.g., left/right in horizontal writing modes). Maps to `align-inline` attribute."
+            },
+            {
+              "kind": "field",
+              "name": "zIndex",
+              "type": {
+                "text": "string"
+              },
+              "default": "'1'"
+            },
+            {
+              "kind": "method",
+              "name": "render"
+            }
+          ],
+          "attributes": [
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Allows the imposter to break out of its container's bounds.",
+              "name": "breakout"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "Sets the logical margin from the aligned edge. Accepts CSS length values (default: '0px').",
+              "name": "margin"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Uses fixed positioning instead of absolute positioning.",
+              "name": "fixed"
+            },
+            {
+              "type": {
+                "text": "'start' | 'center' | 'end'"
+              },
+              "description": "Block direction alignment (e.g., top/bottom in horizontal writing modes).",
+              "name": "alignBlock",
+              "default": "'center'"
+            },
+            {
+              "type": {
+                "text": "'start' | 'center' | 'end'"
+              },
+              "description": "Inline direction alignment (e.g., left/right in horizontal writing modes).",
+              "name": "alignInline",
+              "default": "'center'"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "e-imposter",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Imposter",
+          "declaration": {
+            "name": "Imposter",
+            "module": "src/components/imposter.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./box.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./stack.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./center.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./cluster.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./sidebar.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./switcher.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./grid.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./frame.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./reel.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./imposter.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./icon.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./cover.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./container.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/reel.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A layout component that creates a horizontally scrolling container.\nUseful for carousels, image galleries, or lists that shouldn't wrap.",
+          "name": "Reel",
+          "cssProperties": [
+            {
+              "description": "The height of the reel container. Defaults to `auto`. Controlled by the `height` attribute.",
+              "name": "--reel-height"
+            },
+            {
+              "description": "The padding of the reel container. Defaults to `inherit`. Controlled by the `padding` attribute.",
+              "name": "--reel-padding"
+            },
+            {
+              "description": "The width of individual items in the reel. Defaults to `auto`. Controlled by the `item-width` attribute.",
+              "name": "--reel-item-width"
+            },
+            {
+              "description": "The gap between items in the reel. Defaults to `1rem`. Controlled by the `gap` attribute.",
+              "name": "--reel-gap"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The items to be displayed in the reel.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "styles",
+              "static": true,
+              "default": "css` :host { display: flex; block-size: var(--reel-height, auto); overflow-x: auto; overflow-y: hidden; padding: var(--reel-padding, inherit); } :host([no-bar]) { scrollbar-width: none; } :host([no-bar])::-webkit-scrollbar { display: none; } ::slotted(*) { flex: 0 0 var(--reel-item-width, auto); } ::slotted(img) { block-size: 100%; flex-basis: auto; width: auto; } ::slotted(*:not(:first-child)) { margin-inline-start: var(--reel-gap, 1rem); } `"
+            },
+            {
+              "kind": "field",
+              "name": "itemWidth",
+              "type": {
+                "text": "string"
+              },
+              "default": "'auto'",
+              "description": "The width of each item in the reel.\nMaps to the `--reel-item-width` CSS custom property.\nAccepts any valid CSS length value.",
+              "attribute": "item-width"
+            },
+            {
+              "kind": "field",
+              "name": "gap",
+              "type": {
+                "text": "string"
+              },
+              "default": "'1rem'",
+              "description": "The gap between items in the reel.\nMaps to the `--reel-gap` CSS custom property.\nAccepts any valid CSS length value.",
+              "attribute": "gap"
+            },
+            {
+              "kind": "field",
+              "name": "height",
+              "type": {
+                "text": "string"
+              },
+              "default": "'auto'",
+              "description": "The height of the reel container.\nMaps to the `--reel-height` CSS custom property.\nAccepts any valid CSS length value.",
+              "attribute": "height"
+            },
+            {
+              "kind": "field",
+              "name": "padding",
+              "type": {
+                "text": "string"
+              },
+              "default": "'0'",
+              "description": "The padding of the reel container.\nMaps to the `--reel-padding` CSS custom property.\nAccepts any valid CSS padding value.",
+              "attribute": "padding"
+            },
+            {
+              "kind": "field",
+              "name": "noBar",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "If true, hides the horizontal scrollbar.\nReflects to the `no-bar` attribute.",
+              "attribute": "no-bar"
+            },
+            {
+              "kind": "method",
+              "name": "render"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "item-width",
+              "type": {
+                "text": "string"
+              },
+              "default": "'auto'",
+              "description": "The width of each item in the reel.\nMaps to the `--reel-item-width` CSS custom property.\nAccepts any valid CSS length value.",
+              "fieldName": "itemWidth"
+            },
+            {
+              "name": "gap",
+              "type": {
+                "text": "string"
+              },
+              "default": "'1rem'",
+              "description": "The gap between items in the reel.\nMaps to the `--reel-gap` CSS custom property.\nAccepts any valid CSS length value.",
+              "fieldName": "gap"
+            },
+            {
+              "name": "height",
+              "type": {
+                "text": "string"
+              },
+              "default": "'auto'",
+              "description": "The height of the reel container.\nMaps to the `--reel-height` CSS custom property.\nAccepts any valid CSS length value.",
+              "fieldName": "height"
+            },
+            {
+              "name": "padding",
+              "type": {
+                "text": "string"
+              },
+              "default": "'0'",
+              "description": "The padding of the reel container.\nMaps to the `--reel-padding` CSS custom property.\nAccepts any valid CSS padding value.",
+              "fieldName": "padding"
+            },
+            {
+              "name": "no-bar",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "If true, hides the horizontal scrollbar.\nReflects to the `no-bar` attribute.",
+              "fieldName": "noBar"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "e-reel",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Reel",
+          "declaration": {
+            "name": "Reel",
+            "module": "src/components/reel.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/sidebar.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A layout component that creates a sidebar layout, placing sidebar content\nalongside main content. The sidebar can be positioned on the left or right.\nIt uses Flexbox and allows content to wrap when space is limited.",
+          "name": "Sidebar",
+          "cssProperties": [
+            {
+              "description": "The gap between the sidebar and main content. Defaults to `var(--s1, 1rem)`. Controlled by the `space` attribute.",
+              "name": "--sidebar-space"
+            },
+            {
+              "description": "Vertical alignment of sidebar and main content. Defaults to `stretch`. Set to `flex-start` when `no-stretch` attribute is present.",
+              "name": "--sidebar-align"
+            },
+            {
+              "description": "The minimum width of the main content area before wrapping. Defaults to `50%`. Controlled by the `content-min` attribute.",
+              "name": "--sidebar-content-min"
+            },
+            {
+              "description": "The width of the sidebar. Defaults to `undefined` (intrinsic width). Controlled by the `side-width` attribute.",
+              "name": "--sidebar-width"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The content for the sidebar area.",
+              "name": "sidebar"
+            },
+            {
+              "description": "Default slot for the main content area.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "styles",
+              "static": true,
+              "default": "css` :host { display: flex; flex-wrap: wrap; gap: var(--sidebar-space, var(--s1, 1rem)); align-items: var(--sidebar-align, stretch); } ::slotted(:not([slot=\"sidebar\"])) { flex-basis: 0; flex-grow: 999; min-inline-size: var(--sidebar-content-min, 50%); } ::slotted([slot=\"sidebar\"]) { flex-basis: var(--sidebar-width); flex-grow: 0; } :host([no-stretch]) { align-items: flex-start; /* Override default stretch alignment */ } :host([side=\"right\"]) ::slotted([slot=\"sidebar\"]) { order: 1; } `"
+            },
+            {
+              "kind": "field",
+              "name": "side",
+              "type": {
+                "text": "'left' | 'right'"
+              },
+              "default": "'left'",
+              "description": "Determines which side the sidebar appears on.\nReflects to the `side` attribute.",
+              "attribute": "side"
+            },
+            {
+              "kind": "field",
+              "name": "sideWidth",
+              "type": {
+                "text": "string | undefined"
+              },
+              "default": "undefined",
+              "description": "The width of the sidebar element. If not set, the sidebar takes its intrinsic width.\nMaps to the `--sidebar-width` CSS custom property.\nAccepts any valid CSS length value.",
+              "attribute": "side-width"
+            },
+            {
+              "kind": "field",
+              "name": "contentMin",
+              "type": {
+                "text": "string"
+              },
+              "default": "'50%'",
+              "description": "The minimum width of the main content area before the layout wraps.\nMaps to the `--sidebar-content-min` CSS custom property.\nAccepts any valid CSS length or percentage value.",
+              "attribute": "content-min"
+            },
+            {
+              "kind": "field",
+              "name": "space",
+              "type": {
+                "text": "string"
+              },
+              "default": "'var(--s1, 1rem)'",
+              "description": "The gap between the sidebar and the main content.\nMaps to the `--sidebar-space` CSS custom property.\nAccepts any valid CSS length value or CSS variable.",
+              "attribute": "space"
+            },
+            {
+              "kind": "field",
+              "name": "noStretch",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "If true, prevents the sidebar and content from stretching vertically,\naligning them to the top instead.\nReflects to the `no-stretch` attribute.",
+              "attribute": "no-stretch"
+            },
+            {
+              "kind": "method",
+              "name": "render"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "side",
+              "type": {
+                "text": "'left' | 'right'"
+              },
+              "default": "'left'",
+              "description": "Determines which side the sidebar appears on.\nReflects to the `side` attribute.",
+              "fieldName": "side"
+            },
+            {
+              "name": "side-width",
+              "type": {
+                "text": "string | undefined"
+              },
+              "default": "undefined",
+              "description": "The width of the sidebar element. If not set, the sidebar takes its intrinsic width.\nMaps to the `--sidebar-width` CSS custom property.\nAccepts any valid CSS length value.",
+              "fieldName": "sideWidth"
+            },
+            {
+              "name": "content-min",
+              "type": {
+                "text": "string"
+              },
+              "default": "'50%'",
+              "description": "The minimum width of the main content area before the layout wraps.\nMaps to the `--sidebar-content-min` CSS custom property.\nAccepts any valid CSS length or percentage value.",
+              "fieldName": "contentMin"
+            },
+            {
+              "name": "space",
+              "type": {
+                "text": "string"
+              },
+              "default": "'var(--s1, 1rem)'",
+              "description": "The gap between the sidebar and the main content.\nMaps to the `--sidebar-space` CSS custom property.\nAccepts any valid CSS length value or CSS variable.",
+              "fieldName": "space"
+            },
+            {
+              "name": "no-stretch",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "If true, prevents the sidebar and content from stretching vertically,\naligning them to the top instead.\nReflects to the `no-stretch` attribute.",
+              "fieldName": "noStretch"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "e-sidebar",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Sidebar",
+          "declaration": {
+            "name": "Sidebar",
+            "module": "src/components/sidebar.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/stack.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A layout component that arranges items vertically with consistent spacing.\nIt uses `flex-direction: column` and applies margin between items.\nOptionally, it can push items apart after a specific child index.",
+          "name": "Stack",
+          "cssProperties": [
+            {
+              "description": "The vertical space (margin) between items. Defaults to `1.5rem`. Controlled by the `space` attribute.",
+              "name": "--stack-space"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The items to be stacked vertically.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "styles",
+              "static": true,
+              "default": "css` :host { display: flex; flex-direction: column; justify-content: flex-start; --space: var(--stack-space, 1.5rem); } ::slotted(*) { margin-block: 0; } ::slotted(*:not(:first-child)) { margin-block-start: var(--space); } `"
+            },
+            {
+              "kind": "field",
+              "name": "tag",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "A semantic hint for the role of the stack element.\nDoes not change the rendered tag but can be used for CSS attribute selectors\nor JavaScript targeting.",
+              "attribute": "tag"
+            },
+            {
+              "kind": "field",
+              "name": "space",
+              "type": {
+                "text": "string"
+              },
+              "default": "'1.5rem'",
+              "description": "The vertical space between stacked items.\nMaps to the `--stack-space` CSS custom property.\nAccepts any valid CSS length value or CSS variable.",
+              "attribute": "space"
+            },
+            {
+              "kind": "field",
+              "name": "splitAfter",
+              "type": {
+                "text": "number | null"
+              },
+              "default": "null",
+              "description": "The 1-based index after which to inject `margin-block-end: auto`,\npushing subsequent items to the end of the stack.",
+              "attribute": "split-after"
+            },
+            {
+              "kind": "method",
+              "name": "_applySplitAfterStyle",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "handleSlotChange",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "updated",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "changedProperties",
+                  "type": {
+                    "text": "Map<string | number | symbol, unknown>"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "render"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "tag",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "A semantic hint for the role of the stack element.\nDoes not change the rendered tag but can be used for CSS attribute selectors\nor JavaScript targeting.",
+              "fieldName": "tag"
+            },
+            {
+              "name": "space",
+              "type": {
+                "text": "string"
+              },
+              "default": "'1.5rem'",
+              "description": "The vertical space between stacked items.\nMaps to the `--stack-space` CSS custom property.\nAccepts any valid CSS length value or CSS variable.",
+              "fieldName": "space"
+            },
+            {
+              "name": "split-after",
+              "type": {
+                "text": "number | null"
+              },
+              "default": "null",
+              "description": "The 1-based index after which to inject `margin-block-end: auto`,\npushing subsequent items to the end of the stack.",
+              "fieldName": "splitAfter"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "e-stack",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Stack",
+          "declaration": {
+            "name": "Stack",
+            "module": "src/components/stack.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/switcher.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A layout component that arranges items horizontally until a specified threshold is reached,\nthen switches to a vertical layout by wrapping items. It can limit the number of items\nthat maintain the horizontal layout before forcing subsequent items onto new lines.",
+          "name": "Switcher",
+          "cssProperties": [
+            {
+              "description": "The gap between items. Defaults to `var(--s1, 1rem)`. Controlled by the `gap` attribute.",
+              "name": "--switcher-gap"
+            },
+            {
+              "description": "The container width threshold at which the layout switches. Defaults to `30rem`. Controlled by the `threshold` attribute.",
+              "name": "--switcher-threshold"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The content items to be laid out by the switcher.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "styles",
+              "static": true,
+              "default": "css` :host { display: flex; flex-wrap: wrap; gap: var(--switcher-gap, var(--s1, 1rem)); --threshold: var(--switcher-threshold, 30rem); } ::slotted(*) { flex-grow: 1; flex-basis: calc((var(--threshold) - 100%) * 999); } `"
+            },
+            {
+              "kind": "field",
+              "name": "threshold",
+              "type": {
+                "text": "string"
+              },
+              "default": "'30rem'",
+              "description": "The container width threshold at which the layout switches from horizontal to vertical.\nAccepts any valid CSS length value. Maps to the `--switcher-threshold` CSS custom property.",
+              "attribute": "threshold"
+            },
+            {
+              "kind": "field",
+              "name": "gap",
+              "type": {
+                "text": "string"
+              },
+              "default": "'var(--s1, 1rem)'",
+              "description": "The gap between items. Accepts any valid CSS length value or CSS variable.\nMaps to the `--switcher-gap` CSS custom property.",
+              "attribute": "gap"
+            },
+            {
+              "kind": "field",
+              "name": "limit",
+              "description": "The maximum number of items that should maintain the horizontal layout before\nsubsequent items are forced onto new lines (by setting `flex-basis: 100%`).\nSet to `Infinity` by default, meaning no limit.",
+              "attribute": "limit"
+            },
+            {
+              "kind": "method",
+              "name": "applyLimitStyles"
+            },
+            {
+              "kind": "method",
+              "name": "handleSlotChange"
+            },
+            {
+              "kind": "method",
+              "name": "render"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "threshold",
+              "type": {
+                "text": "string"
+              },
+              "default": "'30rem'",
+              "description": "The container width threshold at which the layout switches from horizontal to vertical.\nAccepts any valid CSS length value. Maps to the `--switcher-threshold` CSS custom property.",
+              "fieldName": "threshold"
+            },
+            {
+              "name": "gap",
+              "type": {
+                "text": "string"
+              },
+              "default": "'var(--s1, 1rem)'",
+              "description": "The gap between items. Accepts any valid CSS length value or CSS variable.\nMaps to the `--switcher-gap` CSS custom property.",
+              "fieldName": "gap"
+            },
+            {
+              "name": "limit",
+              "description": "The maximum number of items that should maintain the horizontal layout before\nsubsequent items are forced onto new lines (by setting `flex-basis: 100%`).\nSet to `Infinity` by default, meaning no limit.",
+              "fieldName": "limit"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "e-switcher",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Switcher",
+          "declaration": {
+            "name": "Switcher",
+            "module": "src/components/switcher.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/utils/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./resolve-vars.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/utils/resolve-vars.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "resolveVars",
+          "return": {
+            "type": {
+              "text": "string"
+            }
+          },
+          "parameters": [
+            {
+              "name": "value",
+              "type": {
+                "text": "string | undefined | null"
+              }
+            },
+            {
+              "name": "defaultValue",
+              "type": {
+                "text": "string"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "resolveVars",
+          "return": {
+            "type": {
+              "text": "string | null"
+            }
+          },
+          "parameters": [
+            {
+              "name": "value",
+              "type": {
+                "text": "string | undefined | null"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "resolveVars",
+          "return": {
+            "type": {
+              "text": "string | null"
+            }
+          },
+          "parameters": [
+            {
+              "name": "value",
+              "type": {
+                "text": "string | undefined | null"
+              }
+            },
+            {
+              "name": "defaultValue",
+              "optional": true,
+              "type": {
+                "text": "string"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "resolveVars",
+          "declaration": {
+            "name": "resolveVars",
+            "module": "src/utils/resolve-vars.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "resolveVars",
+          "declaration": {
+            "name": "resolveVars",
+            "module": "src/utils/resolve-vars.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "resolveVars",
+          "declaration": {
+            "name": "resolveVars",
+            "module": "src/utils/resolve-vars.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "docs/node_modules/@fortawesome/fontawesome-free/js/all.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "docs/node_modules/@fortawesome/fontawesome-free/js/all.min.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "docs/node_modules/@fortawesome/fontawesome-free/js/brands.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "docs/node_modules/@fortawesome/fontawesome-free/js/brands.min.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "docs/node_modules/@fortawesome/fontawesome-free/js/conflict-detection.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "docs/node_modules/@fortawesome/fontawesome-free/js/conflict-detection.min.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "docs/node_modules/@fortawesome/fontawesome-free/js/fontawesome.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "docs/node_modules/@fortawesome/fontawesome-free/js/fontawesome.min.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "docs/node_modules/@fortawesome/fontawesome-free/js/regular.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "docs/node_modules/@fortawesome/fontawesome-free/js/regular.min.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "docs/node_modules/@fortawesome/fontawesome-free/js/solid.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "docs/node_modules/@fortawesome/fontawesome-free/js/solid.min.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "docs/node_modules/@fortawesome/fontawesome-free/js/v4-shims.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "docs/node_modules/@fortawesome/fontawesome-free/js/v4-shims.min.js",
+      "declarations": [],
+      "exports": []
+    }
+  ]
+}

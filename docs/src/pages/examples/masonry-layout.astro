@@ -1,0 +1,790 @@
+---
+// Import the layout component
+import Layout from "../../layouts/Layout.astro";
+// Import custom elements definitions
+import "e-layout";
+---
+
+<Layout headings={[]} title="Pinterest-Style Masonry Layout">
+  <e-box padding="1.5em" borderWidth="0" radius="0">
+    <e-stack space="2em">
+      <div>
+        <h1>Inspiration Gallery</h1>
+        <p>
+          A Pinterest-style masonry layout showcasing various images with
+          different heights. This example demonstrates how to use e-layout
+          components to create a responsive grid that adapts to different screen
+          sizes while maintaining visual interest.
+        </p>
+      </div>
+
+      <e-cluster justify="center" space="0.5em">
+        <button class="filter-btn active">All</button>
+        <button class="filter-btn">Nature</button>
+        <button class="filter-btn">Architecture</button>
+        <button class="filter-btn">Food</button>
+        <button class="filter-btn">Travel</button>
+      </e-cluster>
+
+      <div class="masonry-container">
+        <div class="masonry-layout">
+          <!-- Column 1 -->
+          <e-stack class="masonry-column" space="1em">
+            <!-- Pin 1 -->
+            <e-box
+              class="pin-card"
+              padding="0"
+              borderWidth="0"
+              radius="1em"
+              bg="#fff"
+            >
+              <e-stack space="0.5em">
+                <e-frame ratio="4/5">
+                  <img
+                    src="/e-layout/thumb_1.jpg"
+                    alt="Colorful abstract design"
+                    class="pin-image"
+                  />
+                </e-frame>
+                <e-box padding="0.8em 1em 1em">
+                  <e-stack space="0.8em">
+                    <h3 class="pin-title">Abstract Color Palette</h3>
+                    <p class="pin-description">
+                      Vibrant color combinations for your next design project
+                    </p>
+                    <e-cluster justify="space-between" align="center">
+                      <span class="pin-user">
+                        <e-icon size="1.2em" space="0.4em">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <circle cx="12" cy="8" r="5"></circle>
+                            <path d="M20 21a8 8 0 0 0-16 0"></path>
+                          </svg>
+                          ColorLover
+                        </e-icon>
+                      </span>
+                      <e-cluster space="0.5em">
+                        <button class="pin-action-btn">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <path
+                              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                            ></path>
+                          </svg>
+                        </button>
+                        <button class="pin-action-btn">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"
+                            ></path>
+                            <polyline points="16 6 12 2 8 6"></polyline>
+                            <line x1="12" y1="2" x2="12" y2="15"></line>
+                          </svg>
+                        </button>
+                      </e-cluster>
+                    </e-cluster>
+                  </e-stack>
+                </e-box>
+              </e-stack>
+            </e-box>
+
+            <!-- Pin 4 -->
+            <e-box
+              class="pin-card"
+              padding="0"
+              borderWidth="0"
+              radius="1em"
+              bg="#fff"
+            >
+              <e-stack space="0.5em">
+                <e-frame ratio="3/5">
+                  <img
+                    src="/e-layout/thumb_4.jpg"
+                    alt="Travel destination"
+                    class="pin-image"
+                  />
+                </e-frame>
+                <e-box padding="0.8em 1em 1em">
+                  <e-stack space="0.8em">
+                    <h3 class="pin-title">Scenic Landscapes</h3>
+                    <p class="pin-description">
+                      Breathtaking views from around the world to inspire your
+                      wanderlust
+                    </p>
+                    <e-cluster justify="space-between" align="center">
+                      <span class="pin-user">
+                        <e-icon size="1.2em" space="0.4em">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <circle cx="12" cy="8" r="5"></circle>
+                            <path d="M20 21a8 8 0 0 0-16 0"></path>
+                          </svg>
+                          TravelBug
+                        </e-icon>
+                      </span>
+                      <e-cluster space="0.5em">
+                        <button class="pin-action-btn">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <path
+                              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                            ></path>
+                          </svg>
+                        </button>
+                        <button class="pin-action-btn">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"
+                            ></path>
+                            <polyline points="16 6 12 2 8 6"></polyline>
+                            <line x1="12" y1="2" x2="12" y2="15"></line>
+                          </svg>
+                        </button>
+                      </e-cluster>
+                    </e-cluster>
+                  </e-stack>
+                </e-box>
+              </e-stack>
+            </e-box>
+
+            <!-- Pin 7 -->
+            <e-box
+              class="pin-card"
+              padding="0"
+              borderWidth="0"
+              radius="1em"
+              bg="#fff"
+            >
+              <e-stack space="0.5em">
+                <e-frame ratio="5/3">
+                  <img
+                    src="/e-layout/thumb_1.jpg"
+                    alt="Creative artwork"
+                    class="pin-image"
+                  />
+                </e-frame>
+                <e-box padding="0.8em 1em 1em">
+                  <e-stack space="0.8em">
+                    <h3 class="pin-title">Creative Inspiration</h3>
+                    <p class="pin-description">
+                      Artistic concepts to spark your imagination
+                    </p>
+                    <e-cluster justify="space-between" align="center">
+                      <span class="pin-user">
+                        <e-icon size="1.2em" space="0.4em">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <circle cx="12" cy="8" r="5"></circle>
+                            <path d="M20 21a8 8 0 0 0-16 0"></path>
+                          </svg>
+                          ArtisticSoul
+                        </e-icon>
+                      </span>
+                      <e-cluster space="0.5em">
+                        <button class="pin-action-btn">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <path
+                              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                            ></path>
+                          </svg>
+                        </button>
+                        <button class="pin-action-btn">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"
+                            ></path>
+                            <polyline points="16 6 12 2 8 6"></polyline>
+                            <line x1="12" y1="2" x2="12" y2="15"></line>
+                          </svg>
+                        </button>
+                      </e-cluster>
+                    </e-cluster>
+                  </e-stack>
+                </e-box>
+              </e-stack>
+            </e-box>
+          </e-stack>
+
+          <!-- Column 2 -->
+          <e-stack class="masonry-column" space="1em">
+            <!-- Pin 2 -->
+            <e-box
+              class="pin-card"
+              padding="0"
+              borderWidth="0"
+              radius="1em"
+              bg="#fff"
+            >
+              <e-stack space="0.5em">
+                <e-frame ratio="3/4">
+                  <img
+                    src="/e-layout/thumb_2.jpg"
+                    alt="Modern architecture"
+                    class="pin-image"
+                  />
+                </e-frame>
+                <e-box padding="0.8em 1em 1em">
+                  <e-stack space="0.8em">
+                    <h3 class="pin-title">Modern Architecture</h3>
+                    <p class="pin-description">
+                      Clean lines and geometric shapes define this stunning
+                      building
+                    </p>
+                    <e-cluster justify="space-between" align="center">
+                      <span class="pin-user">
+                        <e-icon size="1.2em" space="0.4em">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <circle cx="12" cy="8" r="5"></circle>
+                            <path d="M20 21a8 8 0 0 0-16 0"></path>
+                          </svg>
+                          ArchDaily
+                        </e-icon>
+                      </span>
+                      <e-cluster space="0.5em">
+                        <button class="pin-action-btn">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <path
+                              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                            ></path>
+                          </svg>
+                        </button>
+                        <button class="pin-action-btn">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"
+                            ></path>
+                            <polyline points="16 6 12 2 8 6"></polyline>
+                            <line x1="12" y1="2" x2="12" y2="15"></line>
+                          </svg>
+                        </button>
+                      </e-cluster>
+                    </e-cluster>
+                  </e-stack>
+                </e-box>
+              </e-stack>
+            </e-box>
+
+            <!-- Pin 5 -->
+            <e-box
+              class="pin-card"
+              padding="0"
+              borderWidth="0"
+              radius="1em"
+              bg="#fff"
+            >
+              <e-stack space="0.5em">
+                <e-frame ratio="4/3">
+                  <img
+                    src="/e-layout/thumb_5.jpg"
+                    alt="Interior design"
+                    class="pin-image"
+                  />
+                </e-frame>
+                <e-box padding="0.8em 1em 1em">
+                  <e-stack space="0.8em">
+                    <h3 class="pin-title">Interior Elegance</h3>
+                    <p class="pin-description">
+                      Sophisticated design elements for a modern living space
+                    </p>
+                    <e-cluster justify="space-between" align="center">
+                      <span class="pin-user">
+                        <e-icon size="1.2em" space="0.4em">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <circle cx="12" cy="8" r="5"></circle>
+                            <path d="M20 21a8 8 0 0 0-16 0"></path>
+                          </svg>
+                          HomeDesigner
+                        </e-icon>
+                      </span>
+                      <e-cluster space="0.5em">
+                        <button class="pin-action-btn">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <path
+                              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                            ></path>
+                          </svg>
+                        </button>
+                        <button class="pin-action-btn">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"
+                            ></path>
+                            <polyline points="16 6 12 2 8 6"></polyline>
+                            <line x1="12" y1="2" x2="12" y2="15"></line>
+                          </svg>
+                        </button>
+                      </e-cluster>
+                    </e-cluster>
+                  </e-stack>
+                </e-box>
+              </e-stack>
+            </e-box>
+
+            <!-- Pin 8 -->
+            <e-box
+              class="pin-card"
+              padding="0"
+              borderWidth="0"
+              radius="1em"
+              bg="#fff"
+            >
+              <e-stack space="0.5em">
+                <e-frame ratio="2/3">
+                  <img
+                    src="/e-layout/thumb_3.jpg"
+                    alt="Fashion design"
+                    class="pin-image"
+                  />
+                </e-frame>
+                <e-box padding="0.8em 1em 1em">
+                  <e-stack space="0.8em">
+                    <h3 class="pin-title">Fashion Forward</h3>
+                    <p class="pin-description">
+                      Trending styles and timeless fashion inspiration
+                    </p>
+                    <e-cluster justify="space-between" align="center">
+                      <span class="pin-user">
+                        <e-icon size="1.2em" space="0.4em">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <circle cx="12" cy="8" r="5"></circle>
+                            <path d="M20 21a8 8 0 0 0-16 0"></path>
+                          </svg>
+                          StyleIcon
+                        </e-icon>
+                      </span>
+                      <e-cluster space="0.5em">
+                        <button class="pin-action-btn">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <path
+                              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                            ></path>
+                          </svg>
+                        </button>
+                        <button class="pin-action-btn">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"
+                            ></path>
+                            <polyline points="16 6 12 2 8 6"></polyline>
+                            <line x1="12" y1="2" x2="12" y2="15"></line>
+                          </svg>
+                        </button>
+                      </e-cluster>
+                    </e-cluster>
+                  </e-stack>
+                </e-box>
+              </e-stack>
+            </e-box>
+          </e-stack>
+
+          <!-- Column 3 -->
+          <e-stack class="masonry-column" space="1em">
+            <!-- Pin 3 -->
+            <e-box
+              class="pin-card"
+              padding="0"
+              borderWidth="0"
+              radius="1em"
+              bg="#fff"
+            >
+              <e-stack space="0.5em">
+                <e-frame ratio="1/1">
+                  <img
+                    src="/e-layout/thumb_3.jpg"
+                    alt="Delicious food"
+                    class="pin-image"
+                  />
+                </e-frame>
+                <e-box padding="0.8em 1em 1em">
+                  <e-stack space="0.8em">
+                    <h3 class="pin-title">Gourmet Delights</h3>
+                    <p class="pin-description">
+                      Exquisite culinary creations to inspire your next meal
+                    </p>
+                    <e-cluster justify="space-between" align="center">
+                      <span class="pin-user">
+                        <e-icon size="1.2em" space="0.4em">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <circle cx="12" cy="8" r="5"></circle>
+                            <path d="M20 21a8 8 0 0 0-16 0"></path>
+                          </svg>
+                          FoodieChef
+                        </e-icon>
+                      </span>
+                      <e-cluster space="0.5em">
+                        <button class="pin-action-btn">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <path
+                              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                            ></path>
+                          </svg>
+                        </button>
+                        <button class="pin-action-btn">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"
+                            ></path>
+                            <polyline points="16 6 12 2 8 6"></polyline>
+                            <line x1="12" y1="2" x2="12" y2="15"></line>
+                          </svg>
+                        </button>
+                      </e-cluster>
+                    </e-cluster>
+                  </e-stack>
+                </e-box>
+              </e-stack>
+            </e-box>
+
+            <!-- Pin 6 -->
+            <e-box
+              class="pin-card"
+              padding="0"
+              borderWidth="0"
+              radius="1em"
+              bg="#fff"
+            >
+              <e-stack space="0.5em">
+                <e-frame ratio="1/1.5">
+                  <img
+                    src="/e-layout/hd720.png"
+                    alt="Technology concept"
+                    class="pin-image"
+                  />
+                </e-frame>
+                <e-box padding="0.8em 1em 1em">
+                  <e-stack space="0.8em">
+                    <h3 class="pin-title">Tech Innovations</h3>
+                    <p class="pin-description">
+                      Cutting-edge technology concepts shaping our future
+                    </p>
+                    <e-cluster justify="space-between" align="center">
+                      <span class="pin-user">
+                        <e-icon size="1.2em" space="0.4em">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <circle cx="12" cy="8" r="5"></circle>
+                            <path d="M20 21a8 8 0 0 0-16 0"></path>
+                          </svg>
+                          TechGuru
+                        </e-icon>
+                      </span>
+                      <e-cluster space="0.5em">
+                        <button class="pin-action-btn">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <path
+                              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                            ></path>
+                          </svg>
+                        </button>
+                        <button class="pin-action-btn">
+                          <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none"
+                          >
+                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"
+                            ></path>
+                            <polyline points="16 6 12 2 8 6"></polyline>
+                            <line x1="12" y1="2" x2="12" y2="15"></line>
+                          </svg>
+                        </button>
+                      </e-cluster>
+                    </e-cluster>
+                  </e-stack>
+                </e-box>
+              </e-stack>
+            </e-box>
+          </e-stack>
+        </div>
+      </div>
+    </e-stack>
+  </e-box>
+</Layout>
+
+<style>
+  /* Page styles */
+  h1 {
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+  }
+
+  /* Filter buttons */
+  .filter-btn {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 0.6em 1.2em;
+    border-radius: 2em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .filter-btn:hover {
+    background-color: #e0e0e0;
+  }
+
+  .filter-btn.active {
+    background-color: #333;
+    color: white;
+  }
+
+  /* Masonry container */
+  .masonry-container {
+    width: 100%;
+    padding: 0.5em;
+  }
+
+  /* Masonry layout */
+  .masonry-layout {
+    display: flex;
+    gap: 1em;
+    width: 100%;
+  }
+
+  .masonry-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Pin card styles */
+  .pin-card {
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+  }
+
+  .pin-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .pin-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  .pin-card:hover .pin-image {
+    transform: scale(1.03);
+  }
+
+  .pin-title {
+    font-size: 1.1em;
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .pin-description {
+    font-size: 0.9em;
+    color: #666;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .pin-user {
+    font-size: 0.85em;
+    color: #555;
+    display: flex;
+    align-items: center;
+  }
+
+  .pin-action-btn {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    padding: 0.5em;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .pin-action-btn:hover {
+    background-color: #f0f0f0;
+    color: #e60023;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 2em;
+    }
+
+    .filter-btn {
+      padding: 0.5em 1em;
+      font-size: 0.9em;
+    }
+
+    .masonry-layout {
+      flex-direction: column;
+    }
+  }
+
+  /* For medium screens, show 2 columns */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .masonry-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

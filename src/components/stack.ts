@@ -1,6 +1,18 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { resolveVars } from '../utils/index.js';
 
+/**
+ * A layout component that arranges items vertically with consistent spacing.
+ * It uses `flex-direction: column` and applies margin between items.
+ * Optionally, it can push items apart after a specific child index.
+ *
+ * @element e-stack
+ *
+ * @slot - The items to be stacked vertically.
+ *
+ * @cssprop --stack-space - The vertical space (margin) between items. Defaults to `1.5rem`. Controlled by the `space` attribute.
+ */
 @customElement('e-stack')
 export class Stack extends LitElement {
   static styles = css`
@@ -8,86 +20,89 @@ export class Stack extends LitElement {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      /* Apply gap using margin on children, controlled by --space */
-      --space: var(--stack-space, 1.5rem); /* Default space from spec */
+      --space: var(--stack-space, 1.5rem);
     }
 
-    /* Apply margin to slotted children */
     ::slotted(*) {
       margin-block: 0;
     }
 
-    /* Add margin-top to all children except the first */
     ::slotted(*:not(:first-child)) {
       margin-block-start: var(--space);
     }
-
-    /* TODO: Implement recursive styling if possible/needed */
-    /* :host([recursive]) ::slotted(*) { ... } might not work due to Shadow DOM */
-
-    /* TODO: Implement splitAfter logic - likely needs JS in updated() */
   `;
 
   /**
-   * The space between child elements. Accepts any valid CSS margin value.
-   * Defaults to '1.5rem'.
+   * A semantic hint for the role of the stack element.
+   * Does not change the rendered tag but can be used for CSS attribute selectors
+   * or JavaScript targeting.
+   * @attr
+   */
+  @property({ type: String })
+  tag?: string;
+
+  /**
+   * The vertical space between stacked items.
+   * Maps to the `--stack-space` CSS custom property.
+   * Accepts any valid CSS length value or CSS variable.
+   * @attr
    */
   @property({ type: String })
   space = '1.5rem';
 
   /**
-   * Whether the space should apply recursively to nested stacks.
-   * Note: Due to Shadow DOM limitations, true recursive application might be difficult.
-   * Defaults to false.
-   */
-  @property({ type: Boolean })
-  recursive = false;
-
-  /**
-   * The index (1-based) after which the stack should split, pushing subsequent items down.
-   * Example: splitAfter=2 will add margin-bottom: auto to the 2nd child.
-   * Defaults to null (no split).
+   * The 1-based index after which to inject `margin-block-end: auto`,
+   * pushing subsequent items to the end of the stack.
+   * @attr split-after
    */
   @property({ type: Number, attribute: 'split-after' })
   splitAfter: number | null = null;
 
-  /**
-   * Updates the CSS custom property for space and handles splitAfter logic.
-   */
-  updated(changedProperties: Map<string | number | symbol, unknown>) {
-    if (changedProperties.has('space')) {
-      this.style.setProperty('--stack-space', this.space);
+  private _applySplitAfterStyle() {
+    const children = this.shadowRoot?.querySelector('slot')?.assignedElements({ flatten: true }) || [];
+    const splitIndex = this.splitAfter;
+
+    for (const child of children) {
+      if (child instanceof HTMLElement) {
+        child.style.removeProperty('margin-block-end');
+      }
     }
 
-    // Handle splitAfter logic - apply margin-bottom: auto to the specified child
-    // This requires accessing slotted nodes, which can be complex.
-    // A simpler approach might be to require users to apply a class/attribute
-    // to the element they want to push down, and style that in CSS.
-    // For now, we'll leave the JS implementation commented out as it needs careful handling.
-    /*
-    if (changedProperties.has('splitAfter') || changedProperties.get('slotchange')) { // Need to react to slot changes too
-      const children = this.shadowRoot?.querySelector('slot')?.assignedElements({ flatten: true }) || [];
-      children.forEach((child, index) => {
-        if (child instanceof HTMLElement) {
-          if (this.splitAfter !== null && index === this.splitAfter - 1) {
-            child.style.marginBottom = 'auto';
-          } else {
-            child.style.marginBottom = ''; // Reset if splitAfter changes
-          }
-        }
-      });
+    if (splitIndex !== null && splitIndex > 0 && splitIndex < children.length) {
+      const targetChild = children[splitIndex - 1]; // Adjust index (1-based to 0-based)
+      if (targetChild instanceof HTMLElement) {
+        targetChild.style.marginBlockEnd = 'auto';
+      }
     }
-    */
+  }
+
+  private handleSlotChange() {
+    this._applySplitAfterStyle();
+  }
+
+  protected updated(changedProperties: Map<string | number | symbol, unknown>): void {
+    super.updated(changedProperties);
+    if (changedProperties.has('splitAfter')) {
+      this._applySplitAfterStyle();
+    }
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    // Apply initial styles potentially needed by _applySplitAfterStyle
+    this.style.setProperty('--stack-space', resolveVars(this.space));
+    // Apply splitAfter style after initial render and potentially after slot changes
+    // Use requestAnimationFrame to ensure children are available
+    requestAnimationFrame(() => this._applySplitAfterStyle());
   }
 
   render() {
-    // Listen for slot changes to potentially re-run splitAfter logic
-    // return html`<slot @slotchange=${() => this.requestUpdate('slotchange')}></slot>`;
-    return html`<slot></slot>`;
+    // Update space property on render if it changes
+    this.style.setProperty('--stack-space', resolveVars(this.space));
+    return html`<slot @slotchange=${this.handleSlotChange}></slot>`;
   }
 }
 
-// Type definition for custom element in the global scope
 declare global {
   interface HTMLElementTagNameMap {
     'e-stack': Stack;

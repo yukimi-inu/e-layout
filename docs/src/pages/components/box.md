@@ -1,11 +1,11 @@
 ---
 layout: ../../layouts/Layout.astro
-title: 'Box Component'
+title: 'Box Component (e-box)'
 ---
 
 # Box (`<e-box>`)
 
-The `e-box` component is the most fundamental layout primitive. It acts as a simple block-level container or wrapper around its content, primarily used to apply padding or other basic block styles.
+The `e-box` component is a fundamental layout primitive that acts as a simple block-level container. It provides basic styling options like padding, border, background color, text color, and border radius through CSS custom properties and corresponding element attributes.
 
 ## Basic Usage
 
@@ -13,39 +13,37 @@ The `e-box` component is the most fundamental layout primitive. It acts as a sim
 <e-box>This content is inside a Box.</e-box>
 ```
 
-## Example
+## Examples
 
-Here's a live example:
+**Styled Box: `padding="1.5rem" border-width="2px" border-color="blue" radius="0.5rem" bg="slategray" color="white"`**
 
 <div class="example-container">
-  <e-box padding="1.5rem" style="border: 1px dashed blue;">
-    This content is inside an e-box component with `padding="1.5rem"`.
-  </e-box>
+  <div class="example-wrapper">
+    <e-box tag="section" padding="1.5rem" border="4px solid var(--border-color)" radius="0.5rem" bg="--color-bg-example-blue" color="--color-text-therity">
+      This box uses `tag="section"` and has custom styles applied via attributes (padding, border, radius, background, color).
+    </e-box>
+  </div>
 </div>
-
-<style>
-.example-container {
-  background-color: #f0f0f0;
-  padding: 1rem;
-  margin-top: 1rem;
-  border-radius: 4px;
-}
-</style>
-
-<script>
-  // Import the component definition to register the custom element
-  // The alias 'e-layout/box' is configured in astro.config.mjs
-  import 'e-layout/box';
-</script>
 
 ## Properties
 
-*   **`padding`**: `string` (Default: `'0'`)
-    *   Sets the padding inside the box. Accepts any valid CSS padding value (e.g., `'1rem'`, `'0.5rem 1rem'`).
+*   **`tag`** `<string>` (Default: `undefined`)
+    *   Provides a semantic hint (e.g., 'section', 'article'). Does not change the rendered tag. Useful for CSS selectors (`e-box[tag="..."]`). Attribute: `tag`.
+*   **`padding`** `<string>` (Default: `0`)
+    *   Sets the padding inside the box. Accepts any valid CSS padding value. Maps to `--box-padding`. Attribute: `padding`.
+*   **`border-width`** `<string>` (Default: `0`)
+    *   Sets the border width. Maps to `--box-border-width`. Attribute: `border-width`.
+*   **`border-color`** `<string>` (Default: `transparent`)
+    *   Sets the border color. Maps to `--box-border-color`. Used if `border` is not set. Attribute: `border-color`.
+*   **`border`** `<string>` (Default: `unset`)
+    *   Sets the border using CSS shorthand. Maps to `--box-border`. Overrides `border-width` and `border-color`. Example: `"1px solid black"`. Attribute: `border`.
+*   **`radius`** `<string>` (Default: `0`)
+    *   Sets the border radius. Maps to `--box-radius`. Attribute: `radius`.
+*   **`bg`** `<string>` (Default: `inherit`)
+    *   Sets the background color. Maps to `--box-bg`. Attribute: `bg`.
+*   **`color`** `<string>` (Default: `currentColor`)
+    *   Sets the text color. Maps to `--box-color`. Attribute: `color`.
 
-## Styling
-
-*   **`--box-padding`**: (Default: `0`)
-    *   Overrides the `padding` property via CSS.
-
-You can also apply standard CSS like `border`, `background-color`, etc., directly to the `e-box` element.
+<style>
+/* .example-container and .example-wrapper styles are defined globally */
+</style>

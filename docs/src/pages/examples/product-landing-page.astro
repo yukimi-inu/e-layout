@@ -1,0 +1,291 @@
+---
+// Import the layout component
+import Layout from "../../layouts/Layout.astro";
+// Import custom elements definitions
+import "e-layout";
+---
+
+<Layout headings={[]} title="Product Landing Page Example">
+  <p>
+    This example demonstrates a typical product landing page layout, including a
+    hero section, feature highlights, pricing, and a call to action.
+  </p>
+
+  <style>
+    .page-header,
+    .page-footer {
+      padding: 1em 2em;
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #e9ecef;
+    }
+    .page-footer {
+      border-top: 1px solid #e9ecef;
+      border-bottom: none;
+      margin-top: 3em;
+      text-align: center;
+      color: #6c757d;
+      font-size: 0.9em;
+    }
+    .hero-section {
+      padding: 4em 2em;
+      background-color: #e9ecef; /* Light background for hero */
+      text-align: center;
+    }
+    .hero-section h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5em;
+    }
+    .hero-section p {
+      font-size: 1.2rem;
+      color: #495057;
+      margin-bottom: 1.5em;
+    }
+    .section {
+      padding: 3em 0;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 1.5em;
+      color: #343a40;
+    }
+    .feature-item {
+      text-align: center;
+    }
+    .feature-icon {
+      font-size: 2.5em; /* Make icon larger */
+      margin-bottom: 0.5em;
+      color: #007bff; /* Example color */
+    }
+    .feature-item h3 {
+      font-size: 1.2em;
+      margin-bottom: 0.5em;
+    }
+    .feature-item p {
+      color: #6c757d;
+    }
+    .pricing-card {
+      border: 1px solid #dee2e6;
+      border-radius: 0.5em;
+      background-color: #fff;
+      text-align: center;
+    }
+    .pricing-card-header {
+      padding: 1.5em;
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+      border-top-left-radius: 0.5em;
+      border-top-right-radius: 0.5em;
+    }
+    .pricing-card-header h3 {
+      margin: 0;
+      font-size: 1.3em;
+    }
+    .pricing-card-body {
+      padding: 1.5em;
+    }
+    .price {
+      font-size: 2.5em;
+      font-weight: bold;
+      color: #212529;
+      margin-bottom: 0.2em;
+    }
+    .price-term {
+      color: #6c757d;
+      margin-bottom: 1em;
+    }
+    .pricing-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.5em 0;
+    }
+    .pricing-card li {
+      margin-bottom: 0.5em;
+      color: #495057;
+    }
+    .cta-section {
+      background-color: #007bff;
+      color: #fff;
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5em;
+    }
+    .cta-section p {
+      margin-bottom: 1.5em;
+      opacity: 0.9;
+    }
+    .button {
+      /* Basic button styling */
+      display: inline-block;
+      padding: 0.8em 1.5em;
+      font-size: 1rem;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 0.3em;
+      cursor: pointer;
+      border: none;
+    }
+    .button-primary {
+      background-color: #007bff;
+      color: #fff;
+    }
+    .button-secondary {
+      background-color: #6c757d;
+      color: #fff;
+    }
+    .button-outline {
+      background-color: transparent;
+      color: #007bff;
+      border: 1px solid #007bff;
+    }
+    .button-large {
+      font-size: 1.2rem;
+      padding: 1em 2em;
+    }
+  </style>
+
+  <div class="example-page-container">
+    <e-box class="page-header">
+      <e-cluster justify="space-between" align="center">
+        <div><strong>AwesomeProduct</strong></div>
+        <nav>
+          <e-cluster space="1em" align="center">
+            <a href="#">Features</a>
+            <a href="#">Pricing</a>
+            <a href="#">Docs</a>
+            <a href="#" class="button button-outline">Log In</a>
+          </e-cluster>
+        </nav>
+      </e-cluster>
+    </e-box>
+
+    <e-stack space="0">
+      <!-- Use stack to manage sections vertically -->
+
+      <e-box class="hero-section">
+        <e-center max="60ch">
+          <h1>The Best Solution for Your Needs</h1>
+          <p>
+            Revolutionize your workflow with our innovative platform. Simple,
+            powerful, and effective.
+          </p>
+          <e-cluster justify="center" space="1em">
+            <a href="#" class="button button-primary button-large"
+              >Get Started Free</a
+            >
+            <a href="#" class="button button-secondary button-large"
+              >Learn More</a
+            >
+          </e-cluster>
+        </e-center>
+      </e-box>
+
+      <e-box class="section features-section">
+        <e-center max="80rem" gutters="1rem">
+          <h2 class="section-title">Why Choose AwesomeProduct?</h2>
+          <e-grid min="15em" gap="2em">
+            <div class="feature-item">
+              <div class="feature-icon">🚀</div>
+              <h3>Blazing Fast</h3>
+              <p>Experience unparalleled speed and performance.</p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">🔒</div>
+              <h3>Secure & Reliable</h3>
+              <p>Your data is safe with our enterprise-grade security.</p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">💡</div>
+              <h3>Easy to Use</h3>
+              <p>Intuitive design makes getting started a breeze.</p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">⚙️</div>
+              <h3>Highly Customizable</h3>
+              <p>Tailor the platform to fit your exact needs.</p>
+            </div>
+          </e-grid>
+        </e-center>
+      </e-box>
+
+      <e-box class="section pricing-section" bg="#f8f9fa">
+        <!-- Slightly different background for pricing -->
+        <e-center max="80rem" gutters="1rem">
+          <h2 class="section-title">Simple, Transparent Pricing</h2>
+          <e-grid min="18em" gap="1.5em">
+            <e-box class="pricing-card">
+              <div class="pricing-card-header"><h3>Basic</h3></div>
+              <div class="pricing-card-body">
+                <div class="price">$10</div>
+                <div class="price-term">per month</div>
+                <ul>
+                  <li>Feature A</li>
+                  <li>Feature B</li>
+                  <li>Basic Support</li>
+                </ul>
+                <a href="#" class="button button-outline">Choose Plan</a>
+              </div>
+            </e-box>
+            <e-box class="pricing-card" border="2px solid #007bff">
+              <!-- Highlighted plan -->
+              <div
+                class="pricing-card-header"
+                style="background-color: #007bff; color: #fff;"
+              >
+                <h3>Pro</h3>
+              </div>
+              <div class="pricing-card-body">
+                <div class="price">$25</div>
+                <div class="price-term">per month</div>
+                <ul>
+                  <li>All Basic Features</li>
+                  <li>Feature C & D</li>
+                  <li>Priority Support</li>
+                  <li>Advanced Analytics</li>
+                </ul>
+                <a href="#" class="button button-primary">Choose Plan</a>
+              </div>
+            </e-box>
+            <e-box class="pricing-card">
+              <div class="pricing-card-header"><h3>Enterprise</h3></div>
+              <div class="pricing-card-body">
+                <div class="price">Custom</div>
+                <div class="price-term">contact us</div>
+                <ul>
+                  <li>All Pro Features</li>
+                  <li>Dedicated Account Manager</li>
+                  <li>Custom Integrations</li>
+                  <li>SLA</li>
+                </ul>
+                <a href="#" class="button button-outline">Contact Sales</a>
+              </div>
+            </e-box>
+          </e-grid>
+        </e-center>
+      </e-box>
+
+      <e-box class="section cta-section" padding="4em 2em">
+        <e-center max="60ch">
+          <h2>Ready to Get Started?</h2>
+          <p>
+            Sign up today and see how AwesomeProduct can transform your
+            business.
+          </p>
+          <a
+            href="#"
+            class="button button-secondary button-large"
+            style="background-color: #fff; color: #007bff;"
+            >Start Your Free Trial</a
+          >
+        </e-center>
+      </e-box>
+    </e-stack>
+
+    <e-box class="page-footer">
+      &copy; 2025 AwesomeProduct, Inc. All rights reserved.
+    </e-box>
+  </div>
+</Layout>

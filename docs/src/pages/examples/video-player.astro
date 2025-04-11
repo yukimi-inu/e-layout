@@ -1,0 +1,662 @@
+---
+// Import the layout component
+import Layout from "../../layouts/Layout.astro";
+// Import custom elements definitions
+import "e-layout";
+---
+
+<Layout headings={[]} title="Video Player Page Example">
+  <p>
+    This example demonstrates a modern video streaming platform layout,
+    featuring a main video player, interactive elements, and a sidebar for
+    related content, using various e-layout components.
+  </p>
+
+  <style>
+    body {
+      background-color: #0f0f0f;
+      color: #f1f1f1;
+    }
+    .example-page-container {
+      background-color: #0f0f0f;
+      color: #f1f1f1;
+      padding: 0 2em;
+    }
+    .page-header {
+      padding: 0.8em 0;
+      background-color: #0f0f0f;
+      border-bottom: 1px solid #272727;
+      margin-bottom: 1.5em;
+    }
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #ff0000;
+    }
+    .search-bar {
+      flex-grow: 1;
+      max-width: 40em;
+      margin: 0 2em;
+      position: relative;
+    }
+    .search-input {
+      width: 100%;
+      padding: 0.5em 1em 0.5em 2.5em;
+      border-radius: 1.5em;
+      border: 1px solid #303030;
+      background-color: #121212;
+      color: #f1f1f1;
+    }
+    .search-icon {
+      position: absolute;
+      left: 0.8em;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #aaa;
+    }
+    .user-actions {
+      display: flex;
+      gap: 1.5em;
+      align-items: center;
+    }
+    .user-avatar {
+      width: 2em;
+      height: 2em;
+      border-radius: 50%;
+      background-color: #4285f4;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: bold;
+    }
+    .video-player-area {
+      background-color: #000;
+    }
+    .video-placeholder {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .video-info {
+      padding: 1em 0;
+    }
+    .video-title {
+      font-size: 1.4em;
+      margin: 0 0 0.5em 0;
+    }
+    .video-stats {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1em;
+      padding-bottom: 1em;
+      border-bottom: 1px solid #272727;
+    }
+    .views-date {
+      color: #aaa;
+      font-size: 0.9em;
+    }
+    .action-button {
+      background: none;
+      border: none;
+      color: #f1f1f1;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      cursor: pointer;
+      padding: 0.5em 0.8em;
+      border-radius: 1.5em;
+    }
+    .action-button:hover {
+      background-color: #272727;
+    }
+    .action-icon {
+      width: 1.5em;
+      height: 1.5em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .channel-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 1em 0;
+      padding-bottom: 1em;
+      border-bottom: 1px solid #272727;
+    }
+    .channel-details {
+      display: flex;
+      gap: 1em;
+      align-items: center;
+    }
+    .channel-avatar {
+      width: 3em;
+      height: 3em;
+      border-radius: 50%;
+      background-color: #ff0000;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: bold;
+    }
+    .channel-text h3 {
+      margin: 0 0 0.2em 0;
+      font-size: 1em;
+    }
+    .channel-text p {
+      margin: 0;
+      color: #aaa;
+      font-size: 0.9em;
+    }
+    .subscribe-button {
+      background-color: #cc0000;
+      color: white;
+      border: none;
+      padding: 0.6em 1.2em;
+      border-radius: 1.5em;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .subscribe-button:hover {
+      background-color: #aa0000;
+    }
+    .video-description {
+      background-color: #1f1f1f;
+      padding: 1em;
+      border-radius: 0.8em;
+      margin-bottom: 1.5em;
+    }
+    .description-text {
+      margin: 0;
+      line-height: 1.5;
+    }
+    .show-more {
+      color: #aaa;
+      font-weight: bold;
+      margin-top: 0.5em;
+      cursor: pointer;
+    }
+    .comments-section {
+      margin-top: 1.5em;
+    }
+    .comments-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1em;
+    }
+    .comments-count {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    .sort-button {
+      color: #aaa;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      cursor: pointer;
+    }
+    .comment-input {
+      display: flex;
+      gap: 1em;
+      margin-bottom: 1.5em;
+    }
+    .user-comment-avatar {
+      width: 2.5em;
+      height: 2.5em;
+      border-radius: 50%;
+      background-color: #4285f4;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: bold;
+    }
+    .comment-box {
+      flex-grow: 1;
+      border-bottom: 1px solid #272727;
+      padding-bottom: 0.5em;
+    }
+    .comment-box input {
+      width: 100%;
+      background: none;
+      border: none;
+      color: #f1f1f1;
+      font-size: 1em;
+      padding: 0.5em 0;
+    }
+    .comment-box input:focus {
+      outline: none;
+    }
+    .comment-item {
+      display: flex;
+      gap: 1em;
+      margin-bottom: 1.5em;
+    }
+    .comment-content h4 {
+      margin: 0 0 0.2em 0;
+      font-size: 0.9em;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+    .comment-date {
+      color: #aaa;
+      font-size: 0.8em;
+      font-weight: normal;
+    }
+    .comment-text {
+      margin: 0;
+      line-height: 1.4;
+      font-size: 0.95em;
+    }
+    .comment-actions {
+      display: flex;
+      gap: 1em;
+      margin-top: 0.5em;
+      color: #aaa;
+      font-size: 0.9em;
+    }
+    .comment-action {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      cursor: pointer;
+    }
+    .related-item {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1em;
+      cursor: pointer;
+    }
+    .related-item:hover .related-info h4 {
+      color: #3ea6ff;
+    }
+    .related-thumbnail {
+      position: relative;
+      margin-bottom: 0.5em;
+    }
+    .thumbnail-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 0.5em;
+    }
+    .video-duration {
+      position: absolute;
+      bottom: 0.5em;
+      right: 0.5em;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 0.1em 0.4em;
+      border-radius: 0.2em;
+      font-size: 0.8em;
+    }
+    .related-info h4 {
+      margin: 0 0 0.3em 0;
+      font-size: 0.95em;
+      line-height: 1.3;
+    }
+    .related-info p {
+      margin: 0 0 0.2em 0;
+      font-size: 0.85em;
+      color: #aaa;
+    }
+    .tag {
+      display: inline-block;
+      background-color: #272727;
+      color: #3ea6ff;
+      padding: 0.3em 0.8em;
+      border-radius: 1em;
+      font-size: 0.85em;
+      margin-right: 0.5em;
+      margin-bottom: 0.5em;
+      cursor: pointer;
+    }
+    .tag:hover {
+      background-color: #3a3a3a;
+    }
+    .main-content-wrapper {
+      padding: 0 1.5em;
+    }
+  </style>
+
+  <div class="example-page-container">
+    <!-- Header -->
+    <header class="page-header">
+      <div class="header-content">
+        <div class="logo">VideoTube</div>
+        <div class="search-bar">
+          <i class="fa-solid fa-search search-icon"></i>
+          <input type="text" class="search-input" placeholder="Search" />
+        </div>
+        <div class="user-actions">
+          <e-icon label="Upload" space="0.3em">
+            <div class="action-icon">
+              <i class="fa-solid fa-upload"></i>
+            </div>
+          </e-icon>
+          <e-icon label="Notifications" space="0.3em">
+            <div class="action-icon">
+              <i class="fa-solid fa-bell"></i>
+            </div>
+          </e-icon>
+          <div class="user-avatar">U</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content with Sidebar -->
+    <e-sidebar side="right" side-width="20em" space="1em" content-min="65%">
+      <!-- Main Content Area (Video Player and Info) -->
+      <div class="main-content-wrapper">
+        <e-stack space="1em">
+          <e-box class="video-player-area">
+            <e-frame ratio="16:9">
+              <img
+                src="/e-layout/hd720.png"
+                alt="Video thumbnail"
+                class="video-placeholder"
+              />
+              <!-- Replace with actual <video> or <iframe> -->
+            </e-frame>
+          </e-box>
+
+          <div class="video-info">
+            <h1 class="video-title">
+              Building Responsive Layouts with CSS Grid and Flexbox
+            </h1>
+
+            <div class="video-stats">
+              <div class="views-date">
+                <span>1,245,678 views</span> • <span>Apr 2, 2025</span>
+              </div>
+              <e-cluster space="0.5em" justify="flex-end">
+                <button class="action-button">
+                  <div class="action-icon">
+                    <i class="fa-solid fa-thumbs-up"></i>
+                  </div>
+                  <span>24K</span>
+                </button>
+                <button class="action-button">
+                  <div class="action-icon">
+                    <i class="fa-solid fa-thumbs-down"></i>
+                  </div>
+                  <span>125</span>
+                </button>
+                <button class="action-button">
+                  <div class="action-icon">
+                    <i class="fa-solid fa-share"></i>
+                  </div>
+                  <span>Share</span>
+                </button>
+                <button class="action-button">
+                  <div class="action-icon">
+                    <i class="fa-solid fa-download"></i>
+                  </div>
+                  <span>Download</span>
+                </button>
+                <button class="action-button">
+                  <div class="action-icon">
+                    <i class="fa-solid fa-ellipsis"></i>
+                  </div>
+                </button>
+              </e-cluster>
+            </div>
+
+            <div class="channel-info">
+              <div class="channel-details">
+                <div class="channel-avatar">C</div>
+                <div class="channel-text">
+                  <h3>CodeMaster</h3>
+                  <p>1.2M subscribers</p>
+                </div>
+              </div>
+              <button class="subscribe-button">Subscribe</button>
+            </div>
+
+            <e-box
+              class="video-description"
+              padding="1em"
+              bg="#1f1f1f"
+              radius="0.8em"
+            >
+              <p class="description-text">
+                In this comprehensive tutorial, we explore modern CSS layout
+                techniques using Grid and Flexbox. Learn how to create
+                responsive, maintainable layouts for any screen size. We'll
+                cover best practices, common patterns, and advanced techniques
+                that will level up your frontend development skills.
+              </p>
+              <div class="show-more">Show more</div>
+            </e-box>
+
+            <e-cluster space="0.5em" wrap="wrap">
+              <div class="tag">#CSS</div>
+              <div class="tag">#WebDevelopment</div>
+              <div class="tag">#Responsive</div>
+              <div class="tag">#Frontend</div>
+              <div class="tag">#CSSGrid</div>
+              <div class="tag">#Flexbox</div>
+            </e-cluster>
+          </div>
+
+          <e-box class="comments-section">
+            <div class="comments-header">
+              <div class="comments-count">1,245 Comments</div>
+              <div class="sort-button">
+                <e-icon label="Sort" space="0.3em">
+                  <div class="action-icon">
+                    <i class="fa-solid fa-sort"></i>
+                  </div>
+                  <span>Sort by</span>
+                </e-icon>
+              </div>
+            </div>
+
+            <div class="comment-input">
+              <div class="user-comment-avatar">U</div>
+              <div class="comment-box">
+                <input type="text" placeholder="Add a comment..." />
+              </div>
+            </div>
+
+            <e-stack space="1.5em">
+              <div class="comment-item">
+                <div class="user-comment-avatar">A</div>
+                <div class="comment-content">
+                  <h4>
+                    Alex Johnson <span class="comment-date">2 days ago</span>
+                  </h4>
+                  <p class="comment-text">
+                    This tutorial was exactly what I needed! I've been
+                    struggling with CSS Grid for weeks, and your explanations
+                    made everything click. Thank you!
+                  </p>
+                  <div class="comment-actions">
+                    <div class="comment-action">
+                      <i class="fa-solid fa-thumbs-up"></i>
+                      <span>142</span>
+                    </div>
+                    <div class="comment-action">
+                      <i class="fa-solid fa-thumbs-down"></i>
+                    </div>
+                    <div class="comment-action">Reply</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="comment-item">
+                <div class="user-comment-avatar">S</div>
+                <div class="comment-content">
+                  <h4>
+                    Sarah Miller <span class="comment-date">1 week ago</span>
+                  </h4>
+                  <p class="comment-text">
+                    Could you make a follow-up video on CSS animations and
+                    transitions? Your teaching style is so clear and easy to
+                    follow!
+                  </p>
+                  <div class="comment-actions">
+                    <div class="comment-action">
+                      <i class="fa-solid fa-thumbs-up"></i>
+                      <span>89</span>
+                    </div>
+                    <div class="comment-action">
+                      <i class="fa-solid fa-thumbs-down"></i>
+                    </div>
+                    <div class="comment-action">Reply</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="comment-item">
+                <div class="user-comment-avatar">D</div>
+                <div class="comment-content">
+                  <h4>
+                    David Chen <span class="comment-date">3 weeks ago</span>
+                  </h4>
+                  <p class="comment-text">
+                    I've been using these techniques on my latest project and
+                    the difference is night and day. No more hacky solutions or
+                    excessive media queries. Thanks for sharing your knowledge!
+                  </p>
+                  <div class="comment-actions">
+                    <div class="comment-action">
+                      <i class="fa-solid fa-thumbs-up"></i>
+                      <span>56</span>
+                    </div>
+                    <div class="comment-action">
+                      <i class="fa-solid fa-thumbs-down"></i>
+                    </div>
+                    <div class="comment-action">Reply</div>
+                  </div>
+                </div>
+              </div>
+            </e-stack>
+          </e-box>
+        </e-stack>
+      </div>
+
+      <!-- Sidebar Content Area (Related Videos) -->
+      <div slot="sidebar" class="sidebar-content">
+        <e-stack space="1em">
+          <div class="related-item">
+            <div class="related-thumbnail">
+              <e-frame ratio="16:9">
+                <img
+                  src="/e-layout/thumb_1.jpg"
+                  alt="Thumbnail 1"
+                  class="thumbnail-img"
+                />
+              </e-frame>
+              <div class="video-duration">14:25</div>
+            </div>
+            <div class="related-info">
+              <h4>CSS Variables: The Complete Guide</h4>
+              <p>CodeMaster</p>
+              <p>856K views • 3 months ago</p>
+            </div>
+          </div>
+
+          <div class="related-item">
+            <div class="related-thumbnail">
+              <e-frame ratio="16:9">
+                <img
+                  src="/e-layout/thumb_2.jpg"
+                  alt="Thumbnail 2"
+                  class="thumbnail-img"
+                />
+              </e-frame>
+              <div class="video-duration">22:17</div>
+            </div>
+            <div class="related-info">
+              <h4>Mastering Responsive Typography</h4>
+              <p>Web Design Pro</p>
+              <p>425K views • 2 weeks ago</p>
+            </div>
+          </div>
+
+          <div class="related-item">
+            <div class="related-thumbnail">
+              <e-frame ratio="16:9">
+                <img
+                  src="/e-layout/thumb_3.jpg"
+                  alt="Thumbnail 3"
+                  class="thumbnail-img"
+                />
+              </e-frame>
+              <div class="video-duration">18:03</div>
+            </div>
+            <div class="related-info">
+              <h4>10 CSS Tricks You Didn't Know About</h4>
+              <p>CSS Wizards</p>
+              <p>1.2M views • 5 months ago</p>
+            </div>
+          </div>
+
+          <div class="related-item">
+            <div class="related-thumbnail">
+              <e-frame ratio="16:9">
+                <img
+                  src="/e-layout/thumb_4.jpg"
+                  alt="Thumbnail 4"
+                  class="thumbnail-img"
+                />
+              </e-frame>
+              <div class="video-duration">31:42</div>
+            </div>
+            <div class="related-info">
+              <h4>Building a Portfolio Website from Scratch</h4>
+              <p>Frontend Masters</p>
+              <p>789K views • 1 year ago</p>
+            </div>
+          </div>
+
+          <div class="related-item">
+            <div class="related-thumbnail">
+              <e-frame ratio="16:9">
+                <img
+                  src="/e-layout/thumb_5.jpg"
+                  alt="Thumbnail 5"
+                  class="thumbnail-img"
+                />
+              </e-frame>
+              <div class="video-duration">12:51</div>
+            </div>
+            <div class="related-info">
+              <h4>CSS Grid vs Flexbox: When to Use Each</h4>
+              <p>CodeMaster</p>
+              <p>950K views • 8 months ago</p>
+            </div>
+          </div>
+
+          <div class="related-item">
+            <div class="related-thumbnail">
+              <e-frame ratio="16:9">
+                <div
+                  class="thumbnail-img"
+                  style="background-color: #333; height: 100%; display: grid; place-items: center; border-radius: 0.5em;"
+                >
+                  <span>More videos</span>
+                </div>
+              </e-frame>
+              <div class="video-duration">25:18</div>
+            </div>
+            <div class="related-info">
+              <h4>Modern JavaScript for React Developers</h4>
+              <p>JS Guru</p>
+              <p>1.5M views • 4 months ago</p>
+            </div>
+          </div>
+        </e-stack>
+      </div>
+    </e-sidebar>
+  </div>
+</Layout>

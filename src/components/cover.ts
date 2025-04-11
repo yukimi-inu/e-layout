@@ -1,108 +1,138 @@
-import { LitElement, html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { LitElement, css, html } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
+import { resolveVars } from '../utils/index.js';
 
+/**
+ * A layout component that covers a container, typically the viewport,
+ * placing a header at the top, a footer at the bottom, and centering
+ * the main content vertically in the remaining space.
+ *
+ * @element e-cover
+ *
+ * @slot header - Content placed at the top.
+ * @slot - Default slot for the main content, centered vertically.
+ * @slot footer - Content placed at the bottom.
+ *
+ * @cssprop --cover-min-height - The minimum height of the cover element. Defaults to `100vh`. Controlled by the `min-height` attribute.
+ * @cssprop --cover-space - The space (gap) between the header, main content, and footer. Defaults to `1rem`. Controlled by the `space` attribute.
+ * @cssprop --cover-padding - The padding around the cover element. Defaults to the value of `--cover-space`. Set to `0` when `no-padding` attribute is present.
+ */
 @customElement('e-cover')
 export class Cover extends LitElement {
   static styles = css`
     :host {
       display: flex;
       flex-direction: column;
-      min-block-size: var(--cover-min-height, 100vh); /* Use minHeight property */
-      padding: var(--cover-padding, var(--cover-space, 1rem)); /* Use space/padding */
+      justify-content: space-between;
+      
+      min-block-size: var(--cover-min-height, 100vh);
+      padding: var(--cover-padding, var(--cover-space, 1rem));
+      box-sizing: border-box;
+      gap: var(--cover-space, 1rem);
     }
 
-    /* Apply gap using margin, controlled by --cover-space */
     ::slotted(*) {
-      margin-block: var(--cover-space, 1rem);
+      margin: 0;
     }
 
-    /* Remove margin from first/last elements unless they are the main centered element */
-    /* This logic is complex with slots, might need refinement */
-    ::slotted(:first-child:not([slot="main"])) {
-      margin-block-start: 0;
-    }
-    ::slotted(:last-child:not([slot="main"])) {
-      margin-block-end: 0;
+    ::slotted([slot="header"]) {
+      flex-shrink: 0;
     }
 
-    /* Center the main element vertically */
-    ::slotted([slot="main"]) {
-      margin-block: auto;
+    ::slotted([slot="footer"]) {
+      flex-shrink: 0;
     }
 
-    /* Remove padding if noPadding is true */
-    :host([nopadding]) {
+    :host([no-padding]) {
       padding: 0;
     }
   `;
 
   /**
-   * The minimum height (block-size) of the cover element.
-   * Accepts any valid CSS size value. Defaults to '100vh'.
+   * The minimum height of the cover element.
+   * Maps to the `--cover-min-height` CSS custom property.
+   * @attr min-height
    */
   @property({ type: String, attribute: 'min-height' })
   minHeight = '100vh';
 
   /**
-   * The minimum space (margin) between child elements and padding around the container.
-   * Accepts any valid CSS margin/padding value. Defaults to '1rem'.
+   * The space (gap) between the header, main content, and footer.
+   * Also used as the default padding unless `no-padding` is set.
+   * Maps to the `--cover-space` CSS custom property.
+   * @attr
    */
   @property({ type: String })
-  space = '1rem'; // Renamed from 'gap' in spec for clarity vs flex gap
+  space = '1rem';
 
   /**
-   * Whether to remove the padding from the cover element.
-   * Reflects as attribute 'nopadding'. Defaults to false.
+   * If true, removes the padding around the cover element.
+   * Reflects to the `no-padding` attribute.
+   * @attr no-padding
    */
-  @property({ type: Boolean, reflect: true }) // Reflect for CSS targeting
+  @property({ type: Boolean, reflect: true, attribute: 'no-padding' })
   noPadding = false;
 
-  // centeredElementSelector is difficult to implement dynamically via CSS/JS.
-  // We rely on the user assigning slot="main" to the element to be centered.
+  @state() private _hasHeader = false;
+  @state() private _hasFooter = false;
 
-  /**
-   * Updates CSS custom properties when properties change.
-   */
-  updated(changedProperties: Map<string | number | symbol, unknown>) {
-    if (changedProperties.has('minHeight')) {
-      this.style.setProperty('--cover-min-height', this.minHeight);
-    }
-    if (changedProperties.has('space')) {
-      this.style.setProperty('--cover-space', this.space);
-      // Also update padding unless noPadding is true
-      if (!this.noPadding) {
-        this.style.setProperty('--cover-padding', this.space);
-      }
-    }
-    if (changedProperties.has('noPadding')) {
-      if (this.noPadding) {
-        this.style.setProperty('--cover-padding', '0');
-      } else {
-        // Re-apply space as padding if noPadding becomes false
-        this.style.setProperty('--cover-padding', this.style.getPropertyValue('--cover-space') || this.space);
-      }
-    }
+  private _headerSlot: HTMLSlotElement | null = null;
+  private _footerSlot: HTMLSlotElement | null = null;
+
+  override firstUpdated() {
+    this._headerSlot = this.shadowRoot?.querySelector('slot[name="header"]') ?? null;
+    this._footerSlot = this.shadowRoot?.querySelector('slot[name="footer"]') ?? null;
+
+    this._headerSlot?.addEventListener('slotchange', this._handleHeaderChange);
+    this._footerSlot?.addEventListener('slotchange', this._handleFooterChange);
+
+    // Initial check
+    this._handleHeaderChange();
+    this._handleFooterChange();
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    // Set initial padding based on space unless noPadding is true
-    if (!this.noPadding) {
-      this.style.setProperty('--cover-padding', this.style.getPropertyValue('--cover-space') || this.space);
-    } else {
-      this.style.setProperty('--cover-padding', '0');
-    }
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this._headerSlot?.removeEventListener('slotchange', this._handleHeaderChange);
+    this._footerSlot?.removeEventListener('slotchange', this._handleFooterChange);
   }
+
+  private _handleHeaderChange = () => {
+    // Check if any element nodes are assigned to the slot
+    this._hasHeader = (this._headerSlot?.assignedElements({ flatten: true }) ?? []).length > 0;
+    this.requestUpdate(); // Trigger re-render to apply classes
+  };
+
+  private _handleFooterChange = () => {
+    // Check if any element nodes are assigned to the slot
+    this._hasFooter = (this._footerSlot?.assignedElements({ flatten: true }) ?? []).length > 0;
+    this.requestUpdate(); // Trigger re-render to apply classes
+  };
 
   render() {
-    // Expecting default slot for header/top content,
-    // slot="main" for the centered content,
-    // and default slot again for footer/bottom content.
-    return html`<slot></slot><slot name="main"></slot><slot></slot>`;
+    this.style.setProperty('--cover-min-height', resolveVars(this.minHeight, '100vh'));
+    this.style.setProperty('--cover-space', resolveVars(this.space, '1rem'));
+    // --cover-padding is handled by CSS based on --cover-space and the [no-padding] attribute
+
+    const hostClasses = {
+      'has-header': this._hasHeader,
+      'has-footer': this._hasFooter,
+    };
+
+    // CSS selectors :host(.has-header) and :host(.has-footer) handle conditional styling.
+    // No need to set className directly here.
+    // The hostClasses object itself is not used in the template below,
+    // but the _hasHeader and _hasFooter states trigger updates which allow CSS to apply.
+
+    return html`
+      <slot name="header"></slot>
+      <slot class="main-content"></slot>
+      <slot name="footer"></slot>
+    `;
   }
 }
 
-// Type definition for custom element in the global scope
 declare global {
   interface HTMLElementTagNameMap {
     'e-cover': Cover;

@@ -5,88 +5,108 @@ title: 'Imposter Component'
 
 # Imposter (`<e-imposter>`)
 
-The `e-imposter` component positions its content outside the normal document flow, typically centered over its containing context using `position: absolute`. It can optionally be fixed to the viewport, break out of its container bounds, and have a margin from the container edges. Useful for modals, popovers, etc.
+The `e-imposter` component positions its content outside the normal document flow, typically centered over its containing context using `position: absolute`. It now supports alignment using logical properties (`alignBlock`, `alignInline`) for 9 positions (start/center/end combinations). It can optionally be fixed to the viewport, break out of its container bounds, and have a margin from the aligned container edges. Useful for modals, popovers, etc.
 
 ## Basic Usage
 
 ```html
-<div style="position: relative; height: 200px; border: 1px solid gray;">
+<div class="example-container" style="position: relative; min-height: 10em;"> <!-- position: relative is needed -->
   <!-- Content underneath -->
   <p>Some background content.</p>
-
-  <e-imposter margin="1rem"> {/* Add margin */}
-    <div style="background: white; padding: 2rem; border: 1px solid black;">
+  <e-imposter margin="1rem">
+    <div class="example-item bg-example-neutral">
       Overlay Content (with 1rem margin from edges)
     </div>
   </e-imposter>
 </div>
 ```
 
-## Example
+## Examples
 
-The imposter (red box) is centered within the gray container, which has `position: relative`.
+**Default Imposter (Centered):**
 
-<div class="example-container" style="position: relative; height: 200px; border: 1px solid gray; background-color: lightgray;">
-  <p style="padding: 1rem;">This is the background content area.</p>
-
-  <e-imposter style="width: 150px;">
-    <div class="example-item bg-example-red" style="color: #991b1b; padding: 1rem; text-align: center; border-radius: 4px;"> {/* Adjusted text color for lighter bg */}
-      Imposter Content (Centered)
-    </div>
-  </e-imposter>
+<div class="example-container" style="position: relative; min-height: 10em;"> <!-- position: relative is needed -->
+  <div class="example-wrapper">
+    <p style="padding: 1rem;">This is the background content area.</p>
+    <e-imposter style="width: 150px;">
+      <div class="example-item bg-example-red">
+        Imposter Content (Centered)
+      </div>
+    </e-imposter>
+  </div>
 </div>
 
-**Fixed Position and Breakout Example:**
+**Breakout vs Non-Breakout:**
+
+<div class="example-container" style="position: relative; width: 7em; min-height: 15em;"> <!-- position: relative is needed -->
+  <div class="example-wrapper">
+    <p style="padding: 1rem;">Background</p>
+    <e-imposter breakout style="width: 150px;" align-block="start" class="example-item bg-example-red">
+      Breakout (Overflows)
+    </e-imposter>
+    <e-imposter style="width: 150px;" align-block="end" class="example-item bg-example-blue">
+      Non-Breakout (Contained)
+    </e-imposter>
+  </div>
+</div>
+
+**Fixed Position Example: `fixed`**
+
+*(Live fixed examples are difficult to demonstrate inline. The code below shows how it would be used.)*
+
+```html
+<!-- This would appear centered on the screen -->
+<e-imposter fixed margin="1em">
+  <div class="example-item bg-example-red">
+    Fixed Imposter
+  </div>
+</e-imposter>
+```
+
+**Fixed and Breakout: `fixed breakout`**
 
 ```html
 <!-- This would appear centered on the screen and ignore container bounds -->
 <e-imposter fixed breakout>
-  <div style="background: rgba(0,0,0,0.7); color: white; padding: 2rem;">
-    Fixed Overlay (Ignoring Bounds)
+  <div class="example-item bg-example-green">
+    Fixed & Breakout Imposter
   </div>
 </e-imposter>
 ```
-*(Note: Displaying live fixed examples can be disruptive.)*
 
-<style>
-.example-container {
-  /* background-color: #f0f0f0; */ /* Defined in parent example */
-  /* padding: 1rem; */
-  margin-top: 1rem;
-  border-radius: 4px;
-}
-</style>
+**Alignment Examples:**
 
-<script>
-  // Import the component definition
-  import 'e-layout/imposter';
-</script>
+<e-grid class="example-container">
+  <div class="example-wrapper" style="position: relative; min-height: 8em;">
+    <e-imposter breakout align-block="start" align-inline="start" margin="0.25em">
+      <div class="example-item bg-example-blue">Start/Start (m:0.25em)</div>
+    </e-imposter>
+  </div>
+
+  <div class="example-wrapper" style="position: relative; min-height: 8em;">
+    <e-imposter breakout align-block="center" align-inline="end" margin="0.5em">
+       <div class="example-item bg-example-blue">Center/End (m:0.5em)</div>
+    </e-imposter>
+  </div>
+
+  <div class="example-wrapper" style="position: relative; min-height: 8em;">
+    <e-imposter breakout align-block="end" align-inline="center" margin="0">
+       <div class="example-item bg-example-blue">End/Center (m:0)</div>
+    </e-imposter>
+  </div>
+</e-grid>
 
 ## Properties
 
-*   **`breakout`**: `boolean` (Default: `false`)
-    *   If `true`, allows the element to overflow its container. Reflects as attribute `breakout`.
-*   **`margin`**: `string` (Default: `'0px'`)
-    *   The minimum space between the element and container edges when `breakout` is `false`. Accepts any valid CSS size value.
-*   **`fixed`**: `boolean` (Default: `false`)
-    *   If `true`, uses `position: fixed` instead of `absolute`. Reflects as attribute `fixed`.
-
-## Styling
-
-*   **`--imposter-margin`**: (Default: `0px`) Overrides `margin`.
-*   The component uses `position: absolute` (or `fixed`) and centers itself by default (`inset-*`, `transform`). These can be overridden with standard CSS.
-*   The containment logic (`max-inline-size`, `max-block-size`, `overflow`) is applied when `:not([breakout])`.
-
-```css
-e-imposter {
-  /* Position top-right instead of center */
-  top: 1rem;
-  left: auto;
-  right: 1rem;
-  transform: none;
-  /* Add custom background/padding */
-  --imposter-background: rgba(255, 255, 255, 0.9);
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
+*   **`breakout`** `<boolean>` (Default: `false`)
+    *   Allows the element to overflow its container. Attribute: `breakout`.
+*   **`margin`** `<string>` (Default: `'0px'`)
+    *   Logical margin (offset) from the aligned edge(s). Maps to `--imposter-margin`. Attribute: `margin`.
+*   **`fixed`** `<boolean>` (Default: `false`)
+    *   Uses `position: fixed` instead of `absolute`. Attribute: `fixed`.
+*   **`align-block`** `<'start' | 'center' | 'end'>` (Default: `'center'`)
+    *   Block-direction alignment (e.g., top/center/bottom). Attribute: `align-block`.
+*   **`align-inline`** `<'start' | 'center' | 'end'>` (Default: `'center'`)
+    *   Inline-direction alignment (e.g., left/center/right). Attribute: `align-inline`.
+*   **`z-index`** `<string>` (Default: `'1'`)
+    *   Sets the stack order. Maps to `--imposter-z-index`. Attribute: `z-index`.

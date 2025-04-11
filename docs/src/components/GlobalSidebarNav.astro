@@ -1,62 +1,70 @@
 ---
-// src/components/GlobalSidebarNav.astro
 interface Props {
   currentPage: string;
 }
 const { currentPage } = Astro.props;
 
-// Define global navigation structure
 const navItems = [
-  { text: 'Introduction', href: '/' },
-  { text: 'Getting Started', href: '/getting-started' },
-  { text: 'Usage Guide', href: '/usage' },
+  { text: "Introduction", href: "/" },
+  { text: "Getting Started", href: "/getting-started" },
+  { text: "Usage Guide", href: "/usage" },
   {
-    text: 'Components',
+    text: "Components",
     isSection: true,
     links: [
-      { text: 'Box', href: '/components/box' },
-      { text: 'Stack', href: '/components/stack' },
-      { text: 'Center', href: '/components/center' },
-      { text: 'Cluster', href: '/components/cluster' },
-      { text: 'Sidebar', href: '/components/sidebar' },
-      { text: 'Switcher', href: '/components/switcher' },
-      { text: 'Grid', href: '/components/grid' },
-      { text: 'Frame', href: '/components/frame' },
-      { text: 'Reel', href: '/components/reel' },
-      { text: 'Imposter', href: '/components/imposter' },
-      { text: 'Icon', href: '/components/icon' },
-      { text: 'Cover', href: '/components/cover' },
-      { text: 'Container', href: '/components/container' },
+      { text: "Box", href: "/components/box" },
+      { text: "Stack", href: "/components/stack" },
+      { text: "Center", href: "/components/center" },
+      { text: "Cluster", href: "/components/cluster" },
+      { text: "Sidebar", href: "/components/sidebar" },
+      { text: "Switcher", href: "/components/switcher" },
+      { text: "Grid", href: "/components/grid" },
+      { text: "Frame", href: "/components/frame" },
+      { text: "Reel", href: "/components/reel" },
+      { text: "Imposter", href: "/components/imposter" },
+      { text: "Icon", href: "/components/icon" },
+      { text: "Cover", href: "/components/cover" },
+      { text: "Container", href: "/components/container" },
+    ],
+  },
+  {
+    text: "Examples",
+    isSection: true,
+    links: [
+      { text: "Card List", href: "/examples/card-list" },
+      { text: "Masonry Layout", href: "/examples/masonry-layout" },
+      { text: "Blog Post", href: "/examples/blog-post" },
+      { text: "Video Player", href: "/examples/video-player" },
+      { text: "Admin Dashboard", href: "/examples/admin-dashboard" },
+      { text: "Product Landing Page", href: "/examples/product-landing-page" },
+      { text: "Product Login Page", href: "/examples/login-page" },
     ],
   },
 ];
 
-// Helper function to resolve base URL (Consider moving to a shared utils file if used elsewhere)
 const resolveUrl = (href: string) => {
-  // Ensure leading slash is present and handle base URL correctly
-  const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
-  const finalHref = href.startsWith('/') ? href.substring(1) : href;
-  // Handle root path explicitly
-  if (href === '/') return baseUrl;
+  const baseUrl = import.meta.env.BASE_URL.endsWith("/")
+    ? import.meta.env.BASE_URL
+    : `${import.meta.env.BASE_URL}/`;
+  const finalHref = href.startsWith("/") ? href.substring(1) : href;
+  if (href === "/") return baseUrl;
   return `${baseUrl}${finalHref}`;
 };
 
-// Function to check if a link is active
 const isActive = (linkHref: string, currentPath: string): boolean => {
   const resolvedLink = resolveUrl(linkHref);
-  // Exact match or handle base path case
-  if (linkHref === '/') {
-    return currentPath === resolveUrl('/'); // Match base URL exactly
+  if (linkHref === "/") {
+    return currentPath === resolveUrl("/");
   }
-  return currentPath === resolvedLink || currentPath === `${resolvedLink}/`; // Allow trailing slash match
+  return currentPath === resolvedLink || currentPath === `${resolvedLink}/`;
 };
 ---
 
 <nav class="global-sidebar-nav">
-  <ul>
+  <e-stack space="0.5rem" tag="ul">
     {
       navItems.map((item) => (
-        <li>
+        <e-box tag="li">
           {item.isSection && <span class="section-title">{item.text}</span>}
           {!item.isSection && item.href && (
             <a
@@ -70,7 +78,7 @@ const isActive = (linkHref: string, currentPath: string): boolean => {
             </a>
           )}
           {item.links && (
-            <ul class="nested-list">
+            <e-stack space="0.5rem" tag="ul" class="nested-list">
               {item.links.map((link) => (
                 <li>
                   <a
@@ -84,24 +92,21 @@ const isActive = (linkHref: string, currentPath: string): boolean => {
                   </a>
                 </li>
               ))}
-            </ul>
+            </e-stack>
           )}
-        </li>
+        </e-box>
       ))
     }
-  </ul>
+  </e-stack>
 </nav>
 
 <style>
-  /* Styles adapted from the original SidebarNav */
-  .global-sidebar-nav ul {
+  .global-sidebar-nav [tag="ul"] {
     list-style: none;
     padding: 0;
     margin: 0;
   }
-  .global-sidebar-nav li {
-    margin-bottom: 0.5rem;
-  }
+
   .global-sidebar-nav a {
     text-decoration: none;
     color: var(--color-text-secondary);
@@ -112,36 +117,64 @@ const isActive = (linkHref: string, currentPath: string): boolean => {
       color 0.2s ease;
     font-size: 0.9em;
     font-weight: 400;
-    border-radius: 4px; /* Add subtle rounding */
+    border-radius: 4px;
   }
+
   .global-sidebar-nav a:hover {
     color: var(--color-text-primary);
     background-color: var(--color-bg-hover);
   }
+
   .global-sidebar-nav a.active {
     background-color: var(--color-bg-active);
     color: var(--color-text-active);
     font-weight: 500;
   }
+
   .section-title {
     font-weight: 700;
     color: var(--color-text-primary);
     padding: 0.5rem 1rem 0.2rem;
     margin-top: 1rem;
+    margin-bottom: 1rem;
     display: block;
     font-size: 0.9em;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
+
   .nested-list {
-    padding-left: 1rem; /* Indent component links */
+    padding-left: 1rem;
     margin-top: 0.3rem;
   }
+
   .nested-list li {
     margin-bottom: 0.2rem;
   }
+
   .nested-list a {
     padding: 0.2rem 1rem;
     font-size: 0.88em;
   }
 </style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // 左サイドバーのコンテナを取得
+    const sidebarContainer = document.querySelector(".left-sidebar");
+    if (!sidebarContainer) return;
+
+    // アクティブなリンク要素を取得
+    const activeLink = document.querySelector(".global-sidebar-nav a.active");
+    if (!activeLink) return;
+
+    // アクティブな要素の位置を取得し、スクロール位置を調整
+    // 要素の上端がサイドバーの上から少し下になるようにスクロール
+    const activeRect = activeLink.getBoundingClientRect();
+    const sidebarRect = sidebarContainer.getBoundingClientRect();
+    const scrollOffset = activeRect.top - sidebarRect.top - 100; // 100pxの余白を追加
+
+    // スクロール位置を設定
+    sidebarContainer.scrollTop = scrollOffset;
+  });
+</script>

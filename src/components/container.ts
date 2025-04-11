@@ -1,42 +1,59 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, type PropertyValues, css, html } from 'lit'; // Use import type
 import { customElement, property } from 'lit/decorators.js';
 
 @customElement('e-container')
+/**
+ * A component that establishes a CSS container context, enabling container queries
+ * for its descendants. It sets `container-type: inline-size` by default and allows
+ * assigning a `container-name`.
+ *
+ * @element e-container
+ *
+ * @slot - The content within the container.
+ */
 export class Container extends LitElement {
   static styles = css`
     :host {
-      display: block; /* Or appropriate display type */
-      container-type: inline-size; /* Default container type */
-      container-name: var(--container-name); /* Set name via CSS variable */
+      display: block;
     }
   `;
 
   /**
-   * The name of the container, used for targeting in container queries.
-   * If null or empty, the container will be anonymous.
-   * Defaults to null.
+   * A semantic hint for the role of the container element.
+   * Does not change the rendered tag but can be used for CSS attribute selectors
+   * or JavaScript targeting.
+   * @attr
    */
   @property({ type: String })
-  name: string | null = null;
+  tag?: string;
 
   /**
-   * Updates the CSS custom property when the name property changes.
+   * The name assigned to the CSS container context.
+   * This name is used in container queries (`@container`).
+   * Maps to the `container-name` CSS property.
+   * @attr container-name
    */
-  updated(changedProperties: Map<string | number | symbol, unknown>) {
-    if (changedProperties.has('name')) {
-      if (this.name) {
-        this.style.setProperty('--container-name', this.name);
-      } else {
-        this.style.removeProperty('--container-name');
-      }
+  @property({ type: String, attribute: 'container-name' })
+  containerName: string | null = null;
+
+  protected firstUpdated(changedProperties: PropertyValues<this>): void {
+    super.firstUpdated(changedProperties);
+    this.style.setProperty('container-type', 'inline-size');
+    this.#updateContainerNameStyle();
+  }
+
+  protected updated(changedProperties: PropertyValues<this>): void {
+    super.updated(changedProperties);
+    if (changedProperties.has('containerName')) {
+      this.#updateContainerNameStyle();
     }
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    // Set initial name if provided
-    if (this.name) {
-      this.style.setProperty('--container-name', this.name);
+  #updateContainerNameStyle(): void {
+    if (this.containerName) {
+      this.style.setProperty('container-name', this.containerName);
+    } else {
+      this.style.removeProperty('container-name');
     }
   }
 
@@ -45,7 +62,6 @@ export class Container extends LitElement {
   }
 }
 
-// Type definition for custom element in the global scope
 declare global {
   interface HTMLElementTagNameMap {
     'e-container': Container;

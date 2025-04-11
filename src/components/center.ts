@@ -1,23 +1,34 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { resolveVars } from '../utils/index.js';
 
+/**
+ * A layout component that centers its content horizontally within a maximum width,
+ * with optional gutters on either side. It can also center text content or
+ * intrinsically size its content based on the children.
+ *
+ * @element e-center
+ *
+ * @slot - The content to be centered.
+ *
+ * @cssprop --center-max-width - The maximum width of the centered content area. Defaults to `100%`. Controlled by the `max` attribute.
+ * @cssprop --center-gutters - The padding on the left and right sides of the content. Defaults to `0`. Controlled by the `gutters` attribute.
+ */
 @customElement('e-center')
 export class Center extends LitElement {
   static styles = css`
     :host {
-      box-sizing: content-box; /* As per spec example */
-      display: block; /* Changed from flex to block */
-      margin-inline: auto; /* Center the block itself */
-      max-inline-size: var(--center-max-width, var(--measure, 60ch)); /* Use max property */
-      padding-inline: var(--center-gutters, 0); /* Use gutters property */
+      box-sizing: content-box;
+      display: block;
+      margin-inline: auto;
+      max-inline-size: var(--center-max-width, 100%);
+      padding-inline: var(--center-gutters, 0);
     }
 
-    /* Apply text-align center if withText is true */
     :host([with-text]) {
       text-align: center;
     }
 
-    /* Apply intrinsic centering styles if intrinsic is true */
     :host([intrinsic]) {
       display: flex;
       flex-direction: column;
@@ -26,52 +37,56 @@ export class Center extends LitElement {
   `;
 
   /**
-   * The maximum inline size (width) of the content.
-   * Accepts any valid CSS size value. Defaults to 'var(--measure, 60ch)'.
+   * A semantic hint for the role of the center element.
+   * Does not change the rendered tag but can be used for CSS attribute selectors
+   * or JavaScript targeting.
+   * @attr
    */
-  @property({ type: String, attribute: 'max' })
-  max = 'var(--measure, 60ch)'; // Default from spec example, allowing CSS var override
+  @property({ type: String })
+  tag?: string;
 
   /**
-   * The minimum space on either side of the content (inline padding).
-   * Accepts any valid CSS padding value. Defaults to '0'.
+   * The maximum inline size (width) of the centered content.
+   * Maps to the `--center-max-width` CSS custom property.
+   * Accepts any valid CSS length value.
+   * @attr max
+   */
+  @property({ type: String, attribute: 'max' })
+  max?: string;
+
+  /**
+   * The padding on the left and right sides (gutters) of the content.
+   * Maps to the `--center-gutters` CSS custom property.
+   * Accepts any valid CSS length value.
+   * @attr
    */
   @property({ type: String })
   gutters = '0';
 
   /**
-   * Whether the text content within the element should also be centered.
-   * Reflects as attribute 'with-text'. Defaults to false.
+   * If true, centers the text content within the element (`text-align: center`).
+   * Reflects to the `with-text` attribute.
+   * @attr with-text
    */
   @property({ type: Boolean, reflect: true, attribute: 'with-text' })
   withText = false;
 
   /**
-   * Whether to use intrinsic (flex) centering based on the content's width.
-   * Reflects as attribute 'intrinsic'. Defaults to false.
+   * If true, centers the element intrinsically based on its content width
+   * (`display: flex; align-items: center;`).
+   * Reflects to the `intrinsic` attribute.
+   * @attr
    */
   @property({ type: Boolean, reflect: true })
   intrinsic = false;
 
-  /**
-   * Updates CSS custom properties when properties change.
-   */
-  updated(changedProperties: Map<string | number | symbol, unknown>) {
-    if (changedProperties.has('max')) {
-      this.style.setProperty('--center-max-width', this.max);
-    }
-    if (changedProperties.has('gutters')) {
-      this.style.setProperty('--center-gutters', this.gutters);
-    }
-    // withText and intrinsic are handled by attribute reflection and CSS selectors
-  }
-
   render() {
+    this.style.setProperty('--center-max-width', resolveVars(this.max));
+    this.style.setProperty('--center-gutters', resolveVars(this.gutters));
     return html`<slot></slot>`;
   }
 }
 
-// Type definition for custom element in the global scope
 declare global {
   interface HTMLElementTagNameMap {
     'e-center': Center;

@@ -5,11 +5,11 @@ title: 'Grid Component'
 
 # Grid (`<e-grid>`)
 
-The `e-grid` component creates a responsive grid layout using CSS Grid's `repeat(auto-fit, minmax(min(MIN, 100%), 1fr))` pattern. It automatically adjusts the number of columns based on the available width and a minimum item width.
+The `e-grid` component creates a responsive grid layout using CSS Grid. It offers three modes controlled by the `mode` property: `'fit'` (default), `'fill'`, and `'count'`.
 
 ## Basic Usage
 
-**Basic Usage (Default min: 250px):**
+**Basic Usage (Default min: 10em):**
 
 ```html
 <e-grid>
@@ -25,7 +25,7 @@ The `e-grid` component creates a responsive grid layout using CSS Grid's `repeat
 **With Custom Minimum Width and Gap:**
 
 ```html
-<e-grid min="150px" gap="0.5rem">
+<e-grid min="5em" gap="0.5rem">
   <div>Item 1</div>
   <div>Item 2</div>
   <div>Item 3</div>
@@ -35,58 +35,104 @@ The `e-grid` component creates a responsive grid layout using CSS Grid's `repeat
 
 ## Examples
 
-**Default Grid:**
+**Default Grid (`mode="fit"`): `gap="0.5rem"`**
 
 <div class="example-container">
-  <e-grid gap="0.5rem" style="border: 1px dashed blue; padding: 0.5rem;">
-    <div class="example-item bg-example-slate" style="padding: 1rem;">Item 1 (#EAE4E9)</div>
-    <div class="example-item bg-example-red" style="padding: 1rem;">Item 2 (#FDE2E4)</div>
-    <div class="example-item bg-example-orange" style="padding: 1rem;">Item 3 (#FFF1E6)</div>
-    <div class="example-item bg-example-green" style="padding: 1rem;">Item 4 (#E2ECE9)</div>
-    <div class="example-item bg-example-pink" style="padding: 1rem;">Item 5 (#FAD2E1)</div>
-    <div class="example-item bg-example-cyan" style="padding: 1rem;">Item 6 (#BEE1E6)</div> {/* Changed last orange to cyan */}
-  </e-grid>
+  <div class="example-wrapper">
+    <e-grid gap="0.5rem">
+      <div class="example-item bg-example-blue">Item 1</div>
+      <div class="example-item bg-example-blue">Item 2</div>
+      <div class="example-item bg-example-blue">Item 3</div>
+      <div class="example-item bg-example-blue">Item 4</div>
+      <div class="example-item bg-example-blue">Item 5</div>
+      <div class="example-item bg-example-blue">Item 6</div>
+    </e-grid>
+  </div>
 </div>
 
-**Grid with `min="150px"`:**
+**Custom Min/Gap (`mode="fit"`): `min="5em" gap="1rem"`**
 
 <div class="example-container">
-  <e-grid min="150px" gap="1rem" style="border: 1px dashed green; padding: 0.5rem;">
-    <div class="example-item bg-example-slate" style="padding: 1rem;">Item 1</div>
-    <div class="example-item bg-example-red" style="padding: 1rem;">Item 2</div>
-    <div class="example-item bg-example-orange" style="padding: 1rem;">Item 3</div>
-    <div class="example-item bg-example-green" style="padding: 1rem;">Item 4</div>
-  </e-grid>
+  <div class="example-wrapper">
+    <e-grid min="5em" gap="1rem">
+        <div class="example-item bg-example-blue">Item 1</div>
+        <div class="example-item bg-example-blue">Item 2</div>
+        <div class="example-item bg-example-blue">Item 3</div>
+        <div class="example-item bg-example-blue">Item 4</div>
+    </e-grid>
+  </div>
 </div>
 
-<style>
-.example-container {
-  background-color: #f0f0f0;
-  padding: 1rem;
-  margin-top: 1rem;
-  border-radius: 4px;
-}
-</style>
+**Fixed Width Items (`mode="fit"`): `min="5em" max="5em"`**
 
-<script>
-  // Import the component definition
-  import 'e-layout/grid';
-</script>
+<div class="example-container">
+  <div class="example-wrapper">
+    <e-grid min="5em">
+        <div class="example-item bg-example-blue">Item 1</div>
+        <div class="example-item bg-example-blue">Item 2</div>
+        <div class="example-item bg-example-blue">Item 3</div>
+        <div class="example-item bg-example-blue">Item 4</div>
+        <div class="example-item bg-example-blue">Item 5</div>
+        <div class="example-item bg-example-blue">Item 6</div>
+    </e-grid>
+  </div>
+</div>
+
+**Fill Mode (`mode="fill"`): `min="auto" max="10em"`**
+
+<div class="example-container">
+  <div class="example-wrapper">
+    <e-grid mode="fill" min="auto" max="10em">
+        <div class="example-item bg-example-blue">Item 1</div>
+        <div class="example-item bg-example-blue">Item 2</div>
+        <div class="example-item bg-example-blue">Item 3</div>
+        <!-- Notice potential space to the right -->
+    </e-grid>
+  </div>
+</div>
+
+**Count Mode (`mode="count"`): `count="3" min="auto"`**
+
+<div class="example-container">
+  <div class="example-wrapper">
+    <e-grid mode="count" count="3" min="auto">
+      <div class="example-item bg-example-blue">Item 1</div>
+      <div class="example-item bg-example-blue">Item 2</div>
+      <div class="example-item bg-example-blue">Item 3</div>
+      <div class="example-item bg-example-blue">Item 4</div>
+      <div class="example-item bg-example-blue">Item 5</div>
+    </e-grid>
+  </div>
+</div>
 
 ## Properties
 
-*   **`min`**: `string` (Default: `'250px'`)
-    *   The minimum item width used in the `minmax()` function (e.g., `'150px'`, `'10rem'`).
-*   **`gap`**: `string` (Default: `'1rem'`)
-    *   The space (grid-gap) between grid cells. Accepts any valid CSS `gap` value.
+*   **`mode`** `<'fit' | 'fill' | 'count'>` (Default: `'fit'`)
+    *   Controls grid layout mode: `fit` (adjusts columns, default), `fill` (preserves empty tracks), `count` (fixed column count). Attribute: `mode`.
+*   **`count`** `<number>` (Default: `4`)
+    *   Number of columns when `mode="count"`. Maps to `--grid-count`. Attribute: `count`.
+*   **`min`** `<string>` (Default: `'10em'`)
+    *   Minimum item width in `minmax()`. Maps to `--grid-min`. Attribute: `min`.
+*   **`max`** `<string>` (Default: `'100%'`)
+    *   Maximum item width in `minmax()`. Maps to `--grid-max`. Attribute: `max`.
+*   **`gap`** `<string>` (Default: `'1em'`)
+    *   Space between grid items. Maps to `--grid-gap`. Attribute: `gap`.
+*   **`tag`** `<string>` (Default: `undefined`)
+    *   Provides a semantic hint (e.g., 'ul'). Does not change the rendered tag. Useful for CSS selectors (`e-grid[tag="..."]`). Attribute: `tag`.
 
-## Styling
-
-*   **`--grid-gap`**: (Default: `1rem`) Overrides `gap`.
-*   **`--grid-min-override`**: (Default: `250px`) Overrides `min`.
-
-```css
-e-grid {
-  --grid-gap: 2rem;
-  --grid-min-override: 300px; /* Example override */
+<style>
+/* .example-container and .example-wrapper styles are defined globally */
+.example-item {
+  padding: 1rem; /* Add default padding for items */
+  text-align: center;
+  border-radius: 4px;
+  color: white; /* Assuming white text for colored backgrounds */
 }
+.bg-example-slate { background-color: #64748b; }
+.bg-example-red { background-color: #ef4444; }
+.bg-example-orange { background-color: #f97316; }
+.bg-example-green { background-color: #22c55e; }
+.bg-example-pink { background-color: #ec4899; }
+.bg-example-cyan { background-color: #06b6d4; }
+</style>
+    *   The space (grid-gap) between grid cells. Accepts any valid CSS `gap` value.

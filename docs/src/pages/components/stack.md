@@ -31,8 +31,7 @@ The `e-stack` component arranges its direct children vertically, applying a cons
 
 **With Split:**
 
-This example pushes Item 3 and subsequent items down by applying `margin-bottom: auto` to Item 2. *(Note: Current implementation might require manual styling or future enhancement)*
-
+This example pushes Item 3 and subsequent items down by applying `margin-block-end: auto` to Item 2.
 ```html
 <e-stack split-after="2">
   <div>Header</div>
@@ -43,56 +42,47 @@ This example pushes Item 3 and subsequent items down by applying `margin-bottom:
 
 ## Examples
 
-**Vertical:**
+**Default Stack:**
 
 <div class="example-container">
-  <e-stack style="border: 1px dashed green; padding: 1rem;">
-    <div class="example-item bg-example-slate">Item 1</div>
-    <div class="example-item bg-example-blue">Item 2</div> {/* red -> blue */}
-    <div class="example-item bg-example-orange">Item 3</div>
-  </e-stack>
+  <div class="example-wrapper">
+    <e-stack>
+      <div class="example-item bg-example-blue">Item 1</div>
+      <div class="example-item bg-example-blue">Item 2</div>
+      <div class="example-item bg-example-blue">Item 3</div>
+    </e-stack>
+  </div>
 </div>
 
-**Custom Space (`space="0.5rem"`):**
+**Custom Space: `space="0.5rem"`**
 
 <div class="example-container">
-  <e-stack space="0.5rem" style="border: 1px dashed purple; padding: 1rem;">
-    <div class="example-item bg-example-slate">Item 1</div>
-    <div class="example-item bg-example-blue">Item 2</div> {/* red -> blue */}
-    <div class="example-item bg-example-orange">Item 3</div>
-  </e-stack>
+  <div class="example-wrapper">
+    <e-stack space="0.5rem">
+      <div class="example-item bg-example-blue">Item 1</div>
+      <div class="example-item bg-example-blue">Item 2</div>
+      <div class="example-item bg-example-blue">Item 3</div>
+    </e-stack>
+  </div>
 </div>
 
-<style>
-.example-container {
-  background-color: #f0f0f0;
-  padding: 1rem;
-  margin-top: 1rem;
-  border-radius: 4px;
-}
-</style>
+**Split After: `split-after="2" space="0.5rem"`**
 
-<script>
-  // Import the component definition
-  import 'e-layout/stack';
-</script>
+<div class="example-container">
+  <div class="example-wrapper">
+    <e-stack split-after="2" space="0.5rem" style="min-height: 15em; border: 1px dashed lightgray;"> <!-- Added height/border for visibility -->
+      <div class="example-item bg-example-blue">Item 1</div>
+      <div class="example-item bg-example-blue">Item 2 (margin-bottom: auto applied here)</div>
+      <div class="example-item bg-example-blue">Item 3 (Pushed down)</div>
+    </e-stack>
+  </div>
+</div>
 
 ## Properties
 
-*   **`space`**: `string` (Default: `'1.5rem'`)
-    *   The space (margin) applied between child elements. Accepts any valid CSS margin value.
-*   **`recursive`**: `boolean` (Default: `false`)
-    *   Whether the space should apply recursively to nested stacks. *(Note: Due to Shadow DOM limitations, true recursive application is currently difficult to achieve purely within the component.)*
-*   **`splitAfter`**: `number | null` (Default: `null`)
-    *   The 1-based index of the child after which subsequent children should be pushed down (using `margin-bottom: auto`). Attribute: `split-after`. *(Note: Current CSS-based implementation might not fully support this; JS intervention might be needed in future versions.)*
-
-## Styling
-
-*   **`--stack-space`**: (Default: `1.5rem`)
-    *   Overrides the `space` property via CSS, controlling the margin between elements.
-
-```css
-e-stack {
-  --stack-space: 2.5rem; /* Increase the space */
-}
-```
+*   **`space`** `<string>` (Default: `'1.5rem'`)
+    *   Vertical space between items. Maps to `--stack-space`. Attribute: `space`.
+*   **`split-after`** `<number | null>` (Default: `null`)
+    *   1-based index after which to add `margin-block-end: auto`, pushing subsequent items down. Attribute: `split-after`.
+*   **`tag`** `<string>` (Default: `undefined`)
+    *   Provides a semantic hint (e.g., 'ul'). Does not change the rendered tag. Useful for CSS selectors (`e-stack[tag="..."]`). Attribute: `tag`.

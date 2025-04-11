@@ -45,6 +45,32 @@ import 'e-layout'; // Registers e-box, e-stack, e-center, etc.
 
 *Note: The import paths like `'e-layout/box'` rely on the `exports` field defined in the package's `package.json`.*
 
+### Using the IIFE Build (Self-Hosted)
+
+If you prefer not to use a module bundler or want to use `e-layout` directly in an HTML file via a `<script>` tag, you can use the IIFE (Immediately Invoked Function Expression) build. This build registers all components automatically.
+
+1.  **Copy the Build File:** Copy either `dist/e-layout.js` (unminified) or `dist/e-layout.min.js` (minified) from the `node_modules/e-layout/` directory into your project's assets or scripts folder (e.g., `your-project/scripts/`).
+2.  **Include via Script Tag:** Add a `<script>` tag to your HTML file, pointing to the copied file. Make sure this script is loaded before you use any `<e-*> `tags in your HTML.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Page</title>
+  <!-- Adjust the path according to where you placed the file -->
+  <script src="scripts/e-layout.min.js"></script>
+</head>
+<body>
+  <e-stack>
+    <p>Content inside stack</p>
+  </e-stack>
+
+  <!-- No need for module imports here,
+       the IIFE script registers all components globally -->
+</body>
+</html>
+```
+
 ### 2. Using Components in HTML/Templates
 
 Once the component definition is imported, you can use the custom element tags directly in your HTML or framework templates:

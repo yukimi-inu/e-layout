@@ -1,14 +1,14 @@
 ---
-// src/components/SidebarNav.astro
-import type { MarkdownHeading } from 'astro';
+import type { MarkdownHeading } from "astro";
 
 interface Props {
   headings: MarkdownHeading[];
 }
 const { headings } = Astro.props;
 
-// Filter headings (e.g., only h2 and h3) and ensure they have slugs
-const filteredHeadings = headings.filter((h) => (h.depth === 2 || h.depth === 3) && h.slug);
+const filteredHeadings = headings.filter(
+  (h) => (h.depth === 2 || h.depth === 3) && h.slug
+);
 ---
 
 {
@@ -32,14 +32,17 @@ const filteredHeadings = headings.filter((h) => (h.depth === 2 || h.depth === 3)
   .sidebar-nav {
     padding-top: 1rem;
   }
+
   .sidebar-nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
   }
+
   .sidebar-nav li {
     margin-bottom: 0.5rem;
   }
+
   .sidebar-nav a {
     text-decoration: none;
     color: var(--color-text-secondary);
@@ -51,24 +54,29 @@ const filteredHeadings = headings.filter((h) => (h.depth === 2 || h.depth === 3)
       border-color 0.2s ease;
     font-size: 0.9em;
     font-weight: 400;
-    border-left: 2px solid transparent; /* Active indicator */
+    border-left: 2px solid transparent;
     line-height: 1.4;
   }
+
   .sidebar-nav a:hover {
     color: var(--color-text-primary);
     background-color: var(--color-bg-hover);
   }
+
   .sidebar-nav a.active {
     color: var(--color-text-active);
     font-weight: 500;
     border-left-color: var(--color-accent);
   }
+
   .sidebar-nav .depth-3 a {
     padding-left: 2rem;
   }
+
   .sidebar-nav .depth-4 a {
     padding-left: 3rem;
   }
+
   .on-this-page {
     font-weight: 700;
     color: var(--color-text-primary);
@@ -79,6 +87,7 @@ const filteredHeadings = headings.filter((h) => (h.depth === 2 || h.depth === 3)
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
+
   .sticky-nav {
     position: sticky;
     top: 2rem;
@@ -150,24 +159,22 @@ const filteredHeadings = headings.filter((h) => (h.depth === 2 || h.depth === 3)
       (entries) => {
         if (isScrolling) return;
 
-        let bestVisibleTargetId: string | null = null; // Store the ID of the best candidate
+        let bestVisibleTargetId: string | null = null;
         let minTop = Infinity;
 
         entries.forEach((entry) => {
-          // Check if entry.target is an HTMLElement and has an id
           if (entry.target instanceof HTMLElement && entry.target.id) {
             const targetId = entry.target.id;
-            // Verify this ID corresponds to a heading we are tracking
             const headingExists = headingsData.some(
               (h) => h.targetId === targetId
             );
-            if (!headingExists) return; // Not a heading we care about
+            if (!headingExists) return;
 
             const rect = entry.target.getBoundingClientRect();
             if (rect.top < window.innerHeight / 3 && rect.bottom > 0) {
               if (rect.top < minTop) {
                 minTop = rect.top;
-                bestVisibleTargetId = targetId; // Store the ID
+                bestVisibleTargetId = targetId;
               }
             }
           }
@@ -179,17 +186,17 @@ const filteredHeadings = headings.filter((h) => (h.depth === 2 || h.depth === 3)
           if (window.scrollY < 5) {
             updateActiveLink(null);
           } else {
-            let lastHeadingAboveTargetId: string | null = null; // Store ID
+            let lastHeadingAboveTargetId: string | null = null;
             for (let i = headingsData.length - 1; i >= 0; i--) {
               const currentHeadingData = headingsData[i];
               if (
                 currentHeadingData.targetElement.getBoundingClientRect().top < 5
               ) {
-                lastHeadingAboveTargetId = currentHeadingData.targetId; // Store ID
+                lastHeadingAboveTargetId = currentHeadingData.targetId;
                 break;
               }
             }
-            updateActiveLink(lastHeadingAboveTargetId); // Pass the ID (or null)
+            updateActiveLink(lastHeadingAboveTargetId);
           }
         }
       },

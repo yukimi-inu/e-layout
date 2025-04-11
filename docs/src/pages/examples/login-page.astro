@@ -1,0 +1,427 @@
+---
+// Import the layout component
+import Layout from "../../layouts/Layout.astro";
+// Import custom elements definitions
+import "e-layout";
+---
+
+<Layout headings={[]} title="Modern Login Page Example">
+  <p>
+    This example demonstrates a modern login page layout with a split-screen
+    design, featuring a visually appealing background image and a clean login
+    form, using various e-layout components.
+  </p>
+
+  <style>
+    body {
+      background-color: #f5f7fa;
+      color: #333;
+      font-family: "Arial", sans-serif;
+    }
+    .example-page-container {
+      min-height: 100vh;
+      background-color: #f5f7fa;
+    }
+    .login-container {
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    .brand-logo {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      z-index: 10;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .logo-icon {
+      width: 2rem;
+      height: 2rem;
+      background-color: #4f46e5;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: white;
+    }
+    .image-side {
+      position: relative;
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .image-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        135deg,
+        rgba(79, 70, 229, 0.8) 0%,
+        rgba(45, 212, 191, 0.8) 100%
+      );
+      z-index: 1;
+    }
+    .background-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(20%);
+    }
+    .image-content {
+      position: relative;
+      z-index: 2;
+      color: white;
+      max-width: 80%;
+      padding: 0 3rem;
+    }
+    .image-content h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    .image-content p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+    .testimonial {
+      margin-top: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .testimonial-avatar {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.2);
+      display: grid;
+      place-items: center;
+      aspect-ratio: 1/1;
+    }
+    .testimonial-content {
+      flex: 1;
+    }
+    .testimonial-text {
+      font-style: italic;
+      margin-bottom: 0.5rem;
+    }
+    .testimonial-author {
+      font-weight: 600;
+    }
+    .form-side {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3rem;
+      background-color: white;
+      height: 100%;
+    }
+    .form-header {
+      margin-bottom: 2rem;
+    }
+    .form-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 0.5rem;
+    }
+    .form-subtitle {
+      color: #6b7280;
+      font-size: 1rem;
+    }
+    .login-form {
+      max-width: 400px;
+      width: 100%;
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #374151;
+    }
+    .form-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.375rem;
+      font-size: 1rem;
+      transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+    }
+    .form-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .checkbox {
+      width: 1rem;
+      height: 1rem;
+      border-radius: 0.25rem;
+      border: 1px solid #d1d5db;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      position: relative;
+    }
+    .checkbox:checked {
+      background-color: #4f46e5;
+      border-color: #4f46e5;
+    }
+    .checkbox:checked::after {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 5px;
+      width: 4px;
+      height: 8px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    .forgot-password {
+      color: #4f46e5;
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .forgot-password:hover {
+      color: #4338ca;
+      text-decoration: underline;
+    }
+    .login-button {
+      width: 100%;
+      padding: 0.75rem 1.5rem;
+      background-color: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 0.375rem;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .login-button:hover {
+      background-color: #4338ca;
+    }
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 1.5rem 0;
+      color: #6b7280;
+      font-size: 0.875rem;
+    }
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background-color: #e5e7eb;
+    }
+    .divider::before {
+      margin-right: 1rem;
+    }
+    .divider::after {
+      margin-left: 1rem;
+    }
+    .social-login {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .social-button {
+      flex: 1;
+      padding: 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.375rem;
+      background-color: white;
+      color: #374151;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition:
+        background-color 0.2s,
+        border-color 0.2s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .social-button:hover {
+      background-color: #f9fafb;
+      border-color: #9ca3af;
+    }
+    .signup-link {
+      text-align: center;
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+    .signup-link a {
+      color: #4f46e5;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .signup-link a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 1024px) {
+      .image-content h2 {
+        font-size: 2rem;
+      }
+      .image-content p {
+        font-size: 1rem;
+      }
+    }
+    @media (max-width: 768px) {
+      .image-side {
+        display: none;
+      }
+      .form-side {
+        padding: 2rem;
+      }
+      .brand-logo {
+        color: #4f46e5;
+      }
+    }
+  </style>
+
+  <div class="example-page-container">
+    <div class="brand-logo">
+      <div class="logo-icon">
+        <i class="fa-solid fa-cube"></i>
+      </div>
+      <span>Fusion</span>
+    </div>
+
+    <e-sidebar
+      side="left"
+      side-width="50%"
+      space="0"
+      no-stretch
+      content-min="80%"
+      class="login-container"
+    >
+      <!-- Image Side -->
+      <div slot="sidebar" class="image-side">
+        <div class="image-overlay"></div>
+        <img
+          src="/e-layout/hd720.png"
+          alt="Login background"
+          class="background-image"
+        />
+        <div class="image-content">
+          <h2>Design Better. Faster. Together.</h2>
+          <p>
+            The most intuitive design platform for teams to create, prototype,
+            and collaborate. Join thousands of companies already using Fusion.
+          </p>
+          <div class="testimonial">
+            <div class="testimonial-avatar">
+              <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="testimonial-content">
+              <p class="testimonial-text">
+                "Fusion has transformed how our team collaborates on design
+                projects."
+              </p>
+              <p class="testimonial-author">
+                Sarah Chen, Design Lead at TechCorp
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Side -->
+      <div class="form-side">
+        <e-center max="450px" intrinsic>
+          <div class="login-form">
+            <div class="form-header">
+              <h1 class="form-title">Welcome back</h1>
+              <p class="form-subtitle">Please enter your details to sign in</p>
+            </div>
+
+            <form>
+              <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="form-input"
+                  placeholder="Enter your email"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  class="form-input"
+                  placeholder="••••••••"
+                />
+              </div>
+
+              <div class="form-footer">
+                <div class="remember-me">
+                  <input type="checkbox" id="remember" class="checkbox" />
+                  <label for="remember">Remember me</label>
+                </div>
+                <a href="#" class="forgot-password">Forgot password?</a>
+              </div>
+
+              <button type="submit" class="login-button">
+                <i class="fa-solid fa-right-to-bracket"></i> Sign in
+              </button>
+
+              <div class="divider">or continue with</div>
+
+              <div class="social-login">
+                <button type="button" class="social-button">
+                  <i class="fa-brands fa-google"></i> Google
+                </button>
+                <button type="button" class="social-button">
+                  <i class="fa-brands fa-apple"></i> Apple
+                </button>
+              </div>
+
+              <p class="signup-link">
+                Don't have an account? <a href="#">Sign up</a>
+              </p>
+            </form>
+          </div>
+        </e-center>
+      </div>
+    </e-sidebar>
+  </div>
+</Layout>

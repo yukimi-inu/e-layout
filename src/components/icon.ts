@@ -1,95 +1,96 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { resolveVars } from '../utils/index.js';
 
+/**
+ * A component for displaying icons, typically SVG, with optional text label
+ * and control over size, color, and spacing between icon and text.
+ * It sets accessibility attributes based on the presence of the label.
+ *
+ * @element e-icon
+ *
+ * @slot - The icon content, usually an `<svg>` element.
+ * @slot - If text is provided alongside the SVG, it will be displayed next to the icon.
+ *
+ * @cssprop --e-icon-space - The space between the icon and adjacent text. Defaults to `0.25em`. Controlled by the `space` attribute.
+ * @cssprop --e-icon-color - The color of the icon and text. Defaults to `inherit`. Controlled by the `color` attribute.
+ * @cssprop --e-icon-size - The width and height of the slotted SVG. Defaults to `1em`. Controlled by the `size` attribute.
+ */
 @customElement('e-icon')
 export class Icon extends LitElement {
   static styles = css`
     :host {
-      /* Styles based on spec example */
-      display: inline-block; /* Changed from inline-flex */
-      width: 0.75em;
-      /* width: 1cap; */ /* cap unit might not be widely supported */
-      height: 0.75em;
-      /* height: 1cap; */
-      vertical-align: middle; /* Adjust alignment as needed */
-      /* Allow color inheritance */
-      color: inherit;
-      /* Define space variable, used by parent context */
-      --icon-space: var(--icon-space-override, 1rem);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+      gap: var(--e-icon-space, 0.25em);
+      color: var(--e-icon-color, inherit);
     }
 
-    /* Ensure slotted SVG scales correctly */
     ::slotted(svg) {
       display: block;
-      width: 100%;
-      height: 100%;
-      /* Inherit color for fill/stroke */
+      width: var(--e-icon-size, 1em);
+      height: var(--e-icon-size, 1em);
       fill: currentColor;
     }
 
-    /* Styles for when used with text (applied by parent) */
-    /* Example:
-    .with-icon {
-      display: inline-flex;
-      align-items: baseline;
-    }
-    .with-icon > e-icon {
-      margin-inline-end: var(--icon-space);
-    }
-    */
   `;
 
   /**
-   * The space between the icon and adjacent text when used in context.
-   * If null, natural word spacing is preserved.
-   * This value is primarily intended to be used by a parent CSS rule.
-   * Defaults to null.
-   */
-  @property({ type: String })
-  space: string | null = null;
-
-  /**
-   * Provides an accessible label for the icon, making it behave like an image
-   * in assistive technologies. Sets the aria-label attribute.
-   * Defaults to null.
+   * An accessible label for the icon. If provided, sets `role="img"` and `aria-label`.
+   * If null or empty, these attributes are removed.
+   * @attr
    */
   @property({ type: String })
   label: string | null = null;
 
   /**
-   * Updates the aria-label attribute and space custom property.
+   * The color of the icon and any adjacent text.
+   * Maps to the `--e-icon-color` CSS custom property.
+   * @attr
    */
-  updated(changedProperties: Map<string | number | symbol, unknown>) {
-    if (changedProperties.has('label')) {
-      if (this.label) {
-        this.setAttribute('role', 'img');
-        this.setAttribute('aria-label', this.label);
-      } else {
-        this.removeAttribute('role');
-        this.removeAttribute('aria-label');
-      }
-    }
-    if (changedProperties.has('space')) {
-      // Set CSS variable if space is provided
-      this.style.setProperty('--icon-space-override', this.space ?? '1rem'); // Default space if null? Spec says null preserves natural spacing.
-    }
-  }
+  @property({ type: String })
+  color: string | undefined = undefined;
 
-  connectedCallback() {
-    super.connectedCallback();
-    // Apply initial ARIA attributes if label is set
+  /**
+   * The size (width and height) of the slotted SVG icon.
+   * Maps to the `--e-icon-size` CSS custom property.
+   * Accepts any valid CSS length value.
+   * @attr
+   */
+  @property({ type: String })
+  size = '1em';
+
+  /**
+   * The space between the icon and adjacent text.
+   * Maps to the `--e-icon-space` CSS custom property (used as `gap`).
+   * Accepts any valid CSS length value.
+   * @attr
+   */
+  @property({ type: String })
+  space = '0.25em';
+
+  render() {
     if (this.label) {
       this.setAttribute('role', 'img');
       this.setAttribute('aria-label', this.label);
+    } else {
+      this.removeAttribute('role');
+      this.removeAttribute('aria-label');
     }
-  }
+    if (this.color !== undefined) {
+      this.style.setProperty('--e-icon-color', resolveVars(this.color));
+    } else {
+      this.style.removeProperty('--e-icon-color');
+    }
+    this.style.setProperty('--e-icon-size', resolveVars(this.size, '1em'));
+    this.style.setProperty('--e-icon-space', resolveVars(this.space, '0.25em'));
 
-  render() {
     return html`<slot></slot>`;
   }
 }
 
-// Type definition for custom element in the global scope
 declare global {
   interface HTMLElementTagNameMap {
     'e-icon': Icon;

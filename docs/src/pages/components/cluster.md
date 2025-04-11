@@ -14,7 +14,7 @@ The `e-cluster` component arranges items horizontally, allowing them to wrap ont
   <button>Button 1</button>
   <button>Button 2</button>
   <button>Button 3</button>
-  <button>Another Button</button>
+  <button>Another<br/>Button</button>
   <button>Short</button>
   <button>A Much Longer Button Label</button>
 </e-cluster>
@@ -22,76 +22,86 @@ The `e-cluster` component arranges items horizontally, allowing them to wrap ont
 
 ## Examples
 
-**Default (justify: flex-start, align: flex-start, wrap: wrap):**
+**Default Cluster:**
 
 <div class="example-container">
-  <e-cluster style="border: 1px dashed blue; padding: 0.5rem;">
-    <button>Button 1</button>
-    <button>Button 2</button>
-    <button>Button 3</button>
-    <button>Another Button</button>
-    <button>Short</button>
-    <button>A Much Longer Button Label</button>
-    <button>More</button>
-  </e-cluster>
+  <div class="example-wrapper">
+    <e-cluster>
+      <div class="example-tag">Button 1</div>
+      <div class="example-tag">Button 2</div>
+      <div class="example-tag">Button 3</div>
+      <div class="example-tag">Another<br/>Button</div>
+      <div class="example-tag">Short</div>
+      <div class="example-tag">A Much Longer Button Label</div>
+      <div class="example-tag">More</div>
+    </e-cluster>
+  </div>
 </div>
 
-**justify: center, align: start:**
+**Centered Cluster (No Wrap): `justify="center" align="center" space="0.5rem" wrap="nowrap"`**
 
 <div class="example-container">
-  <e-cluster justify="center" align="center" space="0.5rem" wrap="nowrap" style="border: 1px dashed green; padding: 0.5rem; overflow-x: auto;"> {/* Added overflow for nowrap example */}
-    <button>Button 1</button>
-    <button>Button 2</button>
-    <button>Button 3</button>
-    <button>Another Button</button>
-    <button>Short</button>
-    <button>A Much Longer Button Label</button>
-    <button>More</button>
-  </e-cluster>
+  <div class="example-wrapper">
+    <e-cluster justify="center" align="center" space="0.5rem" wrap="nowrap">
+      <div class="example-tag">Button 1</div>
+      <div class="example-tag">Button 2</div>
+      <div class="example-tag">Button 3</div>
+      <div class="example-tag">Another<br/>Button</div>
+      <div class="example-tag">Short</div>
+      <div class="example-tag">A Much Longer Button Label</div>
+      <div class="example-tag">More</div>
+    </e-cluster>
+  </div>
 </div>
 
-<style>
-.example-container {
-  background-color: #f0f0f0;
-  padding: 1rem;
-  margin-top: 1rem;
-  border-radius: 4px;
-}
-/* Example button style for clarity */
-.example-container button {
-  padding: 0.3rem 0.8rem;
-  border: 1px solid #ccc;
-  background-color: white;
-  border-radius: 4px;
-  white-space: nowrap;
-}
-</style>
+**Align Items End: `justify="center" align="flex-end" space="0.5rem"`**
 
-<script>
-  // Import the component definition
-  import 'e-layout/cluster';
-</script>
+Items within each line are aligned to the end (bottom).
+
+<div class="example-container">
+  <div class="example-wrapper">
+    <e-cluster justify="center" align="flex-end" space="0.5rem" style="height: 10em">
+      <div class="example-tag">Button 1</div>
+      <div class="example-tag">Button 2</div>
+      <div class="example-tag">Button 3</div>
+      <div class="example-tag">Another<br/>Button</div>
+      <div class="example-tag">Short</div>
+      <div class="example-tag">A Much Longer Button Label</div>
+      <div class="example-tag">More</div>
+    </e-cluster>
+  </div>
+</div>
+
+**Align Content End: `justify="center" align="center" align-content="flex-end" space="0.5rem"`**
+
+Lines are packed towards the end of the container when wrapping occurs.
+
+<div class="example-container">
+  <div class="example-wrapper">
+    <e-cluster justify="center" align="center" align-content="flex-end" space="0.5rem" style="height: 10em">
+      <div class="example-tag">Button 1</div>
+      <div class="example-tag">Button 2</div>
+      <div class="example-tag">Button 3</div>
+      <div class="example-tag">Another<br/>Button</div>
+      <div class="example-tag">Short</div>
+      <div class="example-tag">A Much Longer Button Label</div>
+      <div class="example-tag">More</div>
+    </e-cluster>
+  </div>
+</div>
 
 ## Properties
 
-*   **`justify`**: `string` (Default: `'flex-start'`)
-    *   A CSS `justify-content` value.
-*   **`align`**: `string` (Default: `'flex-start'`)
-    *   A CSS `align-items` value.
-*   **`space`**: `string` (Default: `'var(--s1, 1rem)'`)
-    *   A CSS `gap` value controlling the space between items.
-*   **`wrap`**: `'wrap' | 'nowrap' | 'wrap-reverse'` (Default: `'wrap'`)
-    *   Controls the `flex-wrap` behavior.
+*   **`justify`** `<'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly'>` (Default: `'flex-start'`)
+    *   Controls alignment along the main axis. Maps to `justify-content` via `--cluster-justify`. Attribute: `justify`.
+*   **`align`** `<'flex-start' | 'flex-end' | 'center' | 'baseline' | 'stretch'>` (Default: `'flex-start'`)
+    *   Controls alignment along the cross axis. Maps to `align-items` via `--cluster-align`. Attribute: `align`.
+*   **`space`** `<string>` (Default: `'var(--s1, 1rem)'`)
+    *   Sets the gap between items. Maps to `gap` via `--cluster-space`. Attribute: `space`.
+*   **`wrap`** `<'wrap' | 'nowrap' | 'wrap-reverse'>` (Default: `'wrap'`)
+    *   Controls item wrapping. Maps to `flex-wrap` via `--cluster-wrap`. Attribute: `wrap`.
+*   **`align-content`** `<'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'stretch'>` (Default: `'flex-start'`)
+    *   Controls alignment of lines when wrapping. Maps to `align-content` via `--cluster-align-content`. Attribute: `align-content`.
+*   **`tag`** `<string>` (Default: `undefined`)
+    *   Provides a semantic hint (e.g., 'nav'). Does not change the rendered tag. Useful for CSS selectors (`e-cluster[tag="..."]`). Attribute: `tag`.
 
-## Styling
-
-*   **`--cluster-space`**: (Default: `var(--s1, 1rem)`) Overrides `space`.
-*   **`--cluster-justify`**: (Default: `flex-start`) Overrides `justify`.
-*   **`--cluster-align`**: (Default: `flex-start`) Overrides `align`.
-*   **`--cluster-wrap`**: (Default: `wrap`) Overrides `wrap`.
-
-```css
-e-cluster {
-  --cluster-space: 0.5rem;
-  --cluster-justify: center;
-}

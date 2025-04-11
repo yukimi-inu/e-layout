@@ -1,25 +1,23 @@
 ---
-// src/layouts/Layout.astro
-import '../styles/global.css'; // Import global styles
-// Import the new navigation components
-import GlobalSidebarNav from '../components/GlobalSidebarNav.astro';
-import PageTocNav from '../components/PageTocNav.astro';
-import type { MarkdownHeading } from 'astro'; // Import MarkdownHeading type
+import "../styles/global.css";
+import type { MarkdownHeading } from "astro";
+import GlobalSidebarNav from "../components/GlobalSidebarNav.astro";
+import PageTocNav from "../components/PageTocNav.astro";
 interface Props {
   title: string;
-  headings: MarkdownHeading[]; // Add headings prop
-  // Add frontmatter properties if needed for sidebar generation
-  // e.g., section: 'Components' | 'Guides';
+  headings: MarkdownHeading[];
 }
 
-const { title, headings } = Astro.props; // Destructure headings
-const currentPage = Astro.url.pathname; // Needed for GlobalSidebarNav active state
+const { title, headings } = Astro.props;
+const currentPage = Astro.url.pathname;
+const hasToc = headings && headings.length > 0;
 
-// Define resolveUrl helper function in frontmatter for server-side use
 const resolveUrl = (href: string): string => {
-  const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
-  const finalHref = href.startsWith('/') ? href.substring(1) : href;
-  if (href === '/') return baseUrl;
+  const baseUrl = import.meta.env.BASE_URL.endsWith("/")
+    ? import.meta.env.BASE_URL
+    : `${import.meta.env.BASE_URL}/`;
+  const finalHref = href.startsWith("/") ? href.substring(1) : href;
+  if (href === "/") return baseUrl;
   return `${baseUrl}${finalHref}`;
 };
 ---
@@ -35,7 +33,13 @@ const resolveUrl = (href: string): string => {
       type="image/svg+xml"
       href={import.meta.env.BASE_URL + "/favicon.svg"}
     />
-    {/* Google Fonts - JetBrains Mono */}
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -43,36 +47,19 @@ const resolveUrl = (href: string): string => {
       rel="stylesheet"
     />
     <meta name="generator" content={Astro.generator} />
-    {/* Google Fonts - Inter */}
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
       rel="stylesheet"
     />
     <title>{title} - e-layout Docs</title>
-    {/* Remove e-sidebar import */}
+    <script>
+      import "e-layout";
+    </script>
     <style>
-      /* Layout using CSS Grid */
-      .docs-grid-layout {
-        display: grid;
-        /* Define columns: sidebar, main content, TOC */
-        grid-template-columns: var(--sidebar-width, 20em) minmax(0, 1fr) auto;
-        gap: 1rem; /* Adjust gap */
-        min-height: 100vh; /* Ensure layout fills viewport height */
-      }
-
-      .left-sidebar-grid {
-        /* Styles for the container holding logo, links, and global nav */
-        padding: 1rem;
-        border-right: 1px solid var(--color-border);
-        /* Make the sidebar sticky */
-        position: sticky;
-        top: 0;
-        height: 100vh; /* Full viewport height */
-        overflow-y: auto; /* Allow scrolling within the sidebar */
-        background-color: var(--color-bg-sidebar); /* Apply background color */
-        display: flex; /* Use flex for internal alignment */
-        flex-direction: column;
-        gap: 1rem;
+      :root {
+        --sidebar-width: 20em;
+        --toc-width: 16em;
+        --content-max-width: 120ch;
       }
 
       .logo-area a {
@@ -81,32 +68,41 @@ const resolveUrl = (href: string): string => {
         text-decoration: none;
         color: var(--color-text-heading);
       }
+
       .external-links a {
         margin-right: 1rem;
         font-size: 0.9em;
         color: var(--color-text-secondary);
         text-decoration: none;
       }
+
       .external-links a:hover {
         color: var(--color-text-primary);
       }
 
-      .main-content-grid {
-        padding: 2rem; /* Padding around main content */
-        max-width: 80ch; /* Limit content width */
-        margin: 0 auto; /* Center content area */
-        width: 100%; /* Ensure it takes available space */
+      .left-sidebar {
+        padding: 1rem;
+        border-right: 1px solid var(--color-border);
+        background-color: var(--color-bg-sidebar);
+        height: 100vh;
+        overflow-y: auto;
+        position: sticky;
+        top: 0;
+        z-index: 10;
       }
 
-      .right-toc-grid {
-        width: 16em; /* Width of the TOC */
+      .main-content {
+        padding: 2rem;
+        width: 100%;
+        max-width: var(--content-max-width);
+      }
+
+      .right-toc {
         padding: 1rem;
-        /* Make TOC sticky within its grid cell */
         position: sticky;
-        top: 2rem; /* Adjust top offset */
-        align-self: start; /* Align to top */
-        max-height: calc(100vh - 4rem); /* Prevent overflow */
-        overflow-y: auto; /* Allow scrolling */
+        top: 2rem;
+        max-height: calc(100vh - 4rem);
+        overflow-y: auto;
       }
 
       footer {
@@ -116,53 +112,39 @@ const resolveUrl = (href: string): string => {
         font-size: 0.85em;
         color: var(--color-text-secondary);
       }
+
       footer a {
         color: var(--color-text-secondary);
         text-decoration: underline;
       }
+
       footer a:hover {
         color: var(--color-text-primary);
       }
 
-      /* Responsive adjustments */
-      @media (max-width: 1100px) {
-        .docs-grid-layout {
-          /* Switch to 2 columns, hide TOC */
-          grid-template-columns: var(--sidebar-width, 20em) minmax(0, 1fr);
-        }
-        .right-toc-grid {
-          display: none;
-        }
-        .main-content-grid {
-          max-width: none; /* Remove max width when TOC is hidden */
-        }
-      }
-
       @media (max-width: 768px) {
-        .docs-grid-layout {
-          /* Switch to single column */
-          grid-template-columns: minmax(0, 1fr);
-        }
-        .left-sidebar-grid {
-          position: static; /* Unstick sidebar */
-          height: auto; /* Auto height */
+        .left-sidebar {
+          height: auto;
           border-right: none;
-          border-bottom: 1px solid var(--border-color); /* Use correct variable */
+          border-bottom: 1px solid var(--color-border);
+          position: static;
         }
-        .main-content-grid {
-          padding: 1rem; /* Reduce padding */
+
+        .main-content {
+          padding: 1rem;
         }
       }
     </style>
   </head>
-
-  {/* ... existing head content ... */}
 </html>
 <body>
-  {/* Use CSS Grid for layout */}
-  <div class="docs-grid-layout">
-    {/* Left Sidebar Grid Item */}
-    <aside class="left-sidebar-grid">
+  <e-sidebar
+    side="left"
+    side-width="var(--sidebar-width)"
+    content-min="50%"
+    space="0"
+  >
+    <e-stack slot="sidebar" space="1rem" class="left-sidebar">
       <div class="logo-area">
         <a href={resolveUrl("/")}>e-layout</a>
       </div>
@@ -174,45 +156,38 @@ const resolveUrl = (href: string): string => {
         >
       </div>
       <GlobalSidebarNav currentPage={currentPage} />
-    </aside>
+    </e-stack>
 
-    {/* Main Content Grid Item */}
-    <main class="main-content-grid">
-      <article>
-        <h1>{title}</h1>
-        <slot />
-        {/* Page content will be injected here */}
-      </article>
-      <footer>
-        <p>
-          Copyright © {new Date().getFullYear()}
-          <a
-            href="https://github.com/yukimi-inu"
-            target="_blank"
-            rel="noopener noreferrer">yukimi-inu</a
-          >
-        </p>
-      </footer>
-    </main>
+    <e-sidebar
+      side="right"
+      side-width={hasToc ? "var(--toc-width)" : "0"}
+      content-min="50%"
+      space="0"
+    >
+      <e-center class="main-content">
+        <article>
+          <h1>{title}</h1>
+          <slot />
+        </article>
+        <footer>
+          <p>
+            Copyright © {new Date().getFullYear()}
+            <a
+              href="https://github.com/yukimi-inu"
+              target="_blank"
+              rel="noopener noreferrer">yukimi-inu</a
+            >
+          </p>
+        </footer>
+      </e-center>
 
-    {/* Right TOC Grid Item */}
-    <aside class="right-toc-grid">
-      <PageTocNav headings={headings} />
-    </aside>
-  </div>
+      {
+        hasToc && (
+          <e-box slot="sidebar" class="right-toc">
+            <PageTocNav headings={headings} />
+          </e-box>
+        )
+      }
+    </e-sidebar>
+  </e-sidebar>
 </body>
-{
-  /* Client-side script is no longer needed as resolveUrl is handled server-side */
-}
-{
-  /*
-  <script define:vars={{ baseUrl: import.meta.env.BASE_URL }}>
-    function resolveUrl(href) {
-      const resolvedBaseUrl = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
-      const finalHref = href.startsWith('/') ? href.substring(1) : href;
-      if (href === "/") return resolvedBaseUrl;
-      return resolvedBaseUrl + finalHref;
-    }
-  </script>
-  */
-}
