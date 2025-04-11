@@ -23,7 +23,7 @@
   "bugs": {
     "url": "https://github.com/yukimi-inu/e-layout/issues"
   },
-  "homepage": "https://github.com/yukimi-inu/e-layout#readme",
+  "homepage": "https://yukimi-inu.github.io/e-layout/",
   "publishConfig": {
     "access": "public"
   },
