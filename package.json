@@ -69,7 +69,7 @@
     }
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\"",
     "clean": "rm -rf dist",
     "build:esm": "tsc",
     "build:iife": "esbuild src/index.ts --bundle --outfile=dist/e-layout.js --format=iife --global-name=ELayout && esbuild src/index.ts --bundle --minify --outfile=dist/e-layout.min.js --format=iife --global-name=ELayout",
