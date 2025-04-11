@@ -5,56 +5,54 @@ interface Props {
 const { currentPage } = Astro.props;
 
 const navItems = [
-  { text: "Introduction", href: "/" },
-  { text: "Getting Started", href: "/getting-started" },
-  { text: "Usage Guide", href: "/usage" },
+  { text: 'Introduction', href: '/' },
+  { text: 'Getting Started', href: '/getting-started' },
+  { text: 'Usage Guide', href: '/usage' },
   {
-    text: "Components",
+    text: 'Components',
     isSection: true,
     links: [
-      { text: "Box", href: "/components/box" },
-      { text: "Stack", href: "/components/stack" },
-      { text: "Center", href: "/components/center" },
-      { text: "Cluster", href: "/components/cluster" },
-      { text: "Sidebar", href: "/components/sidebar" },
-      { text: "Switcher", href: "/components/switcher" },
-      { text: "Grid", href: "/components/grid" },
-      { text: "Frame", href: "/components/frame" },
-      { text: "Reel", href: "/components/reel" },
-      { text: "Imposter", href: "/components/imposter" },
-      { text: "Icon", href: "/components/icon" },
-      { text: "Cover", href: "/components/cover" },
-      { text: "Container", href: "/components/container" },
+      { text: 'Box', href: '/components/box' },
+      { text: 'Stack', href: '/components/stack' },
+      { text: 'Center', href: '/components/center' },
+      { text: 'Cluster', href: '/components/cluster' },
+      { text: 'Sidebar', href: '/components/sidebar' },
+      { text: 'Switcher', href: '/components/switcher' },
+      { text: 'Grid', href: '/components/grid' },
+      { text: 'Frame', href: '/components/frame' },
+      { text: 'Reel', href: '/components/reel' },
+      { text: 'Imposter', href: '/components/imposter' },
+      { text: 'Icon', href: '/components/icon' },
+      { text: 'Cover', href: '/components/cover' },
+      { text: 'Container', href: '/components/container' },
     ],
   },
   {
-    text: "Examples",
+    text: 'Examples',
     isSection: true,
     links: [
-      { text: "Card List", href: "/examples/card-list" },
-      { text: "Masonry Layout", href: "/examples/masonry-layout" },
-      { text: "Blog Post", href: "/examples/blog-post" },
-      { text: "Video Player", href: "/examples/video-player" },
-      { text: "Admin Dashboard", href: "/examples/admin-dashboard" },
-      { text: "Product Landing Page", href: "/examples/product-landing-page" },
-      { text: "Product Login Page", href: "/examples/login-page" },
+      { text: 'Card List', href: '/examples/card-list' },
+      { text: 'Masonry Layout', href: '/examples/masonry-layout' },
+      { text: 'Blog Post', href: '/examples/blog-post' },
+      { text: 'Video Player', href: '/examples/video-player' },
+      { text: 'Admin Dashboard', href: '/examples/admin-dashboard' },
+      { text: 'Product Landing Page', href: '/examples/product-landing-page' },
+      { text: 'Product Login Page', href: '/examples/login-page' },
     ],
   },
 ];
 
 const resolveUrl = (href: string) => {
-  const baseUrl = import.meta.env.BASE_URL.endsWith("/")
-    ? import.meta.env.BASE_URL
-    : `${import.meta.env.BASE_URL}/`;
-  const finalHref = href.startsWith("/") ? href.substring(1) : href;
-  if (href === "/") return baseUrl;
+  const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+  const finalHref = href.startsWith('/') ? href.substring(1) : href;
+  if (href === '/') return baseUrl;
   return `${baseUrl}${finalHref}`;
 };
 
 const isActive = (linkHref: string, currentPath: string): boolean => {
   const resolvedLink = resolveUrl(linkHref);
-  if (linkHref === "/") {
-    return currentPath === resolveUrl("/");
+  if (linkHref === '/') {
+    return currentPath === resolveUrl('/');
   }
   return currentPath === resolvedLink || currentPath === `${resolvedLink}/`;
 };
