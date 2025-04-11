@@ -1,6 +1,6 @@
 {
   "name": "e-layout",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A layout-focused Web Component library built with Lit, inspired by the principles of Every Layout. Provides framework-agnostic components for common layout patterns.",
   "keywords": [
     "web-components",
