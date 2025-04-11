@@ -360,7 +360,7 @@ While simply importing `e-layout` in your main JavaScript bundle often works aft
     // app/root.tsx (or similar)
     <head>
       {/* Other head elements */}
-      <script src="/scripts/e-layout.min.js" defer></script> {/* Adjust path as needed */}
+      <script src="https://cdn.jsdelivr.net/npm/e-layout/dist/e-layout.min.js" defer></script>
     </head>
     ```
     *(Note: Using `defer` is generally recommended for scripts in the head that don't modify the DOM immediately)*

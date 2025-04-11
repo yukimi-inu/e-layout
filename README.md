@@ -21,8 +21,30 @@ yarn add e-layout
 # or
 pnpm add e-layout
 ```
-
 ## Basic Usage
+
+### Option 1: Using CDN (Recommended)
+
+The simplest way to use e-layout is via CDN:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Page</title>
+  <script src="https://cdn.jsdelivr.net/npm/e-layout/dist/e-layout.min.js"></script>
+</head>
+<body>
+  <e-stack space="1.5rem">
+    <e-box padding="1rem">Item 1</e-box>
+    <e-center max="40ch" with-text>Centered Text</e-center>
+  </e-stack>
+</body>
+</html>
+```
+
+### Option 2: Using NPM Package
+
 
 1.  **Import Components:** Import the necessary component definitions in your main JavaScript/TypeScript file to register the custom elements. Importing individually is recommended for production.
 
@@ -68,7 +90,7 @@ While production builds often handle this, development servers might need adjust
     ```html
     // app/root.tsx
     <head>
-      <script src="/scripts/e-layout.min.js" defer></script> {/* Adjust path */}
+      <script src="https://cdn.jsdelivr.net/npm/e-layout/dist/e-layout.min.js" defer></script>
     </head>
     ```
     (Ensure the IIFE file is copied to your public assets).

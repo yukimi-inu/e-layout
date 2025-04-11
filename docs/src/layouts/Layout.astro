@@ -4,11 +4,18 @@ import type { MarkdownHeading } from 'astro';
 import GlobalSidebarNav from '../components/GlobalSidebarNav.astro';
 import PageTocNav from '../components/PageTocNav.astro';
 interface Props {
-  title: string;
-  headings: MarkdownHeading[];
+  title?: string;
+  headings?: MarkdownHeading[];
+  frontmatter?: {
+    title?: string;
+    headings?: MarkdownHeading[];
+    // biome-ignore lint/suspicious/noExplicitAny: フロントマターには様々なプロパティが含まれる可能性があるため
+    [key: string]: any;
+  };
 }
-
-const { title, headings } = Astro.props;
+const { frontmatter, title: propsTitle, headings: propsHeadings = [] } = Astro.props;
+const title = frontmatter?.title || propsTitle || 'Default Title';
+const headings = frontmatter?.headings || propsHeadings;
 const currentPage = Astro.url.pathname;
 const hasToc = headings && headings.length > 0;
 
@@ -134,58 +141,57 @@ const resolveUrl = (href: string): string => {
       }
     </style>
   </head>
-</html>
-<body>
-  <e-sidebar
-    side="left"
-    side-width="var(--sidebar-width)"
-    content-min="50%"
-    space="0"
-  >
-    <e-stack slot="sidebar" space="1rem" class="left-sidebar">
-      <div class="logo-area">
-        <a href={resolveUrl("/")}>e-layout</a>
-      </div>
-      <div class="external-links">
-        <a
-          href="https://github.com/yukimi-inu/e-layout"
-          target="_blank"
-          rel="noopener noreferrer">GitHub</a
-        >
-      </div>
-      <GlobalSidebarNav currentPage={currentPage} />
-    </e-stack>
-
+  <body>
     <e-sidebar
-      side="right"
-      side-width={hasToc ? "var(--toc-width)" : "0"}
+      side="left"
+      side-width="var(--sidebar-width)"
       content-min="50%"
       space="0"
     >
-      <e-center class="main-content">
-        <article>
-          <h1>{title}</h1>
-          <slot />
-        </article>
-        <footer>
-          <p>
-            Copyright © {new Date().getFullYear()}
-            <a
-              href="https://github.com/yukimi-inu"
-              target="_blank"
-              rel="noopener noreferrer">yukimi-inu</a
-            >
-          </p>
-        </footer>
-      </e-center>
+      <e-stack slot="sidebar" space="1rem" class="left-sidebar">
+        <div class="logo-area">
+          <a href={resolveUrl("/")}>e-layout</a>
+        </div>
+        <div class="external-links">
+          <a
+            href="https://github.com/yukimi-inu/e-layout"
+            target="_blank"
+            rel="noopener noreferrer">GitHub</a
+          >
+        </div>
+        <GlobalSidebarNav currentPage={currentPage} />
+      </e-stack>
 
-      {
-        hasToc && (
-          <e-box slot="sidebar" class="right-toc">
-            <PageTocNav headings={headings} />
-          </e-box>
-        )
-      }
+      <e-sidebar
+        side="right"
+        side-width={hasToc ? "var(--toc-width)" : "0"}
+        content-min="50%"
+        space="0"
+      >
+        <e-center class="main-content">
+          <article>
+            <slot />
+          </article>
+          <footer>
+            <p>
+              Copyright © {new Date().getFullYear()}
+              <a
+                href="https://github.com/yukimi-inu"
+                target="_blank"
+                rel="noopener noreferrer">yukimi-inu</a
+              >
+            </p>
+          </footer>
+        </e-center>
+
+        {
+          hasToc && (
+            <e-box slot="sidebar" class="right-toc">
+              <PageTocNav headings={headings} />
+            </e-box>
+          )
+        }
+      </e-sidebar>
     </e-sidebar>
-  </e-sidebar>
-</body>
+  </body>
+</html>
