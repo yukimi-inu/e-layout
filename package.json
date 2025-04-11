@@ -1,9 +1,32 @@
 {
   "name": "e-layout",
   "version": "0.1.0",
-  "description": "",
+  "description": "A layout-focused Web Component library built with Lit, inspired by the principles of Every Layout. Provides framework-agnostic components for common layout patterns.",
+  "keywords": [
+    "web-components",
+    "layout",
+    "lit",
+    "responsive",
+    "css",
+    "ui",
+    "framework-agnostic",
+    "shadow-dom",
+    "every-layout",
+    "component-library"
+  ],
+  "author": "yukimi-inu",
   "license": "MIT",
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yukimi-inu/e-layout.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yukimi-inu/e-layout/issues"
+  },
+  "homepage": "https://github.com/yukimi-inu/e-layout#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -93,6 +116,7 @@
     "astro": "^5.5.6",
     "esbuild": "^0.25.2",
     "lit": "^3.2.1",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.2",
+    "@fortawesome/fontawesome-free": "^6.7.2"
   }
 }
