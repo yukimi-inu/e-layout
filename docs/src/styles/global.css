@@ -149,7 +149,7 @@ a:hover {
 button {
   display: inline-block;
   width: fit-content;
-  background-color: var(--color-bg-example-blue);
+  background-color: var(--color-bg-example-lavender);
   color: var(--color-text-therity);
   border: none;
   padding: calc(var(--spacing-unit) * 0.5) calc(var(--spacing-unit) * 1.5);
@@ -157,8 +157,12 @@ button {
   cursor: pointer;
   font-size: 1em;
 
+  &:hover {
+    filter: brightness(1.1);
+  }
+
   &:active {
-    background-color: var(--color-bg-example-lavender);
+    filter: brightness(0.9);
     color: var(--color-text-therity);
   }
 
